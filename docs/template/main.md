@@ -14,8 +14,8 @@ templates shipped with 2A.
 
 ## Template Life Cycle Management
 
-Cluster and Service Templates can be delivered to target namespaces using the `TemplateManagement`,
-`ClusterTemplateChain` and `ServiceTemplateChain` objects. `TemplateManagement` object contains the list of
+Cluster and Service Templates can be delivered to target namespaces using the `AccessManagement`,
+`ClusterTemplateChain` and `ServiceTemplateChain` objects. `AccessManagement` object contains the list of
 access rules to apply. Each access rule contains the namespaces' definition to deliver templates into and
 the template chains. Each `ClusterTemplateChain` and `ServiceTemplateChain` contains the supported templates
 and the upgrade sequences for them.
@@ -39,7 +39,7 @@ spec:
     - name: aws-standalone-cp-0-0-2
 ```
 
-2. Edit `TemplateManagement` object and configure the `.spec.accessRules`.
+2. Edit `AccessManagement` object and configure the `.spec.accessRules`.
    For example, to apply all templates and upgrade sequences defined in the `aws` `ClusterTemplateChain` to the
    `default` namespace, the following `accessRule` should be added:
 

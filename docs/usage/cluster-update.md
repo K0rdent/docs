@@ -24,7 +24,7 @@ check the `.status.conditions`.
 > NOTE:
 > The `ManagedCluster` is allowed to be updated to specific templates only.
 > The templates available for the update are defined in the
-> `ClusterTemplateChain` objects. Also, the `TemplateManagement` object should
+> `ClusterTemplateChain` objects. Also, the `AccessManagement` object should
 > contain properly configured `spec.accessRules` with the list of
 > `ClusterTemplateChain` object names and the namespaces where the supported
 > templates from the chain spec will be delivered. For details, see:
