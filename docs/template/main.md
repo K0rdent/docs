@@ -3,14 +3,159 @@
 By default, 2A delivers a set of default `ProviderTemplate`, `ClusterTemplate` and `ServiceTemplate` objects:
 
 * `ProviderTemplate`
-   The template containing the configuration of the provider (ie k0smotron). Cluster-scoped.
+   The template containing the configuration of the provider (e.g., k0smotron). Cluster-scoped.
 * `ClusterTemplate`
    The template containing the configuration of the cluster objects. Namespace-scoped.
 * `ServiceTemplate`
    The template containing the configuration of the service to be installed on the managed cluster. Namespace-scoped.
 
 All Templates are immutable. You can also build your own templates and use them for deployment along with the
-templates shipped with 2A.
+templates shipped with 2A. Below are some examples for each of the templates.
+
+> EXAMPLE: An example of a `ProviderTemplate` with its status.
+> ```yaml
+> apiVersion: hmc.mirantis.com/v1alpha1
+> kind: ProviderTemplate
+> metadata:
+>   name: cluster-api-0-0-4
+> spec:
+>   helm:
+>     chartSpec:
+>       chart: cluster-api
+>       interval: 10m0s
+>       reconcileStrategy: ChartVersion
+>       sourceRef:
+>         kind: HelmRepository
+>         name: hmc-templates
+>       version: 0.0.4
+> status:
+>   capiContracts:
+>     v1alpha3: ""
+>     v1alpha4: ""
+>     v1beta1: ""
+>   chartRef:
+>     kind: HelmChart
+>     name: cluster-api-0-0-4
+>     namespace: hmc-system
+>   config:
+>     airgap: false
+>     config: {}
+>     configSecret:
+>       create: false
+>       name: ""
+>       namespace: ""
+>   description: A Helm chart for Cluster API core components
+>   observedGeneration: 1
+>   valid: true
+> ```
+
+> EXAMPLE: An example of a `ClusterTemplate` with its status.
+> ```yaml
+> apiVersion: hmc.mirantis.com/v1alpha1
+> kind: ClusterTemplate
+> metadata:
+>   name: aws-standalone-cp-0-0-3
+>   namespace: hmc-system
+> spec:
+>   helm:
+>     chartSpec:
+>       chart: aws-standalone-cp
+>       interval: 10m0s
+>       reconcileStrategy: ChartVersion
+>       sourceRef:
+>         kind: HelmRepository
+>         name: hmc-templates
+>       version: 0.0.3
+> status:
+>   chartRef:
+>     kind: HelmChart
+>     name: aws-standalone-cp-0-0-3
+>     namespace: hmc-system
+>   config:
+>     bastion:
+>       allowedCIDRBlocks: []
+>       ami: ""
+>       disableIngressRules: false
+>       enabled: false
+>       instanceType: t2.micro
+>     clusterIdentity:
+>       kind: AWSClusterStaticIdentity
+>       name: ""
+>     clusterNetwork:
+>       pods:
+>         cidrBlocks:
+>         - 10.244.0.0/16
+>       services:
+>         cidrBlocks:
+>         - 10.96.0.0/12
+>     controlPlane:
+>       amiID: ""
+>       iamInstanceProfile: control-plane.cluster-api-provider-aws.sigs.k8s.io
+>       imageLookup:
+>         baseOS: ""
+>         format: amzn2-ami-hvm*-gp2
+>         org: "137112412989"
+>       instanceType: ""
+>       rootVolumeSize: 8
+>     controlPlaneNumber: 3
+>     extensions:
+>       chartRepository: ""
+>       imageRepository: ""
+>     k0s:
+>       version: v1.31.1+k0s.1
+>     publicIP: false
+>     region: ""
+>     sshKeyName: ""
+>     worker:
+>       amiID: ""
+>       iamInstanceProfile: control-plane.cluster-api-provider-aws.sigs.k8s.io
+>       imageLookup:
+>         baseOS: ""
+>         format: amzn2-ami-hvm*-gp2
+>         org: "137112412989"
+>       instanceType: ""
+>       rootVolumeSize: 8
+>     workersNumber: 2
+>   description: 'An HMC template to deploy a k0s cluster on AWS with bootstrapped control
+>     plane nodes. '
+>   observedGeneration: 1
+>   providerContracts:
+>     bootstrap-k0smotron: v1beta1
+>     control-plane-k0smotron: v1beta1
+>     infrastructure-aws: v1beta2
+>   providers:
+>   - bootstrap-k0smotron
+>   - control-plane-k0smotron
+>   - infrastructure-aws
+>   valid: true
+> ```
+
+> EXAMPLE: An example of a `ServiceTemplate` with its status.
+> ```yaml
+> apiVersion: hmc.mirantis.com/v1alpha1
+> kind: ServiceTemplate
+> metadata:
+>   name: kyverno-3-2-6
+>   namespace: hmc-system
+> spec:
+>   helm:
+>     chartSpec:
+>       chart: kyverno
+>       interval: 10m0s
+>       reconcileStrategy: ChartVersion
+>       sourceRef:
+>         kind: HelmRepository
+>         name: hmc-templates
+>       version: 3.2.6
+> status:
+>   chartRef:
+>     kind: HelmChart
+>     name: kyverno-3-2-6
+>     namespace: hmc-system
+>   description: A Helm chart to refer the official kyverno helm chart
+>   observedGeneration: 1
+>   valid: true
+> ```
 
 ## Template Life Cycle Management
 

@@ -65,6 +65,10 @@ OpenStack, etc.).
 ### Managed cluster
 A Kubernetes cluster created and managed by Project 2A.
 
+### Mutli Cluster Service
+The `MultiClusterService` is a custom resource used to manage deployment of beach-head services
+across multiple clusters.
+
 ### Management cluster
 The Kubernetes cluster where 2A is installed and from which all other managed
 clusters are managed.
