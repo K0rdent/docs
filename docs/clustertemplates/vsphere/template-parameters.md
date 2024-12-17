@@ -10,15 +10,15 @@ To deploy managed cluster a number of parameters should be passed to the
 The following is the list of vSphere specific parameters, which are _required_
 for successful cluster creation.
 
-| Parameter                           | Example                               | Description                        |
-|-------------------------------------|---------------------------------------|------------------------------------|
-| `.spec.config.vsphere.server`       | `vcenter.example.com`                 | Address of the vSphere server      |
-| `.spec.config.vsphere.thumbprint`   | `"00:00:00"`                          | Certificate thumbprint             |
-| `.spec.config.vsphere.datacenter`   | `DC`                                  | Datacenter name                    |
-| `.spec.config.vsphere.datastore`    | `/DC/datastore/DS`                    | Datastore path                     |
-| `.spec.config.vsphere.resourcePool` | `/DC/host/vCluster/Resources/ResPool` | Resource pool path                 |
-| `.spec.config.vsphere.folder`       | `/DC/vm/example`                      | vSphere folder path                |
-
+| Parameter                             | Example                               | Description                                                     |
+|---------------------------------------|---------------------------------------|-----------------------------------------------------------------|
+| `.spec.config.vsphere.server`         | `vcenter.example.com`                 | Address of the vSphere server                                   |
+| `.spec.config.vsphere.thumbprint`     | `"00:00:00"`                          | Certificate thumbprint                                          |
+| `.spec.config.vsphere.datacenter`     | `DC`                                  | Datacenter name                                                 |
+| `.spec.config.vsphere.datastore`      | `/DC/datastore/DS`                    | Datastore path                                                  |
+| `.spec.config.vsphere.resourcePool`   | `/DC/host/vCluster/Resources/ResPool` | Resource pool path                                              |
+| `.spec.config.vsphere.folder`         | `/DC/vm/example`                      | vSphere folder path                                             |
+| `.spec.config.controlPlaneEndpointIP` | `172.16.0.10`                         | `kube-vip` vIP which will be created for control plane endpoint |
 
 To obtain vSphere certificate thumbprint you can use the following command:
 
