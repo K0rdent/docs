@@ -72,7 +72,7 @@ kind: ManagedCluster
 metadata:
   name: aws-hosted-cp
 spec:
-  template: aws-hosted-cp
+  template: aws-hosted-cp-0-0-3
   credential: aws-credential
   config:
     vpcID: vpc-0a000000000000000
@@ -81,6 +81,13 @@ spec:
     subnets:
       - id: subnet-0aaaaaaaaaaaaaaaa
         availabilityZone: us-west-1b
+        isPublic: true
+        natGatewayID: xxxxxx
+        routeTableId: xxxxxx
+      - id: subnet-1aaaaaaaaaaaaaaaa
+        availabilityZone: us-west-1b
+        isPublic: false
+        routeTableId: xxxxxx
     instanceType: t3.medium
     securityGroupIDs:
       - sg-0e000000000000000
@@ -101,14 +108,22 @@ kind: ManagedCluster
 metadata:
   name: aws-hosted
 spec:
-  template: aws-hosted-cp
+  template: aws-hosted-cp-0-0-3
   credential: aws-credential
   config:
     vpcID: "{{.spec.network.vpc.id}}"
     region: "{{.spec.region}}"
     subnets:
-      - id: "{{(index .spec.network.subnets 0).resourceID}}"
-        availabilityZone: "{{(index .spec.network.subnets 0).availabilityZone}}"
+    {{- range $subnet := .spec.network.subnets }}
+      - id: "{{ $subnet.resourceID }}"
+        availabilityZone: "{{ $subnet.availabilityZone }}"
+        isPublic: {{ $subnet.isPublic }}
+        {{- if $subnet.isPublic }}
+        natGatewayId: "{{ $subnet.natGatewayId }}"
+        {{- end }}
+        routeTableId: "{{ $subnet.routeTableId }}"
+        zoneType: "{{ $subnet.zoneType }}"
+    {{- end }}
     instanceType: t3.medium
     securityGroupIDs:
       - "{{.status.networkStatus.securityGroups.node.id}}"
