@@ -84,7 +84,7 @@ nav:
       - Overview: template/main.md
       - BYO Templates: template/byo-templates.md
   - ClusterTemplates:
-      - AWS:
+      - AWS & EKS:
         - Template Parameters: clustertemplates/aws/template-parameters.md
         - Hosted Control Plane: clustertemplates/aws/hosted-control-plane.md
       - Azure:
@@ -93,9 +93,6 @@ nav:
       - vSphere:
         - Template Parameters: clustertemplates/vsphere/template-parameters.md
         - Hosted Control Plane: clustertemplates/vsphere/hosted-control-plane.md
-      - EKS:
-        - Template Parameters: clustertemplates/aws/template-parameters.md#eks-templates
-        - Troubleshooting: clustertemplates/aws/vpc-removal.md
   - Credentials:
       - Overview: credential/main.md
   - RBAC:

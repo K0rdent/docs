@@ -17,7 +17,7 @@ by following the [AWS clusterawsadm installation instructions](https://github.co
 
 ## EKS Deployment
 
-- Additional EKS steps and verifications are described in [EKS clusters](../eks/main.md).
+- Additional EKS steps and verifications are described in [EKS clusters](../clustertemplates/aws/template-parameters.md#eks-templates).
 
 ### Configure AWS IAM
 

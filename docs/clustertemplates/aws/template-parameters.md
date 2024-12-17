@@ -75,7 +75,12 @@ spec:
 
 ## EKS templates
 
-EKS templates use the parameters similar to AWS and resulting EKS `ManagedCluster` can look like this:
+> WARNING:
+> When deploying EKS cluster please note that
+> [additional steps](vpc-removal.md) may be needed for proper VPC removal.
+
+EKS templates use the parameters similar to AWS and resulting EKS
+`ManagedCluster` can look like this:
 
 ```yaml
 apiVersion: hmc.mirantis.com/v1alpha1
