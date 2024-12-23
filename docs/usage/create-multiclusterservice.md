@@ -129,8 +129,8 @@ This scenario presents a conflict on both the clusters as the MultiClusterServic
 on both whereas the ManagedCluster for each is attempting to deploy v4.11.0 of ingress-nginx.
 
 This is where `.spec.servicesPriority` can be used to specify who gets the priority. Higher number means higer priority and vice versa. In this example:
-1. ManagedCluster `dev-cluster-1` would lose and its ingress-nginx (v4.11.3) would be deployed on its cluster.
-2. ManagedCluster `dev-cluster-2` would win and ingress-nginx (v4.11.0) would be deployed on its cluster.
+1. MultiClusterService "global-ingress" will take precedence over ManagedCluster "dev-cluster-1" and ingress-nginx (v4.11.3) defined in MultiClusterService object will be deployed on the cluster.
+2. ManagedCluster "dev-cluster-2" will take precedence over MultiClusterService "global-ingress" and ingress-nginx (v4.11.0) defined in ManagedCluster object will be deployed on the cluster.
 
 > NOTE: If servicesPriority are equal, the first one to reach the cluster wins and deploys its beach-head services.
 

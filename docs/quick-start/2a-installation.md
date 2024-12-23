@@ -95,13 +95,13 @@ The output should be similar to:
 
 ```sh
 NAME                                 VALID
-cluster-api-0-0-3                    true
-cluster-api-provider-aws-0-0-3       true
-cluster-api-provider-azure-0-0-3     true
-cluster-api-provider-vsphere-0-0-3   true
-hmc-0-0-4                            true
-k0smotron-0-0-3                      true
-projectsveltos-0-42-0                true
+cluster-api-X-Y-Z                    true
+cluster-api-provider-aws-X-Y-Z       true
+cluster-api-provider-azure-X-Y-Z     true
+cluster-api-provider-vsphere-X-Y-Z   true
+hmc-X-Y-Z                            true
+k0smotron-X-Y-Z                      true
+projectsveltos-X-Y-Z                 true
 ```
 
 Check `ClusterTemplate` objects with:
@@ -114,13 +114,13 @@ The output should be similar to:
 
 ```bash
 NAME                                VALID
-aws-eks-0-0-2                       true
-aws-hosted-cp-0-0-3                 true
-aws-standalone-cp-0-0-3             true
-azure-hosted-cp-0-0-3               true
-azure-standalone-cp-0-0-3           true
-vsphere-hosted-cp-0-0-3             true
-vsphere-standalone-cp-0-0-3         true
+aws-eks-X-Y-Z                       true
+aws-hosted-cp-X-Y-Z                 true
+aws-standalone-cp-X-Y-Z             true
+azure-hosted-cp-X-Y-Z               true
+azure-standalone-cp-X-Y-Z           true
+vsphere-hosted-cp-X-Y-Z             true
+vsphere-standalone-cp-X-Y-Z         true
 ```
 
 Check `ServiceTemplate` objects with:
@@ -132,10 +132,10 @@ kubectl get servicetemplate -n hmc-system
 The output should be similar to:
 
 ```sh
-NAME                   VALID
-ingress-nginx-4-11-0   true
-ingress-nginx-4-11-3   true
-kyverno-3-2-6          true
+NAME                  VALID
+ingress-nginx-X-Y-Z   true
+ingress-nginx-X-Y-Z   true
+kyverno-X-Y-Z         true
 ```
 
 ### Next Step

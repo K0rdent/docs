@@ -10,7 +10,11 @@ By default, 2A delivers a set of default `ProviderTemplate`, `ClusterTemplate` a
    The template containing the configuration of the service to be installed on the managed cluster. Namespace-scoped.
 
 All Templates are immutable. You can also build your own templates and use them for deployment along with the
-templates shipped with 2A. Below are some examples for each of the templates.
+templates shipped with 2A.
+
+## Template Naming Convention
+
+The templates can have any name. However, since they are immutable, we have adopted a naming convention that includes semver in the name, i.e., `template-<major>-<minor>-<patch>`. Below are some examples for each of the templates.
 
 > EXAMPLE: An example of a `ProviderTemplate` with its status.
 > ```yaml
