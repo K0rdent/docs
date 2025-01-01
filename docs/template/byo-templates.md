@@ -142,7 +142,7 @@ annotations:
 ## Compatibility attributes
 
 Each of the `*Template` resources has compatibility versions attributes to constraint the core `CAPI`, `CAPI` provider or Kubernetes versions.
-CAPI-related version constraints must be set in the [`CAPI` contract format](https://cluster-api.sigs.k8s.io/developer/providers/contracts).
+CAPI-related version constraints must be set in the [`CAPI` contract format](https://cluster-api.sigs.k8s.io/developer/providers/contracts/overview).
 Kubernetes version constraints must be set in the Semantic Version format.
 Each attribute can be set either via the corresponding `.spec` fields or via the annotations.
 Values set via the `.spec` have precedence over the values set via the annotations.
