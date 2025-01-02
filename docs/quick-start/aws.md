@@ -47,16 +47,16 @@ with the necessary IAM policies and service account.
 
 ## Step 1: Create AWS IAM User
 
-1. Create an AWS IAM user assigned the following roles:
+1. Create an AWS IAM user with the following policies assigned:
 
     - `control-plane.cluster-api-provider-aws.sigs.k8s.io`
     - `controllers.cluster-api-provider-aws.sigs.k8s.io`
     - `nodes.cluster-api-provider-aws.sigs.k8s.io`
 
-2. Create Access Keys for the IAM user.
+2. Create Access Key for the IAM user.
 
-    In the AWS IAM Console, create the Access Keys for the IAM user and download
-    them.
+    In the AWS IAM Console, create the Access Key for the IAM user and download
+    its items (ID and Secret).
 
     You should have an `AccessKeyID` and a `SecretAccessKey` that look like the
     following:
