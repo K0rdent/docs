@@ -98,7 +98,7 @@ Since this feature depends on the provider some notes and clarifications
 are needed for each provider.
 
 > NOTE: 
-> More detailed research notes can be found [here](https://github.com/Mirantis/hmc/issues/293).
+> More detailed research notes can be found [here](https://github.com/k0rdent/kcm/issues/293).
 
 #### AWS
 

@@ -9,14 +9,14 @@ export KUBECONFIG=<path-to-management-kubeconfig>
 ```
 
 ```bash
-helm install hmc oci://ghcr.io/mirantis/hmc/charts/hmc --version <hmc-version> -n hmc-system --create-namespace
+helm install hmc oci://ghcr.io/k0rdent/kcm/charts/hmc --version <hmc-version> -n hmc-system --create-namespace
 ```
 
 This will use the defaults as seen in Extended Management Configuration section below.
 
 ## Finding Releases
 
-Releases are tagged in the GitHub repository and can be found [here](https://github.com/Mirantis/hmc/tags).
+Releases are tagged in the GitHub repository and can be found [here](https://github.com/k0rdent/kcm/tags).
 
 ## Extended Management Configuration
 
@@ -35,10 +35,10 @@ spec:
   - name: cluster-api-provider-azure
   - name: cluster-api-provider-vsphere
   - name: projectsveltos
-  release: hmc-0-0-3
+  release: hmc-0-0-6
 ```
 To see what is included in a specific release, look at the `release.yaml` file in the tagged release.
-For example, here is the [v0.0.3 release.yaml](https://github.com/Mirantis/hmc/releases/download/v0.0.3/release.yaml).
+For example, here is the [v0.0.6 release.yaml](https://github.com/k0rdent/kcm/releases/download/v0.0.6/release.yaml).
 
 There are two options to override the default management configuration of Project 2A:
 

@@ -1,17 +1,19 @@
-# Project 2A Documentation
+# K0rdent Documentation
 
-The home of the consolidated documentation for Project 2A sponsored by Mirantis.
-Project 2A may be referred to as Project 0x2A in the documentation due to legacy reasons.
+The home of the consolidated documentation for K0rdent sponsored by Mirantis.
+K0rdent may be referred to as Project 2A or Project 0x2A in the documentation
+due to legacy reasons.
 
-[Project 2A Docs](https://mirantis.github.io/project-2a-docs/)
+[K0rdent Docs](https://k0rdent.github.io/docs)
 
-This project utilises Mkdocs with the Material theme and Mermaid for diagrams. Currently
-the docs are published using github actions on github pages from the branch gh-pages.
+This project utilises Mkdocs with the Material theme and Mermaid for
+diagrams. Currently the docs are published using github actions on github pages
+from the branch gh-pages.
 
-Development is tracked under [Project 2A](https://github.com/orgs/Mirantis/projects/8) on github.
+Development is tracked under [K0rdent](https://github.com/orgs/Mirantis/projects/8) on github.
 
-The related Project 2A repositories can be found as follows:
- * [HMC](https://github.com/Mirantis/hmc)
+The related K0rdent repositories can be found as follows:
+ * [HMC](https://github.com/k0rdent/kcm)
 
 ## Project layout
 

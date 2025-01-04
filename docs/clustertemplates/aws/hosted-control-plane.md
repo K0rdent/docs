@@ -141,7 +141,7 @@ kubectl get awscluster cluster -o go-template="$(cat managedcluster.yaml.tpl)" >
   the `kubeconfig` from the cluster and run the commands:
 
 ```
-KUBECONFIG=kubeconfig IMG="ghcr.io/mirantis/hmc/controller-ci:v0.0.1-179-ga5bdf29" REGISTRY_REPO="oci://ghcr.io/mirantis/hmc/charts-ci" make dev-apply
+KUBECONFIG=kubeconfig IMG="ghcr.io/k0rdent/kcm/controller-ci:v0.0.1-179-ga5bdf29" REGISTRY_REPO="oci://ghcr.io/k0rdent/kcm/charts-ci" make dev-apply
 KUBECONFIG=kubeconfig make dev-templates
 ```
 * The infrastructure will need to manually be marked `Ready` to get the
