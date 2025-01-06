@@ -20,7 +20,7 @@ permissions:
 | Cluster and Service Templates    | r/w          | r/o           | r/w             | r/o              | r/o              |
 | Credentials                      | r/w          | r/o           | r/w             | r/o              | r/o              |
 | Flux Helm objects                | r/w          | r/o           | r/w             | r/o              | r/o              |
-| Cluster Deployments                 | r/w          | r/o           | r/w             | r/w              | r/o              |
+| Cluster Deployments              | r/w          | r/o           | r/w             | r/w              | r/o              |
 
 
 ## Roles definition
