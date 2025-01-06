@@ -126,3 +126,9 @@ In Project 2A, you provide this file in a Kubernetes Secret that references Open
 automatically generates the cloud-config required by OpenStack’s cloud-controller-manager.
 
 For more details, refer to the [kcm OpenStack Credential Propagation doc](https://github.com/k0rdent/kcm/blob/main/docs/dev.md#openstack).
+
+
+#### Adopted cluster
+
+Credentials for adopted clusters consist of a secret containing a kubeconfig file to access the existing kubernetes cluster. 
+The kubeconfig file for the cluster should be contained in the value key of the secret object.
