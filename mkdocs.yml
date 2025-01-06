@@ -77,7 +77,7 @@ nav:
   - Usage:
       - Installation Guide: usage/installation.md
       - Air-gapped Installation Guide: usage/airgap.md
-      - Create Managed Cluster: usage/create-managed-cluster.md
+      - Create Cluster Deployment: usage/create-cluster-deployment.md
       - Cluster Updates: usage/cluster-update.md
       - 2A Upgrade: usage/2a-upgrade.md
   - Templates:

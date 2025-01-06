@@ -62,7 +62,7 @@ managing Kubernetes clusters. It enables Cluster API (CAPI) to provision and
 manage clusters on a specific infrastructure platform (e.g., AWS, Azure, VMware,
 OpenStack, etc.).
 
-### Managed cluster
+### Cluster deployment
 A Kubernetes cluster created and managed by Project 2A.
 
 ### Mutli Cluster Service

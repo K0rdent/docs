@@ -9,8 +9,8 @@ The following is the process of passing credentials to the system:
 
 1. Provider specific `ClusterIdentity` and `Secret` are created
 2. `Credential` object is created referencing `ClusterIdentity` from step **1**.
-3. The `Credential` object is then referenced in the `ManagedCluster`.
-4. Optionally, certain credentials MAY be propagated to the `ManagedCluster` after it is created.
+3. The `Credential` object is then referenced in the `ClusterDeployment`.
+4. Optionally, certain credentials MAY be propagated to the `ClusterDeployment` after it is created.
 
 The following diagram illustrates the process:
 
@@ -18,8 +18,8 @@ The following diagram illustrates the process:
 flowchart TD
   Step1["<b>Step 1</b> (Lead Engineer):<br/>Create ClusterIdentity and Secret objects where ClusterIdentity references Secret"]
   Step1 --> Step2["<b>Step 2</b> (Any Engineer):<br/>Create Credential object referencing ClusterIdentity"]
-  Step2 --> Step3["<b>Step 3</b> (Any Engineer):<br/>Create ManagedCluster referencing Credential object"]
-  Step3 --> Step4["<b>Step 4</b> (Any Engineer):<br/>Apply ManagedCluster, wait for provisioning & reconciliation, then propagate credentials to nodes if necessary"]
+  Step2 --> Step3["<b>Step 3</b> (Any Engineer):<br/>Create ClusterDeployment referencing Credential object"]
+  Step3 --> Step4["<b>Step 4</b> (Any Engineer):<br/>Apply ClusterDeployment, wait for provisioning & reconciliation, then propagate credentials to nodes if necessary"]
 ```
 
 By design steps 1 and 2 should be executed by the lead engineer who has
@@ -31,7 +31,7 @@ like `ClusterIdentity`.
 
 The `Credential` object acts like a reference to the underlying credentials. It
 is namespace-scoped, which means that it must be in the same `Namespace` with
-the `ManagedCluster` it is referenced in. Actual credentials can be located in
+the `ClusterDeployment` it is referenced in. Actual credentials can be located in
 any namespace.
 
 ### Example
@@ -61,7 +61,7 @@ present.
 
 ## Cloud provider credentials propagation
 
-Some components in the managed cluster require cloud provider credentials to be
+Some components in the cluster deployment require cloud provider credentials to be
 passed for proper functioning. As an example Cloud Controller Manager (CCM)
 requires provider credentials to create load balancers and provide other
 functionality.
@@ -77,7 +77,7 @@ to pass all necessary credentials. This approach has several problems:
 
 To solve these problems in Project 2A we're using special controller which
 aggregates all necessary data from CAPI provider resources (like
-`ClusterIdentity`) and creates secrets directly on the managed cluster.
+`ClusterIdentity`) and creates secrets directly on the cluster deployment.
 
 This eliminates the need to pass anything credentials-related to `cloud-init`
 and makes it possible to rotate credentials automatically without the need for
@@ -89,7 +89,7 @@ use them without seeing values and even any access to underlying
 infrastructure platform.
 
 The process is fully automated and credentials will be propagated automatically
-within the `ManagedCluster` reconciliation process, user only needs to provide
+within the `ClusterDeployment` reconciliation process, user only needs to provide
 the correct [Credential object](#credential-object).
 
 ### Provider specific notes

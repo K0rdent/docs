@@ -1,15 +1,15 @@
-# Deploy beach-head Services using Managed Cluster
+# Deploy beach-head Services using Cluster Deployment
 
 ## Deployment
 
-Beach-head services can be deployed on a managed cluster (i.e., target cluster) using the `ManagedCluster` object.
+Beach-head services can be installed on a cluster deployment (i.e., target cluster) using the `ClusterDeployment` object.
 Consider the following example:
 
-> EXAMPLE: `ManagedCluster` object for AWS Infrastructure Provider with beach-head services
+> EXAMPLE: `ClusterDeployment` object for AWS Infrastructure Provider with beach-head services
 > 
 > ```yaml
 > apiVersion: hmc.mirantis.com/v1alpha1
-> kind: ManagedCluster
+> kind: ClusterDeployment
 > metadata:
 >   name: my-managed-cluster
 >   namespace: hmc-system
@@ -68,7 +68,7 @@ In the example above the following fields are relevant to the deployment of beac
 > NOTE:
 > Refer to [Parameter List](#parameter-list) for more detail about these fields.
 
-This example `ManagedCluster` object will deploy kyverno and ingress-nginx referred to by their
+This example `ClusterDeployment` object will deploy kyverno and ingress-nginx referred to by their
 service templates respectively on the target cluster it is managing. See the example below for
 the service template for kyverno.
 
@@ -97,15 +97,15 @@ For more details see the [Bring your own Templates](../template/byo-templates.md
 
 ### Configuring Custom Values
 
-Helm values can be passed to each beach-head services with the `.spec.services[].values` field in the `ManagedCluster` or `MultiClusterService` object.
+Helm values can be passed to each beach-head services with the `.spec.services[].values` field in the `ClusterDeployment` or `MultiClusterService` object.
 
 EXAMPLE: 
 ```yaml
 apiVersion: hmc.mirantis.com/v1alpha1
-kind: ManagedCluster
+kind: ClusterDeployment
 metadata:
   . . .
-  name: my-managedcluster
+  name: my-clusterdeployment
   namespace: hmc-system
   . . .
 spec:
@@ -149,9 +149,9 @@ Using Sveltos templating feature, we can also write templates which can be usefu
 EXAMPLE:
 ```yaml
 apiVersion: hmc.mirantis.com/v1alpha1
-kind: ManagedCluster
+kind: ClusterDeployment
 metadata:
-  name: my-managedcluster
+  name: my-clusterdeployment
   namespace: hmc-system
 spec:
   . . .
@@ -168,16 +168,16 @@ spec:
         controlPlaneEndpointPort: "{{ .Cluster.spec.controlPlaneEndpoint.port }}"
 ```
 
-In the example above the host and port information is being fetched from the spec of the CAPI cluster that belongs to this `ManagedCluster`.
+In the example above the host and port information is being fetched from the spec of the CAPI cluster that belongs to this `ClusterDeployment`.
 
 ## Checking status
 
-The `.status.services` field of the `ManagedCluster` object shows the status for each of the beach-head services.
+The `.status.services` field of the `ClusterDeployment` object shows the status for each of the beach-head services.
 
-> EXAMPLE: Status for beach-head services deployed with `ManagedCluster`
+> EXAMPLE: Status for beach-head services deployed with `ClusterDeployment`
 > ```yaml
 > apiVersion: hmc.mirantis.com/v1alpha1
-> kind: ManagedCluster
+> kind: ClusterDeployment
 > metadata:
 >   . . .
 >   generation: 1
@@ -233,7 +233,7 @@ ingress-nginx-controller-cbcf8bf58-zhvph   1/1     Running   0          24m
 ```
 
 > NOTE:
-> * Refer to Step 7 of [Create Managed Cluster](../usage/create-managed-cluster.md/step-7-retrieve-kubernetes-configuration-of-your-managed-cluster) guide for how to access the target cluster.
+> * Refer to Step 7 of [Create Cluster Deployment](../usage/create-managed-cluster.md/step-7-retrieve-kubernetes-configuration-of-your-managed-cluster) guide for how to access the target cluster.
 > * Refer to [Service Templates](../servicetemplates.md) for more detail on what statuses are reported.
 
 ## Removing beach-head services
@@ -241,10 +241,10 @@ ingress-nginx-controller-cbcf8bf58-zhvph   1/1     Running   0          24m
 To remove a beach-head service simply remove its entry from `.spec.services`.
 The example below removes `kyverno-3-2-6` so its status also removed from `.status.services`.
 
-> EAMPLE: Showing removal of `kyverno-3-2-6` from `ManagedCluster`
+> EAMPLE: Showing removal of `kyverno-3-2-6` from `ClusterDeployment`
 > ```yaml
 > apiVersion: hmc.mirantis.com/v1alpha1
-> kind: ManagedCluster
+> kind: ClusterDeployment
 > metadata:
 >   . . .
 >   generation: 2

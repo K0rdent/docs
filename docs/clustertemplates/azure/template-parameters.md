@@ -5,7 +5,7 @@
 SSH public key can be passed to `.spec.config.sshPublicKey` (in case of hosted CP)
 parameter or `.spec.config.controlPlane.sshPublicKey` and
 `.spec.config.worker.sshPublicKey` parameters (in case of standalone CP)
-of the `ManagedCluster` object.
+of the `ClusterDeployment` object.
 
 It should be encoded in **base64** format.
 

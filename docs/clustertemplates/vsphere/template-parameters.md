@@ -1,9 +1,9 @@
 # vSphere cluster template parameters
 
-## ManagedCluster parameters
+## ClusterDeployment parameters
 
-To deploy managed cluster a number of parameters should be passed to the
-`ManagedCluster` object.
+To create a cluster deployment a number of parameters should be passed to the
+`ClusterDeployment` object.
 
 ### Parameter list
 
@@ -26,13 +26,13 @@ To obtain vSphere certificate thumbprint you can use the following command:
 curl -sw %{certs} https://vcenter.example.com | openssl x509 -sha256 -fingerprint -noout | awk -F '=' '{print $2}'
 ```
 
-## Example of ManagedCluster CR
+## Example of ClusterDeployment CR
 
-With all above parameters provided your `ManagedCluster` can look like this:
+With all above parameters provided your `ClusterDeployment` can look like this:
 
 ```yaml
 apiVersion: hmc.mirantis.com/v1alpha1
-kind: ManagedCluster
+kind: ClusterDeployment
 metadata:
   name: cluster-1
 spec:
@@ -82,7 +82,7 @@ public key to configure SSH access.
 SSH public key can be passed to `.spec.config.ssh.publicKey` (in case of
 hosted CP) parameter or `.spec.config.controlPlane.ssh.publicKey` and
 `.spec.config.worker.ssh.publicKey` parameters (in case of standalone CP) of the
-`ManagedCluster` object.
+`ClusterDeployment` object.
 
 SSH public key must be passed literally as a string.
 
@@ -119,7 +119,7 @@ used:
 | `.network`    | `/DC/network/Net` | Network path        |
 
 As with resource parameters the position of these parameters in the
-`ManagedCluster` depends on deployment type and these parameters are used in:
+`ClusterDeployment` depends on deployment type and these parameters are used in:
 
 - `.spec.config` in case of hosted CP deployment.
 - `.spec.config.controlPlane` in in case of standalone CP for control plane

@@ -50,7 +50,7 @@ following:
       extensions charts within the `extensions` directory.  All of these charts
       will be pushed to a chart repository within a registry.
     - `scripts/airgap-push.sh` - A script that will aid in re-tagging and
-      pushing the `ManagedCluster` required charts and images to a desired
+      pushing the `ClusterDeployment` required charts and images to a desired
       registry.
 
 2. Extract and use the `airgap-push.sh` script to push the `extensions` images
@@ -91,7 +91,7 @@ following:
         --set controller.defaultRegistryURL="oci://<chart-repository>"
       ```
 
-5. Within the `spec:` for your desired `ManagedCluster` object, specify the
+5. Within the `spec:` for your desired `ClusterDeployment` object, specify the
    custom image registry and chart repository to be used (the registry and chart
    repository where the `extensions` bundle and charts were pushed).
 

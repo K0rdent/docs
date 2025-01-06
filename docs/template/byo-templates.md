@@ -67,8 +67,8 @@ The controller will automatically create the `HelmChart` object based on the cha
 `.spec.helm.chartSpec`.
 
 > NOTE:
-> `ClusterTemplate` and `ServiceTemplate` objects should reside in the same namespace as the `ManagedCluster`
-> referencing them. The `ManagedCluster` can't reference the Template from another namespace (the creation request will
+> `ClusterTemplate` and `ServiceTemplate` objects should reside in the same namespace as the `ClusterDeployment`
+> referencing them. The `ClusterDeployment` can't reference the Template from another namespace (the creation request will
 > be declined by the admission webhook). All `ClusterTemplates` and `ServiceTemplates` shipped with HMC reside in the
 > system namespace (defaults to `hmc-system`). To get the instructions on how to distribute Templates along multiple
 > namespaces, read [Template Life Cycle Management](main.md#template-life-cycle-management).
@@ -252,12 +252,12 @@ The aforedescribed attributes are being checked sticking to the following rules:
 * both the exact and constraint version of the same type (e.g. `k8sVersion` and `k8sConstraint`) must
 be set otherwise no check is performed;
 * if a `ClusterTemplate` object's providers contract version does not satisfy contract versions
-from the related `ProviderTemplate` object, the updates to the `ManagedCluster` object will be blocked;
+from the related `ProviderTemplate` object, the updates to the `ClusterDeployment` object will be blocked;
 * if a `ProviderTemplate` object's `CAPI` contract version
 (e.g. in a `v1beta1: v1beta1_v1beta2` key-value pair, the key `v1beta1` is the core `CAPI` contract version)
 is not listed in the core `CAPI` `ProviderTemplate` object, the updates to the `Management` object will be blocked;
 * if a `ClusterTemplate` object's exact kubernetes version does not satisfy the kubernetes version
-constraint from the related `ServiceTemplate` object, the updates to the `ManagedCluster` object will be blocked.
+constraint from the related `ServiceTemplate` object, the updates to the `ClusterDeployment` object will be blocked.
 
 ## Remove Templates shipped with HMC
 

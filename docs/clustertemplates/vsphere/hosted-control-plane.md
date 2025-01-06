@@ -9,7 +9,7 @@ Keep in mind that all control plane components for all managed clusters will
 reside in the management cluster.
 
 
-## ManagedCluster manifest
+## ClusterDeployment manifest
 
 Hosted CP template has mostly identical parameters with standalone CP, you can
 check them in the [template parameters](template-parameters.md) section.
@@ -23,7 +23,7 @@ check them in the [template parameters](template-parameters.md) section.
 
 ```yaml
 apiVersion: hmc.mirantis.com/v1alpha1
-kind: ManagedCluster
+kind: ClusterDeployment
 metadata:
   name: cluster-1
 spec:

@@ -184,18 +184,18 @@ kubectl apply -f azure-cluster-identity-cred.yaml
 
 This creates the `Credential` object that will be used in the next step.
 
-## Step 6: Create your first ManagedCluster
+## Step 6: Create your first ClusterDeployment
 
 Create a YAML with the specification of your managed Cluster and save it as
-`my-azure-managedcluster1.yaml`.
+`my-azure-clusterdeployment1.yaml`.
 
-Here is an example of a `ManagedCluster` YAML file:
+Here is an example of a `ClusterDeployment` YAML file:
 
 ```yaml
 apiVersion: hmc.mirantis.com/v1alpha1
-kind: ManagedCluster
+kind: ClusterDeployment
 metadata:
-  name: my-azure-managedcluster1
+  name: my-azure-clusterdeployment1
   namespace: hmc-system
 spec:
   template: azure-standalone-cp-0-0-3
@@ -212,22 +212,22 @@ spec:
 Apply the YAML to your management cluster:
 
 ```shell
-kubectl apply -f my-azure-managedcluster1.yaml
+kubectl apply -f my-azure-clusterdeployment1.yaml
 ```
 
 There will be a delay as the cluster finishes provisioning. Follow the
 provisioning process with the following command:
 
 ```shell
-kubectl -n hmc-system get managedcluster.hmc.mirantis.com my-azure-managedcluster1 --watch
+kubectl -n hmc-system get clusterdeployment.hmc.mirantis.com my-azure-clusterdeployment1 --watch
 ```
 
 After the cluster is `Ready`, you can access it via the kubeconfig, like this:
 
 ```shell
-kubectl -n hmc-system get secret my-azure-managedcluster1-kubeconfig -o jsonpath='{.data.value}' | base64 -d > my-azure-managedcluster1-kubeconfig.kubeconfig
+kubectl -n hmc-system get secret my-azure-clusterdeployment1-kubeconfig -o jsonpath='{.data.value}' | base64 -d > my-azure-clusterdeployment1-kubeconfig.kubeconfig
 ```
 
 ```shell
-KUBECONFIG="my-azure-managedcluster1-kubeconfig.kubeconfig" kubectl get pods -A
+KUBECONFIG="my-azure-clusterdeployment1-kubeconfig.kubeconfig" kubectl get pods -A
 ```

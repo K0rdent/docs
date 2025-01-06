@@ -77,7 +77,7 @@ how to perform 2A installation in the air-gapped environment.
 
 > WARNING: 
 > 
-> Make sure you have no Project 2A `ManagedCluster` objects left in the cluster prior to deletion.
+> Make sure you have no Project 2A `ClusterDeployment` objects left in the cluster prior to deletion.
 
 2. Remove the `hmc` Helm release:
 
