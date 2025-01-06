@@ -1,8 +1,8 @@
-# Deploy beach-head Services using Managed Cluster
+# Deploy beach-head Services using Cluster Deployment
 
 ## Deployment
 
-Beach-head services can be deployed on a managed cluster (i.e., target cluster) using the `ClusterDeployment` object.
+Beach-head services can be installed on a cluster deployment (i.e., target cluster) using the `ClusterDeployment` object.
 Consider the following example:
 
 > EXAMPLE: `ClusterDeployment` object for AWS Infrastructure Provider with beach-head services
@@ -233,7 +233,7 @@ ingress-nginx-controller-cbcf8bf58-zhvph   1/1     Running   0          24m
 ```
 
 > NOTE:
-> * Refer to Step 7 of [Create Managed Cluster](../usage/create-managed-cluster.md/step-7-retrieve-kubernetes-configuration-of-your-managed-cluster) guide for how to access the target cluster.
+> * Refer to Step 7 of [Create Cluster Deployment](../usage/create-managed-cluster.md/step-7-retrieve-kubernetes-configuration-of-your-managed-cluster) guide for how to access the target cluster.
 > * Refer to [Service Templates](../servicetemplates.md) for more detail on what statuses are reported.
 
 ## Removing beach-head services

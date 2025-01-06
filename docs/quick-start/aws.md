@@ -152,9 +152,9 @@ Apply the YAML to your cluster:
 kubectl apply -f aws-cluster-identity-cred.yaml
 ```
 
-## Step 5: Create Your First Managed Cluster
+## Step 5: Create Your First Cluster Deployment
 
-Create a YAML with the specification of your Managed Cluster and save it as
+Create a YAML with the specification of your Cluster Deployment and save it as
 `my-aws-clusterdeployment1.yaml`.
 
 Here is an example of a `ClusterDeployment` YAML file:

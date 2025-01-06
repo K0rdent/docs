@@ -83,7 +83,7 @@ dev-cluster-2                  Provisioned   3h10m             app.kubernetes.io
 >   . . .
 > ```
 
-> NOTE: See [Deploy beach-head Services using Managed Cluster](deploy-services-clusterdeployment.md) for how to use beach-head services with ClusterDeployment.
+> NOTE: See [Deploy beach-head Services using Cluster Deployment](deploy-services-clusterdeployment.md) for how to use beach-head services with ClusterDeployment.
 
 Now the following `global-ingress` MultiClusterService object is created with the following spec:
 
@@ -110,11 +110,11 @@ version 4.11.3 of ingress-nginx service on it.
 
 ### Configuring Custom Values
 
-Refer to "Configuring Custom Values" in [Deploy beach-head Services using Managed Cluster](./deploy-services-clusterdeployment.md).
+Refer to "Configuring Custom Values" in [Deploy beach-head Services using Cluster Deployment](./deploy-services-clusterdeployment.md).
 
 ### Templating Custom Values
 
-Refer to "Templating Custom Values" in [Deploy beach-head Services using Managed Cluster](./deploy-services-clusterdeployment.md).
+Refer to "Templating Custom Values" in [Deploy beach-head Services using Cluster Deployment](./deploy-services-clusterdeployment.md).
 
 ### Services Priority and Conflict
 
@@ -296,4 +296,4 @@ The status under `.status.services` for ClusterDeployment `dev-cluster-2` shows 
 
 ## Parameter List
 
-Refer to "Parameter List" in [Deploy beach-head Services using Managed Cluster](./deploy-services-clusterdeployment.md).
+Refer to "Parameter List" in [Deploy beach-head Services using Cluster Deployment](./deploy-services-clusterdeployment.md).

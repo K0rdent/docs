@@ -1,4 +1,4 @@
-# Managed Cluster update
+# Cluster Deployment update
 
 To update the `ClusterDeployment`, update `.spec.template` in the `ClusterDeployment`
 object to the new `ClusterTemplate` name:

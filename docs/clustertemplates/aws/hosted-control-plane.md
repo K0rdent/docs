@@ -10,12 +10,12 @@ This section covers setting up for a k0smotron hosted control plane on AWS.
 -   Subnet ID which will be used along with AZ information
 -   AMI ID which will be used to deploy worker nodes
 
-Keep in mind that all control plane components for all managed clusters will
+Keep in mind that all control plane components for all cluster deployments will
 reside in the management cluster.
 
 ## Networking
 
-The networking resources in AWS which are needed for a managed cluster can be
+The networking resources in AWS which are needed for a cluster deployment can be
 reused with a management cluster.
 
 If you deployed your AWS Kubernetes cluster using Cluster API Provider AWS (CAPA)

@@ -61,7 +61,7 @@ present.
 
 ## Cloud provider credentials propagation
 
-Some components in the managed cluster require cloud provider credentials to be
+Some components in the cluster deployment require cloud provider credentials to be
 passed for proper functioning. As an example Cloud Controller Manager (CCM)
 requires provider credentials to create load balancers and provide other
 functionality.
@@ -77,7 +77,7 @@ to pass all necessary credentials. This approach has several problems:
 
 To solve these problems in Project 2A we're using special controller which
 aggregates all necessary data from CAPI provider resources (like
-`ClusterIdentity`) and creates secrets directly on the managed cluster.
+`ClusterIdentity`) and creates secrets directly on the cluster deployment.
 
 This eliminates the need to pass anything credentials-related to `cloud-init`
 and makes it possible to rotate credentials automatically without the need for

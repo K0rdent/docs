@@ -29,7 +29,7 @@ AMI ID can be directly used in the `.amiID` parameter.
 
 #### CAPA prebuilt AMIs
 
-Use `clusterawsadm` to get available AMIs to deploy managed cluster:
+Use `clusterawsadm` to get available AMIs to deploy cluster deployment:
 
 ```bash
 clusterawsadm ami list

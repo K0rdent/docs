@@ -1,4 +1,4 @@
-# Create Managed Cluster
+# Create Cluster Deployment
 
 ## Creation Process 
 
@@ -111,9 +111,9 @@ Following is an interpolated example.
 > clusterctl describe cluster <cluster-name> -n <namespace> --show-conditions all
 > ```
 
-### Step 7: Retrieve Kubernetes Configuration of Your Managed Cluster
+### Step 7: Retrieve Kubernetes Configuration of Your Cluster Deployment
 
-- Retrieve the Kubernetes configuration of your managed cluster when it is
+- Retrieve the Kubernetes configuration of your cluster deployment when it is
   finished provisioning:
 
     ```shell

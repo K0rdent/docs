@@ -141,7 +141,7 @@ kyverno-X-Y-Z         true
 ### Next Step
 
 Now you can configure your Infrastructure Provider of choice and create your
-first Managed Cluster.
+first Cluster Deployment.
 
 Jump to any of the following Infrastructure Providers for specific instructions:
 

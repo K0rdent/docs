@@ -2,7 +2,7 @@
 
 ## ClusterDeployment parameters
 
-To deploy managed cluster a number of parameters should be passed to the
+To create a cluster deployment a number of parameters should be passed to the
 `ClusterDeployment` object.
 
 ### Parameter list

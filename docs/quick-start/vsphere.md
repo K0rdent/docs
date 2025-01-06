@@ -136,9 +136,9 @@ Apply the YAML to your cluster:
 kubectl apply -f vsphere-cluster-identity-cred.yaml
 ```
 
-## Step 4: Create your first Managed Cluster
+## Step 4: Create your first Cluster Deployment
 
-Create a YAML with the specification of your Managed Cluster and save it as
+Create a YAML with the specification of your Cluster Deployment and save it as
 `my-vsphere-clusterdeployment1.yaml`.
 
 Here is an example of a `ClusterDeployment` YAML file:
