@@ -73,6 +73,7 @@ in the works.
  * [AWS](quick-start/aws.md)
  * [Azure](quick-start/azure.md)
  * [vSphere](quick-start/vsphere.md)
+ * [OpenStack](quick-start/openstack.md)
 
 ## Development Documentation
 
