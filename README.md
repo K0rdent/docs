@@ -1,19 +1,23 @@
-# K0rdent Documentation
+# k0rdent Documentation
 
-The home of the consolidated documentation for K0rdent sponsored by Mirantis.
-K0rdent may be referred to as Project 2A or Project 0x2A in the documentation
-due to legacy reasons.
+The home of the consolidated documentation for k0rdent sponsored by Mirantis.
 
-[K0rdent Docs](https://k0rdent.github.io/docs)
+[k0rdent Docs](https://k0rdent.github.io/docs)
 
 This project utilises Mkdocs with the Material theme and Mermaid for
 diagrams. Currently the docs are published using github actions on github pages
 from the branch gh-pages.
 
-Development is tracked under [K0rdent](https://github.com/orgs/Mirantis/projects/8) on github.
+Development is tracked under [k0rdent](https://github.com/orgs/k0rdent/projects/4) on github.
 
-The related K0rdent repositories can be found as follows:
- * [HMC](https://github.com/k0rdent/kcm)
+The k0rdent org is:
+ * [k0rdent](https://github.com/k0rdent)
+
+The related k0rdent repositories can be found as follows:
+ * [k0rdent Cluster Manager (kcm)](https://github.com/k0rdent/kcm)
+ * [k0rdent Observability and FinOps (kof)](https://github.com/k0rdent/kof)
+ * [k0rdent Documentation Source (docs)](https://github.com/k0rdent/docs)
+ * [k0rdent Community Documentation](https://github.com/k0rdent/community)
 
 ## Project layout
 
