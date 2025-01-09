@@ -14,8 +14,10 @@ erDiagram
     CAPI ||--|{ CAPV : provider
     CAPI ||--|{ CAPA : provider
     CAPI ||--|{ CAPZ : provider
+    CAPI ||--|{ CAPO : provider
     CAPI ||--|{ K0smotron : Bootstrap
     K0smotron |o..o| CAPV : uses
     K0smotron |o..o| CAPA : uses
     K0smotron |o..o| CAPZ : uses
+    K0smotron |o..o| CAPO : uses
 ```
