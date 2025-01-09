@@ -1,7 +1,7 @@
 ## Requirements
 
-Project 2A requires a Kubernetes cluster. It can be of any type and will become
-the 2A _management cluster_.
+k0rdent requires a Kubernetes cluster. It can be of any type and will become
+the k0rdent _management cluster_.
 
 If you don't have a Kubernetes cluster yet, consider using
 [k0s](https://docs.k0sproject.io/stable/install/).
@@ -28,7 +28,7 @@ helm install hmc oci://ghcr.io/k0rdent/kcm/charts/hmc --version 0.0.6 -n hmc-sys
 
 ## Verification
 
-The installation takes a few minutes until 2A and its subcomponents are
+The installation takes a few minutes until k0rdent and its subcomponents are
 fully installed and configured.
 
 ### Verify Core Components are running
@@ -78,11 +78,11 @@ shard-controller-767975966-v5qqn         1/1     Running   0          16m
 sveltos-agent-manager-56bbf5fb94-9lskd   1/1     Running   0          15m
 ```
 
-If you have fewer pods, give 2A more time to reconcile all the pods.
+If you have fewer pods, give k0rdent more time to reconcile all the pods.
 
-### Verify 2A templates have been successfully reconciled
+### Verify k0rdent templates have been successfully reconciled
 
-For additional verification, check that the example templates packaged with 2A have
+For additional verification, check that the example templates packaged with k0rdent have
 been installed and are valid.
 
 Check `ProviderTemplate` objects with:

@@ -1,46 +1,66 @@
-# Welcome to Mirantis Project 2A Docs
+# Welcome to Mirantis k0rdent Documentation
 
 ## Introduction
 
-Mirantis Project 2A is focused on developing a consistent way to deploy 
-and manage Kubernetes clusters at scale. Think of Project 2A as a "super 
-control plane" designed to manage other Kubernetes control planes.  Whether 
-you want to manage Kubernetes clusters on-premises, in the cloud, or a
-combination of both, Project 2A provides a consistent way to do so.  With
+Mirantis k0rdent is focused on developing a consistent way to deploy 
+and manage Kubernetes clusters at scale. One way to think of k0rdent is as a "super 
+control plane" designed to manage other Kubernetes control planes. Another way to think
+of k0rdent is as a platform for Platform Engineering. If you are building an internal
+developer platform (IDP), need a way to manage Kubernetes clusters at scale in a centralized
+place, create Golden Paths, etc. k0rdent is a great way to do that.
+
+Whether you want to manage Kubernetes clusters on-premises, in the cloud, or a
+combination of both, k0rdent provides a consistent way to do so.  With
 full life-cycle management, including provisioning, configuration, and
-maintenance, Project 2A is designed to be a repeatable and secure way 
+maintenance, k0rdent is designed to be a repeatable and secure way 
 to manage your Kubernetes clusters in a central location.
 
-## Project 2A vs HMC
+## k0rdent vs Project 2A vs HMC naming
 
-Project 2A includes all of the components below, but because HMC was the first
-component to be developed, it is still referred to as "HMC" in some documentation.
-In many ways "Project 2A" and "HMC" are synonymous.
+k0rdent is the official name of an internal Mirantis project that was originally
+codenamed "Project 2A". During our initial skunkworks-style 3-month MVP push, the
+code was put into a repository named HMC, which stood for "Hybrid Multi-Cluster Controller".
+What is HMC became k0rdent Cluster Manager (kcm), but it was a little confusing because
+the overall project was still called "Project 2A" or even "HMC" at times.
 
-2A is built around the creation of a set of standardised templates that enable 
-easy, repeatable cluster deployments and life cycle management. 
+So, to be clear, here are the names and components:
 
-The main components of 2A include:
+- k0rdent: the overall project name
+  - k0rdent Cluster Manager (kcm): the first component developed, and still the main component
+  - k0rdent State Manager (ksm): the second component developed, and manages beach-head services, policy, Kubernetes API configurations and more
+    - This is currently rolled into kcm, but will be split out in the future
+    - ksm leverages [Project Sveltos](https://github.com/projectsveltos/sveltos) for certain functionality
+  - k0rdent Observability and FinOps (kof): the third component developed, and manages cluster and beach-head services monitoring, events and log management
+- Project 2A: the original codename of k0rdent
+  - may occasionally show up in some documentation
+- HMC or hmc: the original repository name for k0rdent development
+  - may occasionally show up in some documentation and code
+- motel: the original repository and codename for k0rdent Observability and FinOps (kof)
+  - may occasionally show up in some documentation and code
 
- * **Hybrid Multi-Cluster Controller (HMC)**
+## k0rdent Components
+
+The main components of k0rdent include:
+
+ * **k0rdent Cluster Manager (kcm)**
 
     Deployment and life-cycle management of Kubernetes clusters, including configuration, updates, and other CRUD operations.
 
- * **State Management Controller (SMC)**
+ * **k0rdent State Manager (ksm)**
 
     Installation and life-cycle management of [beach-head services](glossary.md#beach-head-services), policy, Kubernetes API configurations and more.
 
- * **Observability (OBS)**
+ * **k0rdent Observability and FinOps (kof)**
 
     Cluster and beach-head services monitoring, events and log management.
 
 ## Quick Start
 
-See the [2A Quick Start Guide](quick-start/2a-installation.md)
+See the [k0rdent Quick Start Guide](quick-start/installation.md)
 
 ## Supported Providers
 
-Project 2A leverages the Cluster API provider ecosystem, the following providers have
+k0rdent leverages the Cluster API provider ecosystem, the following providers have
 had `ProviderTemplates` created and validated, and more are in the works.
 
  * [AWS](quick-start/aws.md)
