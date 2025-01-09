@@ -29,7 +29,7 @@ AMI ID can be directly used in the `.amiID` parameter.
 
 #### CAPA prebuilt AMIs
 
-Use `clusterawsadm` to get available AMIs to deploy managed cluster:
+Use `clusterawsadm` to get available AMIs to deploy cluster deployment:
 
 ```bash
 clusterawsadm ami list
@@ -47,20 +47,20 @@ To access the nodes using the SSH protocol, several things should be configured:
 ### SSH keys
 
 Only one SSH key is supported and it should be added in AWS prior to creating
-the `ManagedCluster` object. The name of the key should then be placed under `.spec.config.sshKeyName`.
+the `ClusterDeployment` object. The name of the key should then be placed under `.spec.config.sshKeyName`.
 
 The same SSH key will be used for all machines and a bastion host.
 
 To enable bastion you should add `.spec.config.bastion.enabled` option in the
-`ManagedCluster` object to `true`.
+`ClusterDeployment` object to `true`.
 
 Full list of the bastion configuration options could be fould in [CAPA docs](https://cluster-api-aws.sigs.k8s.io/crd/#infrastructure.cluster.x-k8s.io/v1beta1.Bastion).
 
-The resulting `ManagedCluster` can look like this:
+The resulting `ClusterDeployment` can look like this:
 
 ```yaml
 apiVersion: hmc.mirantis.com/v1alpha1
-kind: ManagedCluster
+kind: ClusterDeployment
 metadata:
   name: cluster-1
 spec:
@@ -80,11 +80,11 @@ spec:
 > [additional steps](vpc-removal.md) may be needed for proper VPC removal.
 
 EKS templates use the parameters similar to AWS and resulting EKS
-`ManagedCluster` can look like this:
+`ClusterDeployment` can look like this:
 
 ```yaml
 apiVersion: hmc.mirantis.com/v1alpha1
-kind: ManagedCluster
+kind: ClusterDeployment
 metadata:
   name: cluster-1
 spec:

@@ -136,18 +136,18 @@ Apply the YAML to your cluster:
 kubectl apply -f vsphere-cluster-identity-cred.yaml
 ```
 
-## Step 4: Create your first Managed Cluster
+## Step 4: Create your first Cluster Deployment
 
-Create a YAML with the specification of your Managed Cluster and save it as
-`my-vsphere-managedcluster1.yaml`.
+Create a YAML with the specification of your Cluster Deployment and save it as
+`my-vsphere-clusterdeployment1.yaml`.
 
-Here is an example of a `ManagedCluster` YAML file:
+Here is an example of a `ClusterDeployment` YAML file:
 
 ```yaml
 apiVersion: hmc.mirantis.com/v1alpha1
-kind: ManagedCluster
+kind: ClusterDeployment
 metadata:
-  name: my-vsphere-managedcluster1
+  name: my-vsphere-clusterdeployment1
   namespace: hmc-system
 spec:
   template: vsphere-standalone-cp-0-0-3
@@ -183,22 +183,22 @@ spec:
 Apply the YAML to your management cluster:
 
 ```shell
-kubectl apply -f my-vsphere-managedcluster1.yaml
+kubectl apply -f my-vsphere-clusterdeployment1.yaml
 ```
 
 There will be a delay as the cluster finishes provisioning. Follow the
 provisioning process with the following command:
 
 ```shell
-kubectl -n hmc-system get managedcluster.hmc.mirantis.com my-vsphere-managedcluster1 --watch
+kubectl -n hmc-system get clusterdeployment.hmc.mirantis.com my-vsphere-clusterdeployment1 --watch
 ```
 
 After the cluster is `Ready`, you can access it via the kubeconfig, like this:
 
 ```shell
-kubectl -n hmc-system get secret my-vsphere-managedcluster1-kubeconfig -o jsonpath='{.data.value}' | base64 -d > my-vsphere-managedcluster1-kubeconfig.kubeconfig
+kubectl -n hmc-system get secret my-vsphere-clusterdeployment1-kubeconfig -o jsonpath='{.data.value}' | base64 -d > my-vsphere-clusterdeployment1-kubeconfig.kubeconfig
 ```
 
 ```shell
-KUBECONFIG="my-vsphere-managedcluster1-kubeconfig.kubeconfig" kubectl get pods -A
+KUBECONFIG="my-vsphere-clusterdeployment1-kubeconfig.kubeconfig" kubectl get pods -A
 ```

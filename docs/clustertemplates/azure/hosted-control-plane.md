@@ -12,7 +12,7 @@ reside in the management cluster.
 ## Pre-existing resources
 
 Certain resources will not be created automatically in a hosted control plane
-scenario thus they should be created in advance and provided in the `ManagedCluster`
+scenario thus they should be created in advance and provided in the `ClusterDeployment`
 object. You can reuse these resources with management cluster as described
 below.
 
@@ -63,13 +63,13 @@ kubectl get azurecluster <cluster-name> -o go-template='{{(index .spec.networkSp
 
 
 
-## HMC ManagedCluster manifest
+## HMC ClusterDeployment manifest
 
-With all the collected data your `ManagedCluster` manifest will look similar to this:
+With all the collected data your `ClusterDeployment` manifest will look similar to this:
 
 ```yaml
 apiVersion: hmc.mirantis.com/v1alpha1
-kind: ManagedCluster
+kind: ClusterDeployment
 metadata:
   name: azure-hosted-cp
 spec:
@@ -87,11 +87,11 @@ spec:
       securityGroupName: mgmt-cluster-node-nsg
 ```
 
-To simplify creation of the ManagedCluster object you can use the template below:
+To simplify creation of the ClusterDeployment object you can use the template below:
 
 ```yaml
 apiVersion: hmc.mirantis.com/v1alpha1
-kind: ManagedCluster
+kind: ClusterDeployment
 metadata:
   name: azure-hosted-cp
 spec:
@@ -117,7 +117,7 @@ kubectl get azurecluster <management-cluster-name> -o go-template="$(cat templat
 
 ## Cluster creation
 
-After applying `ManagedCluster` object you require to manually set the status of
+After applying `ClusterDeployment` object you require to manually set the status of
 the `AzureCluster` object due to current limitations (see
 [k0sproject/k0smotron#668](https://github.com/k0sproject/k0smotron/issues/668)).
 
@@ -142,7 +142,7 @@ To place finalizer you can execute the following command:
 kubectl patch azurecluster <cluster-name> --type=merge --patch 'metadata: {finalizers: [manual]}'
 ```
 
-When finalizer is placed you can remove the `ManagedCluster` as usual. Check that
+When finalizer is placed you can remove the `ClusterDeployment` as usual. Check that
 all `AzureMachines` objects are deleted successfully and remove finalizer you've
 placed to finish cluster deletion.
 

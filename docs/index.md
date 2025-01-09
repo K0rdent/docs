@@ -50,4 +50,4 @@ had `ProviderTemplates` created and validated, and more are in the works.
 ## Development Documentation
 
 Documentation related to development process and developer specific notes located in
-the [main repository](https://github.com/Mirantis/hmc/blob/main/docs/dev.md).
+the [main repository](https://github.com/k0rdent/kcm/blob/main/docs/dev.md).

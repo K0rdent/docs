@@ -47,16 +47,16 @@ with the necessary IAM policies and service account.
 
 ## Step 1: Create AWS IAM User
 
-1. Create an AWS IAM user assigned the following roles:
+1. Create an AWS IAM user with the following policies assigned:
 
     - `control-plane.cluster-api-provider-aws.sigs.k8s.io`
     - `controllers.cluster-api-provider-aws.sigs.k8s.io`
     - `nodes.cluster-api-provider-aws.sigs.k8s.io`
 
-2. Create Access Keys for the IAM user.
+2. Create Access Key for the IAM user.
 
-    In the AWS IAM Console, create the Access Keys for the IAM user and download
-    them.
+    In the AWS IAM Console, create the Access Key for the IAM user and download
+    its items (ID and Secret).
 
     You should have an `AccessKeyID` and a `SecretAccessKey` that look like the
     following:
@@ -152,21 +152,21 @@ Apply the YAML to your cluster:
 kubectl apply -f aws-cluster-identity-cred.yaml
 ```
 
-## Step 5: Create Your First Managed Cluster
+## Step 5: Create Your First Cluster Deployment
 
-Create a YAML with the specification of your Managed Cluster and save it as
-`my-aws-managedcluster1.yaml`.
+Create a YAML with the specification of your Cluster Deployment and save it as
+`my-aws-clusterdeployment1.yaml`.
 
-Here is an example of a `ManagedCluster` YAML file:
+Here is an example of a `ClusterDeployment` YAML file:
 
 ```yaml
 apiVersion: hmc.mirantis.com/v1alpha1
-kind: ManagedCluster
+kind: ClusterDeployment
 metadata:
-  name: my-aws-managedcluster1
+  name: my-aws-clusterdeployment1
   namespace: hmc-system
 spec:
-  template: aws-standalone-cp-0-0-3
+  template: aws-standalone-cp-0-0-4
   credential: aws-cluster-identity-cred
   config:
     region: us-west-2
@@ -179,22 +179,22 @@ spec:
 Apply the YAML to your management cluster:
 
 ```bash
-kubectl apply -f my-aws-managedcluster1.yaml
+kubectl apply -f my-aws-clusterdeployment1.yaml
 ```
 
 There will be a delay as the cluster finishes provisioning. Follow the
 provisioning process with the following command:
 
 ```bash
-kubectl -n hmc-system get managedcluster.hmc.mirantis.com my-aws-managedcluster1 --watch
+kubectl -n hmc-system get clusterdeployment.hmc.mirantis.com my-aws-clusterdeployment1 --watch
 ```
 
 After the cluster is `Ready`, you can access it via the kubeconfig, like this:
 
 ```bash
-kubectl -n hmc-system get secret my-aws-managedcluster1-kubeconfig -o jsonpath='{.data.value}' | base64 -d > my-aws-managedcluster1-kubeconfig.kubeconfig
+kubectl -n hmc-system get secret my-aws-clusterdeployment1-kubeconfig -o jsonpath='{.data.value}' | base64 -d > my-aws-clusterdeployment1-kubeconfig.kubeconfig
 ```
 
 ```bash
-KUBECONFIG="my-aws-managedcluster1-kubeconfig.kubeconfig" kubectl get pods -A
+KUBECONFIG="my-aws-clusterdeployment1-kubeconfig.kubeconfig" kubectl get pods -A
 ```

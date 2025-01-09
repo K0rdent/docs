@@ -23,7 +23,7 @@ It may be helpful to have the following tools installed:
 ## Installation via Helm
 
 ```bash
-helm install hmc oci://ghcr.io/mirantis/hmc/charts/hmc --version 0.0.4 -n hmc-system --create-namespace
+helm install hmc oci://ghcr.io/k0rdent/kcm/charts/hmc --version 0.0.6 -n hmc-system --create-namespace
 ```
 
 ## Verification
@@ -141,7 +141,7 @@ kyverno-X-Y-Z         true
 ### Next Step
 
 Now you can configure your Infrastructure Provider of choice and create your
-first Managed Cluster.
+first Cluster Deployment.
 
 Jump to any of the following Infrastructure Providers for specific instructions:
 

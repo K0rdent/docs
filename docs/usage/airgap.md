@@ -1,5 +1,9 @@
 # Air-gapped Installation Guide
 
+> WARNING:
+> Currently only vSphere infrastructure provider supports full air-gapped
+> installation.
+
 ## Prerequisites
 
 In order to install HMC in an air-gapped environment, you need will need the
@@ -50,7 +54,7 @@ following:
       extensions charts within the `extensions` directory.  All of these charts
       will be pushed to a chart repository within a registry.
     - `scripts/airgap-push.sh` - A script that will aid in re-tagging and
-      pushing the `ManagedCluster` required charts and images to a desired
+      pushing the `ClusterDeployment` required charts and images to a desired
       registry.
 
 2. Extract and use the `airgap-push.sh` script to push the `extensions` images
@@ -85,20 +89,116 @@ following:
 
       ```bash
       helm install hmc oci://<chart-repository>/hmc \
-        --version <hmc-version> \
+        --version <version> \
         -n hmc-system \
         --create-namespace \
-        --set controller.defaultRegistryURL="oci://<chart-repository>"
+        --set controller.defaultRegistryURL=oci://<chart-repository>
       ```
 
-5. Within the `spec:` for your desired `ManagedCluster` object, specify the
-   custom image registry and chart repository to be used (the registry and chart
-   repository where the `extensions` bundle and charts were pushed).
+5. Edit the `Management` object to add the airgap parameters.
 
-     ```yaml
-     spec:
-      config:
-        extensions:
-         imageRepository: ${IMAGE_REPOSITORY}
-         chartRepository: ${CHART_REPOSITORY}
-     ```
+	 > NOTE:
+	 > Use `insecureRegistry` parameter only in case if you have plain HTTP
+	 > registry.
+
+     The resulting yaml may look like this:
+
+      ```yaml
+      apiVersion: hmc.mirantis.com/v1alpha1
+      kind: Management
+      metadata:
+        name: hmc
+      spec:
+        core:
+          capi:
+            config:
+              airgap: true
+          hmc:
+            config:
+              controller:
+                defaultRegistryURL: oci://<registry-url>
+                insecureRegistry: true
+        providers:
+        - config:
+            airgap: true
+          name: k0smotron
+        - config:
+            airgap: true
+          name: cluster-api-provider-vsphere
+        - name: projectsveltos
+        release: <release name>
+      ```
+
+6. Place k0s binary and airgap bundle at internal server, so they could be
+   available over HTTP. This is required for the airgap provisioning process,
+   since k0s components must be downloaded at each node upon creation.
+   Alternatively you can create the following example deployment using the k0s
+   image provided in the bundle.
+
+      > NOTE:
+      > k0s image version is the same that the default defined in the vSphere
+      > template.
+
+
+      ```yaml
+	  ---
+      apiVersion: apps/v1
+      kind: Deployment
+      metadata:
+        name: k0s-ag-image
+        labels:
+          app: k0s-ag-image
+      spec:
+        replicas: 1
+        selector:
+          matchLabels:
+            app: k0s-ag-image
+        template:
+          metadata:
+            labels:
+              app: k0s-ag-image
+          spec:
+            containers:
+            - name: k0s-ag-image
+              image: k0s-ag-image:v1.31.1-k0s.1
+              ports:
+              - containerPort: 80
+      ---
+      apiVersion: v1
+      kind: Service
+      metadata:
+        name: k0s-ag-image
+      spec:
+        ports:
+        - name: http
+          port: 80
+          protocol: TCP
+          targetPort: 80
+        selector:
+          app: k0s-ag-image
+        type: NodePort
+	  ```
+
+## Creation of the ClusterDeployment
+
+In order to successfully deploy a cluster several configuration options must be
+defined in the `.spec.config` of the `ClusterDeployment.
+
+You must specify the custom image registry and chart repository to be used (the
+registry and chart repository where the `extensions` bundle and charts were
+pushed).
+
+Apart from that you must provide endpoint where k0s binary and airgap bundle
+could be downloaded (step `6` of the [installation procedure](#installation))
+
+```yaml
+spec:
+ config:
+   airgap: true
+   k0s:
+     downloadURL: "http://<k0s binary endpoint>/k0s"
+     bundleURL: "http://<k0s binary endpoint>/k0s-airgap-bundle"
+   extensions:
+    imageRepository: ${IMAGE_REPOSITORY}
+    chartRepository: ${CHART_REPOSITORY}
+```

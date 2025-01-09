@@ -7,7 +7,7 @@ By default, 2A delivers a set of default `ProviderTemplate`, `ClusterTemplate` a
 * `ClusterTemplate`
    The template containing the configuration of the cluster objects. Namespace-scoped.
 * `ServiceTemplate`
-   The template containing the configuration of the service to be installed on the managed cluster. Namespace-scoped.
+   The template containing the configuration of the service to be installed on the cluster deployment. Namespace-scoped.
 
 All Templates are immutable. You can also build your own templates and use them for deployment along with the
 templates shipped with 2A.

@@ -27,12 +27,12 @@ spec:
 
 ## Matching Multiple Clusters
 
-Consider the following example where 2 clusters have been deployed using ManagedCluster objects:
+Consider the following example where 2 clusters have been deployed using ClusterDeployment objects:
 ```sh
-➜  ~ kubectl get managedclusters.hmc.mirantis.com -n hmc-system
+➜  ~ kubectl get clusterdeployments.hmc.mirantis.com -n hmc-system
 NAME             READY   STATUS
-dev-cluster-1   True    ManagedCluster is ready
-dev-cluster-2   True    ManagedCluster is ready
+dev-cluster-1   True    ClusterDeployment is ready
+dev-cluster-2   True    ClusterDeployment is ready
 ➜  ~ 
 ➜  ~ 
 ➜  ~  kubectl get cluster -n hmc-system --show-labels
@@ -42,10 +42,10 @@ dev-cluster-2                  Provisioned   3h10m             app.kubernetes.io
 ```
 
 > EXAMPLE: 
-> Spec for `dev-cluster-1` ManagedCluster (only sections relevant to beach-head services):
+> Spec for `dev-cluster-1` ClusterDeployment (only sections relevant to beach-head services):
 > ```yaml
 > apiVersion: hmc.mirantis.com/v1alpha1
-> kind: ManagedCluster
+> kind: ClusterDeployment
 > metadata:
 >   . . . 
 >   name: dev-cluster-1
@@ -64,10 +64,10 @@ dev-cluster-2                  Provisioned   3h10m             app.kubernetes.io
 >   . . .
 > ```
 > 
-> Spec for `dev-cluster-2` ManagedCluster (only sections relevant to beach-head services):
+> Spec for `dev-cluster-2` ClusterDeployment (only sections relevant to beach-head services):
 > ```yaml
 > apiVersion: hmc.mirantis.com/v1alpha1
-> kind: ManagedCluster
+> kind: ClusterDeployment
 > metadata:
 >   . . .
 >   name: dev-cluster-2
@@ -83,7 +83,7 @@ dev-cluster-2                  Provisioned   3h10m             app.kubernetes.io
 >   . . .
 > ```
 
-> NOTE: See [Deploy beach-head Services using Managed Cluster](deploy-services-managedcluster.md) for how to use beach-head services with ManagedCluster.
+> NOTE: See [Deploy beach-head Services using Cluster Deployment](deploy-services-clusterdeployment.md) for how to use beach-head services with ClusterDeployment.
 
 Now the following `global-ingress` MultiClusterService object is created with the following spec:
 
@@ -110,34 +110,34 @@ version 4.11.3 of ingress-nginx service on it.
 
 ### Configuring Custom Values
 
-Refer to "Configuring Custom Values" in [Deploy beach-head Services using Managed Cluster](./deploy-services-managedcluster.md).
+Refer to "Configuring Custom Values" in [Deploy beach-head Services using Cluster Deployment](./deploy-services-clusterdeployment.md).
 
 ### Templating Custom Values
 
-Refer to "Templating Custom Values" in [Deploy beach-head Services using Managed Cluster](./deploy-services-managedcluster.md).
+Refer to "Templating Custom Values" in [Deploy beach-head Services using Cluster Deployment](./deploy-services-clusterdeployment.md).
 
 ### Services Priority and Conflict
 
-The `.spec.servicesPriority` field is used to specify the priority for the services managed by a ManagedCluster or MultiClusterService object.
+The `.spec.servicesPriority` field is used to specify the priority for the services managed by a ClusterDeployment or MultiClusterService object.
 Considering the example above:
 
-1. ManagedCluster `dev-cluster-1` manages deployment of kyverno (v3.2.6) and ingress-nginx (v4.11.0) with `servicesPriority=100` on its cluster.
-2. ManagedCluster `dev-cluster-2` manages deployment of ingress-nginx (v4.11.0) with `servicesPriority=500` on its cluster.
+1. ClusterDeployment `dev-cluster-1` manages deployment of kyverno (v3.2.6) and ingress-nginx (v4.11.0) with `servicesPriority=100` on its cluster.
+2. ClusterDeployment `dev-cluster-2` manages deployment of ingress-nginx (v4.11.0) with `servicesPriority=500` on its cluster.
 3. MultiClusterService `global-ingress` manages deployment of ingress-nginx (v4.11.3) with `servicesPriority=300` on both clusters.
 
 This scenario presents a conflict on both the clusters as the MultiClusterService is attempting to deploy v4.11.3 of ingress-nginx
-on both whereas the ManagedCluster for each is attempting to deploy v4.11.0 of ingress-nginx.
+on both whereas the ClusterDeployment for each is attempting to deploy v4.11.0 of ingress-nginx.
 
 This is where `.spec.servicesPriority` can be used to specify who gets the priority. Higher number means higer priority and vice versa. In this example:
-1. MultiClusterService "global-ingress" will take precedence over ManagedCluster "dev-cluster-1" and ingress-nginx (v4.11.3) defined in MultiClusterService object will be deployed on the cluster.
-2. ManagedCluster "dev-cluster-2" will take precedence over MultiClusterService "global-ingress" and ingress-nginx (v4.11.0) defined in ManagedCluster object will be deployed on the cluster.
+1. MultiClusterService "global-ingress" will take precedence over ClusterDeployment "dev-cluster-1" and ingress-nginx (v4.11.3) defined in MultiClusterService object will be deployed on the cluster.
+2. ClusterDeployment "dev-cluster-2" will take precedence over MultiClusterService "global-ingress" and ingress-nginx (v4.11.0) defined in ClusterDeployment object will be deployed on the cluster.
 
 > NOTE: If servicesPriority are equal, the first one to reach the cluster wins and deploys its beach-head services.
 
 ## Checking Status
 
 The status for the MultiClusterService object will show the deployment status for the beach-head services managed
-by it on each of the CAPI target clusters that it matches. Consider the same example where 2 ManagedClusters
+by it on each of the CAPI target clusters that it matches. Consider the same example where 2 ClusterDeployments
 and 1 MultiClusterService is deployed.
 
 > EXAMPLE: Status for `global-ingress` MultiClusterService
@@ -206,10 +206,10 @@ and 1 MultiClusterService is deployed.
 The status under `.status.services` shows a conflict for `dev-cluster-2` as expected because the MultiClusterService has a lower priority.
 Whereas, it shows provisioned for `dev-cluster-1` because the MultiClusterService has a higher priority.
 
-> EXAMPLE: Status for `dev-cluster-1` ManagedCluster (only sections relevant to beach-head services):
+> EXAMPLE: Status for `dev-cluster-1` ClusterDeployment (only sections relevant to beach-head services):
 > ```yaml
 > apiVersion: hmc.mirantis.com/v1alpha1
-> kind: ManagedCluster
+> kind: ClusterDeployment
 > metadata:
 >   . . . 
 >   name: dev-cluster-1
@@ -252,13 +252,13 @@ Whereas, it shows provisioned for `dev-cluster-1` because the MultiClusterServic
 >       type: ingress-nginx.ingress-nginx/SveltosHelmReleaseReady
 > ```
 
-The status under `.status.services` for ManagedCluster `dev-cluster-1` shows that it is managing kyverno but unable to manage ingress-nginx because
+The status under `.status.services` for ClusterDeployment `dev-cluster-1` shows that it is managing kyverno but unable to manage ingress-nginx because
 another object with higher priority is managing it, so it shows a conflict instead.
 
-> EXAMPLE: Status for `dev-cluster-2` ManagedCluster (only sections relevant to beach-head services):
+> EXAMPLE: Status for `dev-cluster-2` ClusterDeployment (only sections relevant to beach-head services):
 > ```yaml
 > apiVersion: hmc.mirantis.com/v1alpha1
-> kind: ManagedCluster
+> kind: ClusterDeployment
 > metadata:
 >   . . .
 >   name: dev-cluster-2
@@ -292,8 +292,8 @@ another object with higher priority is managing it, so it shows a conflict inste
 >       type: ingress-nginx.ingress-nginx/SveltosHelmReleaseReady
 > ```
 
-The status under `.status.services` for ManagedCluster `dev-cluster-2` shows that it is managing ingress-nginx as expected since it has a higher priority.
+The status under `.status.services` for ClusterDeployment `dev-cluster-2` shows that it is managing ingress-nginx as expected since it has a higher priority.
 
 ## Parameter List
 
-Refer to "Parameter List" in [Deploy beach-head Services using Managed Cluster](./deploy-services-managedcluster.md).
+Refer to "Parameter List" in [Deploy beach-head Services using Cluster Deployment](./deploy-services-clusterdeployment.md).

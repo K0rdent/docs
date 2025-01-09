@@ -1,4 +1,4 @@
-# Create Managed Cluster
+# Create Cluster Deployment
 
 ## Creation Process 
 
@@ -27,13 +27,13 @@ For details about the templates in Project 2A, see the [Templates system](../tem
 > - [AWS Hosted Control Plane](../clustertemplates/aws/hosted-control-plane.md)
 > - [vSphere Hosted Control Plane](../clustertemplates/vsphere/hosted-control-plane.md)
 
-### Step 3: Create the ManagedCluster Object YAML Configuration
+### Step 3: Create the ClusterDeployment Object YAML Configuration
 
-- Create the file with the `ManagedCluster` configuration:
+- Create the file with the `ClusterDeployment` configuration:
 
     ```yaml
     apiVersion: hmc.mirantis.com/v1alpha1
-    kind: ManagedCluster
+    kind: ClusterDeployment
     metadata:
       name: <cluster-name>
       namespace: <hmc-system-namespace>
@@ -53,11 +53,11 @@ For details about the templates in Project 2A, see the [Templates system](../tem
 
 Following is an interpolated example.
 
-> EXAMPLE: `ManagedCluster` for AWS Infrastructure Provider Object Example
+> EXAMPLE: `ClusterDeployment` for AWS Infrastructure Provider Object Example
 > 
 > ```yaml
 > apiVersion: hmc.mirantis.com/v1alpha1
-> kind: ManagedCluster
+> kind: ClusterDeployment
 > metadata:
 >   name: my-managed-cluster
 >   namespace: hmc-system
@@ -73,26 +73,26 @@ Following is an interpolated example.
 >       instanceType: t3.small
 > ```
 
-### Step 4: Apply the `ManagedCluster` Configuration to Create it
+### Step 4: Apply the `ClusterDeployment` Configuration to Create it
 
-- Apply the `ManagedCluster` object to your Project 2A deployment:
+- Apply the `ClusterDeployment` object to your Project 2A deployment:
 
 	```shell
-	kubectl apply -f managedcluster.yaml
+	kubectl apply -f clusterdeployment.yaml
 	```
 
-### Step 5: Check the Status of the `ManagedCluster` Object
+### Step 5: Check the Status of the `ClusterDeployment` Object
 
-- Check the status of the newly created `ManagedCluster`:
+- Check the status of the newly created `ClusterDeployment`:
 
 	```shell
-	kubectl -n <namespace> get managedcluster.hmc <cluster-name> -o=yaml
+	kubectl -n <namespace> get clusterdeployment.hmc <cluster-name> -o=yaml
 	```
 
 > INFO:
 > 
 > Reminder: `<namespace>` and `<cluster-name>` are defined in the `.metadata`
-> section of the `ManagedCluster` object you created above.
+> section of the `ClusterDeployment` object you created above.
 
 ### Step 6: Wait for Infrastructure and Cluster to be Provisioned
 
@@ -111,9 +111,9 @@ Following is an interpolated example.
 > clusterctl describe cluster <cluster-name> -n <namespace> --show-conditions all
 > ```
 
-### Step 7: Retrieve Kubernetes Configuration of Your Managed Cluster
+### Step 7: Retrieve Kubernetes Configuration of Your Cluster Deployment
 
-- Retrieve the Kubernetes configuration of your managed cluster when it is
+- Retrieve the Kubernetes configuration of your cluster deployment when it is
   finished provisioning:
 
     ```shell
@@ -122,19 +122,19 @@ Following is an interpolated example.
 
 ## Dry Run
 
-Project 2A `ManagedCluster` supports two modes: with and without `.spec.dryRun`
+Project 2A `ClusterDeployment` supports two modes: with and without `.spec.dryRun`
 (defaults to `false`).
 
-If no configuration (`.spec.config`) is specified, the `ManagedCluster` object
+If no configuration (`.spec.config`) is specified, the `ClusterDeployment` object
 will be populated with defaults (default configuration can be found in the
 corresponding `Template` status) and automatically have `.spec.dryRun` set to
 `true`.
 
-> EXAMPLE: `ManagedCluster` with default configuration
+> EXAMPLE: `ClusterDeployment` with default configuration
 > 
 > ```yaml
 > apiVersion: hmc.mirantis.com/v1alpha1
-> kind: ManagedCluster
+> kind: ClusterDeployment
 > metadata:
 >   name: my-managed-cluster
 >   namespace: hmc-system
@@ -170,13 +170,13 @@ After you adjust your configuration and ensure that it passes validation
 (`TemplateReady` condition from `.status.conditions`), remove the `.spec.dryRun`
 flag to proceed with the deployment.
 
-Here is an example of a `ManagedCluster` object that passed the validation:
+Here is an example of a `ClusterDeployment` object that passed the validation:
 
-> EXAMPLE: `ManagedCluster` object that passed the validation
+> EXAMPLE: `ClusterDeployment` object that passed the validation
 > 
 > ```yaml
 > apiVersion: hmc.mirantis.com/v1alpha1
-> kind: ManagedCluster
+> kind: ClusterDeployment
 > metadata:
 >   name: my-managed-cluster
 >   namespace: hmc-system
@@ -205,7 +205,7 @@ Here is an example of a `ManagedCluster` object that passed the validation:
 >       status: "True"
 >       type: HelmChartReady
 >     - lastTransitionTime: "2024-07-22T09:25:49Z"
->       message: ManagedCluster is ready
+>       message: ClusterDeployment is ready
 >       reason: Succeeded
 >       status: "True"
 >       type: Ready
@@ -224,7 +224,7 @@ Here is an example of a `ManagedCluster` object that passed the validation:
 
 > NOTE:
 >
-> Ensure you have no Project 2A `ManagedCluster` objects left in the cluster
+> Ensure you have no Project 2A `ClusterDeployment` objects left in the cluster
 > prior to Management deletion.
 
 2. Remove the `hmc` Helm release:
