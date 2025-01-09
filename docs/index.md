@@ -25,17 +25,15 @@ the overall project was still called "Project 2A" or even "HMC" at times.
 
 So, to be clear, here are the names and components:
 
-- k0rdent: the overall project name
-  - k0rdent Cluster Manager (kcm): the first component developed, and still the main component
-  - k0rdent State Manager (ksm): the second component developed, and manages beach-head services, policy, Kubernetes API configurations and more
+- **k0rdent**: the overall project name
+  - **k0rdent Cluster Manager (kcm)**
+  - **k0rdent State Manager (ksm)**
     - This is currently rolled into kcm, but will be split out in the future
     - ksm leverages [Project Sveltos](https://github.com/projectsveltos/sveltos) for certain functionality
-  - k0rdent Observability and FinOps (kof): the third component developed, and manages cluster and beach-head services monitoring, events and log management
-- Project 2A: the original codename of k0rdent
-  - may occasionally show up in some documentation
-- HMC or hmc: the original repository name for k0rdent development
-  - may occasionally show up in some documentation and code
-- motel: the original repository and codename for k0rdent Observability and FinOps (kof)
+  - **k0rdent Observability and FinOps (kof)**
+- **Project 2A**: the original codename of k0rdent (may occasionally show up in some documentation)
+- **HMC or hmc**: the original repository name for k0rdent development (may occasionally show up in some documentation and code)
+- **motel**: the original repository and codename for k0rdent Observability and FinOps (kof)
   - may occasionally show up in some documentation and code
 
 ## k0rdent Components
