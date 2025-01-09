@@ -74,6 +74,7 @@ nav:
     - AWS: quick-start/aws.md
     - Azure: quick-start/azure.md
     - vSphere: quick-start/vsphere.md
+    - OpenStack: quick-start/openstack.md
   - Usage:
       - Installation Guide: usage/installation.md
       - Air-gapped Installation Guide: usage/airgap.md
@@ -93,6 +94,8 @@ nav:
       - vSphere:
         - Template Parameters: clustertemplates/vsphere/template-parameters.md
         - Hosted Control Plane: clustertemplates/vsphere/hosted-control-plane.md
+      - OpenStack:
+        - Template Parameters: clustertemplates/openstack/template-parameters.md
   - Credentials:
       - Overview: credential/main.md
       - Distribution: credential/distribution.md

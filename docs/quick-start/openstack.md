@@ -123,9 +123,10 @@ spec:
     authURL: <OS_AUTH_URL>
 ```
 
-> Notes
-> spec.template references the OpenStack-specific blueprint (e.g., openstack-standalone-cp-0-0-1).
-> Adjust flavor, image name, and authURL to match your OpenStack environment.
+> [!NOTE]
+> 1. spec.template references the OpenStack-specific blueprint (e.g., openstack-standalone-cp-0-0-1).
+> 2. Adjust flavor, image name, and authURL to match your OpenStack environment.
+> 3. For more information about the config options, see the [OpenStack Template Parameters](../clustertemplates/openstack/template-parameters.md).
 
 Apply the YAML to your management cluster:
 

@@ -124,4 +124,5 @@ For OpenStack, CAPO relies on a clouds.yaml file.
 In Project 2A, you provide this file in a Kubernetes Secret that references OpenStack credentials
 (ideally application credentials for enhanced security). During reconciliation, HMC
 automatically generates the cloud-config required by OpenStack’s cloud-controller-manager.
-<!-- To DO : Add a reference link to hmc's doc -->
+
+For more details, refer to the [kcm OpenStack Credential Propagation doc](https://github.com/k0rdent/kcm/blob/main/docs/dev.md#openstack).
