@@ -132,12 +132,19 @@ For more details, refer to the [kcm OpenStack Credential Propagation doc](https:
 
 Credentials for adopted clusters consist of a secret containing a kubeconfig file to access the existing kubernetes cluster. 
 The kubeconfig file for the cluster should be contained in the value key of the secret object. The following is an example of 
-a secret which contains the kubeconfig for an adopted cluster.
+a secret which contains the kubeconfig for an adopted cluster. To create this secret, first create or obtain a kubeconfig file 
+for the cluster that is being adopted and then run the following command to base64 encode it:
+
+```shell
+cat kubeconfig | base64 -d -w 0
+```
+
+Once you have obtained a base64 encoded kubeconfig file create a secret:
 
 ```yaml
 apiVersion: v1
 data:
-  value: YXBpVmVyc2lvbjogdjEKY2x1c3RlcnM6Ci0gY2x1c3RlcjoKICAgIGNlcnRpZmljYXRlLWF1dGhvcml0eS1kYXRhOiA8ZGVtbz4KICAgIHNlcnZlcjogaHR0cHM6Ly9zZXJ2ZXI6NjQ0MwogIG5hbWU6IGRlbW8KY29udGV4dHM6Ci0gY29udGV4dDoKICAgIGNsdXN0ZXI6IGRlbW8KICAgIHVzZXI6IGFkbWluCiAgbmFtZTogYWRtaW5AZGVtbwpjdXJyZW50LWNvbnRleHQ6IGFkbWluQGRlbW8Ka2luZDogQ29uZmlnCnByZWZlcmVuY2VzOiB7fQp1c2VyczoKLSBuYW1lOiBhZG1pbgogIHVzZXI6CiAgICBjbGllbnQtY2VydGlmaWNhdGUtZGF0YTogPGRlbW8+CiAgICBjbGllbnQta2V5LWRhdGE6IDxkZW1vPg==
+  value: <base64 encoded kubeconfig file>
 kind: Secret
 metadata:
   name: adopted-cluster-kubeconf
