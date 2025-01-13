@@ -1,14 +1,14 @@
 # OpenStack Quick Start
 
 Much of the following includes the process of setting up credentials for OpenStack.
-To better understand how Project 2A uses credentials, read the
+To better understand how k0rdent uses credentials, read the
 [Credential system](../credential/main.md).
 
 ## Prerequisites
 
-### 2A Management Cluster
+### k0rdent Management Cluster
 
-You need a Kubernetes cluster with [2A installed](2a-installation.md).
+You need a Kubernetes cluster with [k0rdent installed](installation.md).
 
 ### Software prerequisites
 
@@ -30,7 +30,7 @@ This credential should include:
 
 > Note: Using an Application Credential is strongly recommended because it limits scope and improves security over a raw username/password approach.
 
-## Step 2: Create the OpenStack Credentials Secret on 2A Management Cluster
+## Step 2: Create the OpenStack Credentials Secret on k0rdent Management Cluster
 
 Create a Kubernetes Secret containing the clouds.yaml that defines your OpenStack environment. Save this as `openstack-cloud-config.yaml` (for example):
 
@@ -60,7 +60,7 @@ Apply the YAML to your cluster using the following command:
 kubectl apply -f openstack-cloud-config.yaml
 ```
 
-## Step 3: Create the 2A Credential Object
+## Step 3: Create the k0rdent Credential Object
 
 Next, define a Credential that references the Secret from Step 2.
 Save this as `openstack-cluster-identity-cred.yaml`:
@@ -86,10 +86,10 @@ Apply the YAML to your cluster:
 kubectl apply -f openstack-cluster-identity-cred.yaml
 ```
 
-> Note
-> .spec.identityRef.kind hould be Secret.
-> .spec.identityRef.name must match the Secret you created in Step 2.
-> .spec.identityRef.namespace must be the same as the Secret’s namespace (hmc-system).
+> NOTE:
+> 1. .spec.identityRef.kind hould be Secret.
+> 2. .spec.identityRef.name must match the Secret you created in Step 2.
+> 3. .spec.identityRef.namespace must be the same as the Secret’s namespace (hmc-system).
 
 ## Step 4: Create Your First Managed Cluster
 
@@ -123,7 +123,7 @@ spec:
     authURL: <OS_AUTH_URL>
 ```
 
-> [!NOTE]
+> NOTE:
 > 1. spec.template references the OpenStack-specific blueprint (e.g., openstack-standalone-cp-0-0-1).
 > 2. Adjust flavor, image name, and authURL to match your OpenStack environment.
 > 3. For more information about the config options, see the [OpenStack Template Parameters](../clustertemplates/openstack/template-parameters.md).

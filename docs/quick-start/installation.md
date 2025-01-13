@@ -148,3 +148,4 @@ Jump to any of the following Infrastructure Providers for specific instructions:
 - [AWS Quick Start](aws.md)
 - [Azure Quick Start](azure.md)
 - [vSphere Quick Start](vsphere.md)
+- [OpenStack Quick Start](openstack.md)
