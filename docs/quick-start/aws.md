@@ -133,7 +133,7 @@ Create a YAML with the specification of your credential and save it as
 > `AWSClusterStaticIdentity` object.
 
 ```yaml
-apiVersion: hmc.mirantis.com/v1alpha1
+apiVersion: k0rdent.mirantis.com/v1alpha1
 kind: Credential
 metadata:
   name: aws-cluster-identity-cred
@@ -160,7 +160,7 @@ Create a YAML with the specification of your Cluster Deployment and save it as
 Here is an example of a `ClusterDeployment` YAML file:
 
 ```yaml
-apiVersion: hmc.mirantis.com/v1alpha1
+apiVersion: k0rdent.mirantis.com/v1alpha1
 kind: ClusterDeployment
 metadata:
   name: my-aws-clusterdeployment1
@@ -186,7 +186,7 @@ There will be a delay as the cluster finishes provisioning. Follow the
 provisioning process with the following command:
 
 ```bash
-kubectl -n hmc-system get clusterdeployment.hmc.mirantis.com my-aws-clusterdeployment1 --watch
+kubectl -n hmc-system get clusterdeployment.k0rdent.mirantis.com my-aws-clusterdeployment1 --watch
 ```
 
 After the cluster is `Ready`, you can access it via the kubeconfig, like this:

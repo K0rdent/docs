@@ -32,7 +32,7 @@ For details about the templates in Project 2A, see the [Templates system](../tem
 - Create the file with the `ClusterDeployment` configuration:
 
     ```yaml
-    apiVersion: hmc.mirantis.com/v1alpha1
+    apiVersion: k0rdent.mirantis.com/v1alpha1
     kind: ClusterDeployment
     metadata:
       name: <cluster-name>
@@ -56,7 +56,7 @@ Following is an interpolated example.
 > EXAMPLE: `ClusterDeployment` for AWS Infrastructure Provider Object Example
 > 
 > ```yaml
-> apiVersion: hmc.mirantis.com/v1alpha1
+> apiVersion: k0rdent.mirantis.com/v1alpha1
 > kind: ClusterDeployment
 > metadata:
 >   name: my-managed-cluster
@@ -133,7 +133,7 @@ corresponding `Template` status) and automatically have `.spec.dryRun` set to
 > EXAMPLE: `ClusterDeployment` with default configuration
 > 
 > ```yaml
-> apiVersion: hmc.mirantis.com/v1alpha1
+> apiVersion: k0rdent.mirantis.com/v1alpha1
 > kind: ClusterDeployment
 > metadata:
 >   name: my-managed-cluster
@@ -175,7 +175,7 @@ Here is an example of a `ClusterDeployment` object that passed the validation:
 > EXAMPLE: `ClusterDeployment` object that passed the validation
 > 
 > ```yaml
-> apiVersion: hmc.mirantis.com/v1alpha1
+> apiVersion: k0rdent.mirantis.com/v1alpha1
 > kind: ClusterDeployment
 > metadata:
 >   name: my-managed-cluster

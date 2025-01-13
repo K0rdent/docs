@@ -24,7 +24,7 @@ Project 2A is deployed with the following default configuration, which may vary
 depending on the release version:
 
 ```yaml
-apiVersion: hmc.mirantis.com/v1alpha1
+apiVersion: k0rdent.mirantis.com/v1alpha1
 kind: Management
 metadata:
   name: hmc

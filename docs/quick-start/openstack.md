@@ -66,7 +66,7 @@ Next, define a Credential that references the Secret from Step 2.
 Save this as `openstack-cluster-identity-cred.yaml`:
 
 ```yaml
-apiVersion: hmc.mirantis.com/v1alpha1
+apiVersion: k0rdent.mirantis.com/v1alpha1
 kind: Credential
 metadata:
   name: openstack-cluster-identity-cred
@@ -99,7 +99,7 @@ Create a YAML with the specification of your Managed Cluster and save it as
 Here is an example:
 
 ```yaml
-apiVersion: hmc.mirantis.com/v1alpha1
+apiVersion: k0rdent.mirantis.com/v1alpha1
 kind: ClusterDeployment
 metadata:
   name: my-openstack-cluster-deployment
@@ -138,7 +138,7 @@ There will be a delay as the cluster finishes provisioning. Follow the
 provisioning process with the following command:
 
 ```bash
-kubectl -n hmc-system get clusterdeployment.hmc.mirantis.com my-openstack-cluster-deployment --watch
+kubectl -n hmc-system get clusterdeployment.k0rdent.mirantis.com my-openstack-cluster-deployment --watch
 ```
 
 After the cluster is `Ready`, you can access it via the kubeconfig, like this:

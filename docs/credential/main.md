@@ -38,7 +38,7 @@ any namespace.
 
 ```yaml
 ---
-apiVersion: hmc.mirantis.com/v1alpha1
+apiVersion: k0rdent.mirantis.com/v1alpha1
 kind: Credential
 metadata:
   name: azure-credential

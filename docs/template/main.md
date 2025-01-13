@@ -18,7 +18,7 @@ The templates can have any name. However, since they are immutable, we have adop
 
 > EXAMPLE: An example of a `ProviderTemplate` with its status.
 > ```yaml
-> apiVersion: hmc.mirantis.com/v1alpha1
+> apiVersion: k0rdent.mirantis.com/v1alpha1
 > kind: ProviderTemplate
 > metadata:
 >   name: cluster-api-0-0-4
@@ -55,7 +55,7 @@ The templates can have any name. However, since they are immutable, we have adop
 
 > EXAMPLE: An example of a `ClusterTemplate` with its status.
 > ```yaml
-> apiVersion: hmc.mirantis.com/v1alpha1
+> apiVersion: k0rdent.mirantis.com/v1alpha1
 > kind: ClusterTemplate
 > metadata:
 >   name: aws-standalone-cp-0-0-3
@@ -136,7 +136,7 @@ The templates can have any name. However, since they are immutable, we have adop
 
 > EXAMPLE: An example of a `ServiceTemplate` with its status.
 > ```yaml
-> apiVersion: hmc.mirantis.com/v1alpha1
+> apiVersion: k0rdent.mirantis.com/v1alpha1
 > kind: ServiceTemplate
 > metadata:
 >   name: kyverno-3-2-6
@@ -175,7 +175,7 @@ The example of the Cluster Template Management:
    the list of `.spec.supportedTemplates[].availableUpgrades` for the specified `ClusterTemplate` if the upgrade is allowed. For example:
 
 ```yaml
-apiVersion: hmc.mirantis.com/v1alpha1
+apiVersion: k0rdent.mirantis.com/v1alpha1
 kind: ClusterTemplateChain
 metadata:
   name: aws

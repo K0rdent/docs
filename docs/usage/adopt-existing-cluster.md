@@ -25,7 +25,7 @@ Create a `Credential` object with all credentials required per the
 - Create the file with the `ClusterDeployment` configuration:
 
     ```yaml
-    apiVersion: hmc.mirantis.com/v1alpha1
+    apiVersion: k0rdent.mirantis.com/v1alpha1
     kind: ClusterDeployment
     metadata:
       name: <cluster-name>
@@ -49,7 +49,7 @@ Following is an interpolated example.
 > EXAMPLE: `ClusterDeployment` 
 >
 > ```yaml
-> apiVersion: hmc.mirantis.com/v1alpha1
+> apiVersion: k0rdent.mirantis.com/v1alpha1
 > kind: ClusterDeployment
 > metadata:
 >   name: my-cluster
