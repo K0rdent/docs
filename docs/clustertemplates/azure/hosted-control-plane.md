@@ -68,7 +68,7 @@ kubectl get azurecluster <cluster-name> -o go-template='{{(index .spec.networkSp
 With all the collected data your `ClusterDeployment` manifest will look similar to this:
 
 ```yaml
-apiVersion: hmc.mirantis.com/v1alpha1
+apiVersion: k0rdent.mirantis.com/v1alpha1
 kind: ClusterDeployment
 metadata:
   name: azure-hosted-cp
@@ -90,7 +90,7 @@ spec:
 To simplify creation of the ClusterDeployment object you can use the template below:
 
 ```yaml
-apiVersion: hmc.mirantis.com/v1alpha1
+apiVersion: k0rdent.mirantis.com/v1alpha1
 kind: ClusterDeployment
 metadata:
   name: azure-hosted-cp

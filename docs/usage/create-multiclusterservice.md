@@ -7,7 +7,7 @@ The `MultiClusterService` object is used to deploy beach-head services on multip
 The `MultiClusterService` object can be created with the following YAML:
 
 ```yaml
-apiVersion: hmc.mirantis.com/v1alpha1
+apiVersion: k0rdent.mirantis.com/v1alpha1
 kind: MultiClusterService
 metadata:
   name: <name>
@@ -29,7 +29,7 @@ spec:
 
 Consider the following example where 2 clusters have been deployed using ClusterDeployment objects:
 ```sh
-➜  ~ kubectl get clusterdeployments.hmc.mirantis.com -n hmc-system
+➜  ~ kubectl get clusterdeployments.k0rdent.mirantis.com -n hmc-system
 NAME             READY   STATUS
 dev-cluster-1   True    ClusterDeployment is ready
 dev-cluster-2   True    ClusterDeployment is ready
@@ -44,7 +44,7 @@ dev-cluster-2                  Provisioned   3h10m             app.kubernetes.io
 > EXAMPLE: 
 > Spec for `dev-cluster-1` ClusterDeployment (only sections relevant to beach-head services):
 > ```yaml
-> apiVersion: hmc.mirantis.com/v1alpha1
+> apiVersion: k0rdent.mirantis.com/v1alpha1
 > kind: ClusterDeployment
 > metadata:
 >   . . . 
@@ -66,7 +66,7 @@ dev-cluster-2                  Provisioned   3h10m             app.kubernetes.io
 > 
 > Spec for `dev-cluster-2` ClusterDeployment (only sections relevant to beach-head services):
 > ```yaml
-> apiVersion: hmc.mirantis.com/v1alpha1
+> apiVersion: k0rdent.mirantis.com/v1alpha1
 > kind: ClusterDeployment
 > metadata:
 >   . . .
@@ -88,7 +88,7 @@ dev-cluster-2                  Provisioned   3h10m             app.kubernetes.io
 Now the following `global-ingress` MultiClusterService object is created with the following spec:
 
 ```yaml
-apiVersion: hmc.mirantis.com/v1alpha1
+apiVersion: k0rdent.mirantis.com/v1alpha1
 kind: MultiClusterService
 metadata:
   name: global-ingress
@@ -142,7 +142,7 @@ and 1 MultiClusterService is deployed.
 
 > EXAMPLE: Status for `global-ingress` MultiClusterService
 > ```yaml
-> apiVersion: hmc.mirantis.com/v1alpha1
+> apiVersion: k0rdent.mirantis.com/v1alpha1
 > kind: MultiClusterService
 > metadata:
 >   . . .
@@ -208,7 +208,7 @@ Whereas, it shows provisioned for `dev-cluster-1` because the MultiClusterServic
 
 > EXAMPLE: Status for `dev-cluster-1` ClusterDeployment (only sections relevant to beach-head services):
 > ```yaml
-> apiVersion: hmc.mirantis.com/v1alpha1
+> apiVersion: k0rdent.mirantis.com/v1alpha1
 > kind: ClusterDeployment
 > metadata:
 >   . . . 
@@ -257,7 +257,7 @@ another object with higher priority is managing it, so it shows a conflict inste
 
 > EXAMPLE: Status for `dev-cluster-2` ClusterDeployment (only sections relevant to beach-head services):
 > ```yaml
-> apiVersion: hmc.mirantis.com/v1alpha1
+> apiVersion: k0rdent.mirantis.com/v1alpha1
 > kind: ClusterDeployment
 > metadata:
 >   . . .

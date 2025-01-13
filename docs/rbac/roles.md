@@ -39,9 +39,9 @@ The `Global Admin` role provides full administrative access across all the 2A sy
 
 **Aggregation Rule**: Includes all `ClusterRoles` with the labels:
 
-* `hmc.mirantis.com/aggregate-to-global-admin: true`
-* `hmc.mirantis.com/aggregate-to-namespace-admin: true`
-* `hmc.mirantis.com/aggregate-to-namespace-editor: true`
+* `k0rdent.mirantis.com/aggregate-to-global-admin: true`
+* `k0rdent.mirantis.com/aggregate-to-namespace-admin: true`
+* `k0rdent.mirantis.com/aggregate-to-namespace-editor: true`
 
 **Permissions**:
 
@@ -78,8 +78,8 @@ including the creation of clusters.
 
 **Aggregation Rule**: Includes all `ClusterRoles` with the labels:
 
-* `hmc.mirantis.com/aggregate-to-global-viewer: true`
-* `hmc.mirantis.com/aggregate-to-namespace-viewer: true`
+* `k0rdent.mirantis.com/aggregate-to-global-viewer: true`
+* `k0rdent.mirantis.com/aggregate-to-namespace-viewer: true`
 
 **Permissions**:
 
@@ -111,8 +111,8 @@ The `Namespace Admin` role provides full administrative access within namespace.
 
 **Aggregation Rule**: Includes all `ClusterRoles` with the labels:
 
-* `hmc.mirantis.com/aggregate-to-namespace-admin: true`
-* `hmc.mirantis.com/aggregate-to-namespace-editor: true`
+* `k0rdent.mirantis.com/aggregate-to-namespace-admin: true`
+* `k0rdent.mirantis.com/aggregate-to-namespace-editor: true`
 
 **Permissions**:
 
@@ -140,7 +140,7 @@ The `Namespace Editor` role allows users to create and modify `ClusterDeployment
 
 **Aggregation Rule**: Includes all `ClusterRoles` with the labels:
 
-* `hmc.mirantis.com/aggregate-to-namespace-editor: true`
+* `k0rdent.mirantis.com/aggregate-to-namespace-editor: true`
 
 **Permissions**:
 
@@ -167,7 +167,7 @@ The `Namespace Viewer` role grants read-only access to resources within a namesp
 
 **Aggregation Rule**: Includes all `ClusterRoles` with the labels:
 
-* `hmc.mirantis.com/aggregate-to-namespace-viewer: true`
+* `k0rdent.mirantis.com/aggregate-to-namespace-viewer: true`
 
 **Permissions**:
 
@@ -184,4 +184,3 @@ A user with the `Namespace Viewer` role has the following permissions in the nam
 3. Can list and view detailed information about available `Cluster` and `Service Templates` and the `Templates'`
    upgrade sequences
 4. Can list and view detailed information about Flux `HelmRepositories` and `HelmCharts`
-

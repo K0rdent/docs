@@ -31,7 +31,7 @@ curl -sw %{certs} https://vcenter.example.com | openssl x509 -sha256 -fingerprin
 With all above parameters provided your `ClusterDeployment` can look like this:
 
 ```yaml
-apiVersion: hmc.mirantis.com/v1alpha1
+apiVersion: k0rdent.mirantis.com/v1alpha1
 kind: ClusterDeployment
 metadata:
   name: cluster-1

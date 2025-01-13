@@ -8,7 +8,7 @@ Consider the following example:
 > EXAMPLE: `ClusterDeployment` object for AWS Infrastructure Provider with beach-head services
 > 
 > ```yaml
-> apiVersion: hmc.mirantis.com/v1alpha1
+> apiVersion: k0rdent.mirantis.com/v1alpha1
 > kind: ClusterDeployment
 > metadata:
 >   name: my-managed-cluster
@@ -75,7 +75,7 @@ the service template for kyverno.
 > EXAMPLE: `ServiceTemplate` object for kyverno version 3.2.6
 > The `ServiceTemplate` for kyverno:
 > ```yaml
-> apiVersion: hmc.mirantis.com/v1alpha1
+> apiVersion: k0rdent.mirantis.com/v1alpha1
 > kind: ServiceTemplate
 > metadata:
 >   name: kyverno-3-2-6
@@ -101,7 +101,7 @@ Helm values can be passed to each beach-head services with the `.spec.services[]
 
 EXAMPLE: 
 ```yaml
-apiVersion: hmc.mirantis.com/v1alpha1
+apiVersion: k0rdent.mirantis.com/v1alpha1
 kind: ClusterDeployment
 metadata:
   . . .
@@ -148,7 +148,7 @@ Using Sveltos templating feature, we can also write templates which can be usefu
 
 EXAMPLE:
 ```yaml
-apiVersion: hmc.mirantis.com/v1alpha1
+apiVersion: k0rdent.mirantis.com/v1alpha1
 kind: ClusterDeployment
 metadata:
   name: my-clusterdeployment
@@ -176,7 +176,7 @@ The `.status.services` field of the `ClusterDeployment` object shows the status 
 
 > EXAMPLE: Status for beach-head services deployed with `ClusterDeployment`
 > ```yaml
-> apiVersion: hmc.mirantis.com/v1alpha1
+> apiVersion: k0rdent.mirantis.com/v1alpha1
 > kind: ClusterDeployment
 > metadata:
 >   . . .
@@ -243,7 +243,7 @@ The example below removes `kyverno-3-2-6` so its status also removed from `.stat
 
 > EAMPLE: Showing removal of `kyverno-3-2-6` from `ClusterDeployment`
 > ```yaml
-> apiVersion: hmc.mirantis.com/v1alpha1
+> apiVersion: k0rdent.mirantis.com/v1alpha1
 > kind: ClusterDeployment
 > metadata:
 >   . . .

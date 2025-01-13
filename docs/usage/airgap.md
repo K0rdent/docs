@@ -104,7 +104,7 @@ following:
      The resulting yaml may look like this:
 
       ```yaml
-      apiVersion: hmc.mirantis.com/v1alpha1
+      apiVersion: k0rdent.mirantis.com/v1alpha1
       kind: Management
       metadata:
         name: hmc

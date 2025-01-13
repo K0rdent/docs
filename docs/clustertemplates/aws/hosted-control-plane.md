@@ -67,7 +67,7 @@ clusters you should setup additional connectivity rules like
 With all the collected data your `ClusterDeployment` manifest will look similar to this:
 
 ```yaml
-apiVersion: hmc.mirantis.com/v1alpha1
+apiVersion: k0rdent.mirantis.com/v1alpha1
 kind: ClusterDeployment
 metadata:
   name: aws-hosted-cp
@@ -103,7 +103,7 @@ Grab the following `ClusterDeployment` manifest template and save it to a file
 named `clusterdeployment.yaml.tpl`:
 
 ```yaml
-apiVersion: hmc.mirantis.com/v1alpha1
+apiVersion: k0rdent.mirantis.com/v1alpha1
 kind: ClusterDeployment
 metadata:
   name: aws-hosted

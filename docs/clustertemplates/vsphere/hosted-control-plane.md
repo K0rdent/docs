@@ -22,7 +22,7 @@ check them in the [template parameters](template-parameters.md) section.
 > (e.g., the `kube-vip` annotation in the example below).
 
 ```yaml
-apiVersion: hmc.mirantis.com/v1alpha1
+apiVersion: k0rdent.mirantis.com/v1alpha1
 kind: ClusterDeployment
 metadata:
   name: cluster-1

@@ -76,7 +76,7 @@ The controller will automatically create the `HelmChart` object based on the cha
 ### Example: Custom ClusterTemplate with the Chart Definition to Create a new HelmChart
 
 ```yaml
-apiVersion: hmc.mirantis.com/v1alpha1
+apiVersion: k0rdent.mirantis.com/v1alpha1
 kind: ClusterTemplate
 metadata:
   name: custom-template
@@ -97,7 +97,7 @@ spec:
 ### Example: Custom ClusterTemplate Referencing an Existing HelmChart object
 
 ```yaml
-apiVersion: hmc.mirantis.com/v1alpha1
+apiVersion: k0rdent.mirantis.com/v1alpha1
 kind: ClusterTemplate
 metadata:
   name: custom-template
@@ -162,7 +162,7 @@ For the core `CAPI` Template values should be empty.
     Example with the `.spec`:
 
     ```yaml
-    apiVersion: hmc.mirantis.com/v1alpha1
+    apiVersion: k0rdent.mirantis.com/v1alpha1
     kind: ProviderTemplate
     # ...
     spec:
@@ -199,7 +199,7 @@ and the value is the provider contract version required to be supported by the p
     Example with the `.spec`:
 
     ```yaml
-    apiVersion: hmc.mirantis.com/v1alpha1
+    apiVersion: k0rdent.mirantis.com/v1alpha1
     kind: ClusterTemplate
     # ...
     spec:
@@ -222,7 +222,7 @@ and the value is the provider contract version required to be supported by the p
       cluster.x-k8s.io/bootstrap-k0smotron: v1beta1
       cluster.x-k8s.io/control-plane-k0smotron: v1beta1
       cluster.x-k8s.io/infrastructure-aws: v1beta2
-      hmc.mirantis.com/k8s-version: 1.30.0
+      k0rdent.mirantis.com/k8s-version: 1.30.0
     ```
 
 1. The `ServiceTemplate` resource has dedicated fields to set an compatibility constrained
@@ -232,7 +232,7 @@ Given compatibility values will be then set accordingly in the `.status` field.
     Example with the `.spec`:
 
     ```yaml
-    apiVersion: hmc.mirantis.com/v1alpha1
+    apiVersion: k0rdent.mirantis.com/v1alpha1
     kind: ServiceTemplate
     # ...
     spec:
@@ -242,7 +242,7 @@ Given compatibility values will be then set accordingly in the `.status` field.
     Example with the `annotations` in the `Chart.yaml`:
 
     ```yaml
-    hmc.mirantis.com/k8s-version-constraint: ^1.30.0
+    k0rdent.mirantis.com/k8s-version-constraint: ^1.30.0
     ```
 
 ### Compatibility attributes enforcement
