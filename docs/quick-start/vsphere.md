@@ -1,14 +1,14 @@
 # vSphere Quick Start
 
 Much of the following includes the process of setting up credentials for vSphere.
-To better understand how Project 2A uses credentials, read the
+To better understand how k0rdent uses credentials, read the
 [Credential System](../credential/main.md).
 
 ## Prerequisites
 
-### 2A Management Cluster
+### k0rdent Management Cluster
 
-You need a Kubernetes cluster with [2A installed](2a-installation.md).
+You need a Kubernetes cluster with [kcm installed](installation.md).
 
 ### Software & VMware-specific prerequisites
 
@@ -106,7 +106,7 @@ Apply the YAML to your cluster:
 kubectl apply -f vsphere-cluster-identity.yaml
 ```
 
-## Step 3: Create the 2A Credential Object
+## Step 3: Create the kcm Credential Object
 
 Create a YAML with the specification of our credential and save it as
 `vsphere-cluster-identity-cred.yaml`

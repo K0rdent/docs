@@ -1,6 +1,6 @@
 # Credential Distribution System
 
-The 2A system provides a mechanism to distribute `Credential` objects across namespaces using the
+The kcm system provides a mechanism to distribute `Credential` objects across namespaces using the
 `AccessManagement` object. This object defines a set of `accessRules` that determine how credentials are distributed.
 
 Each access rule specifies:

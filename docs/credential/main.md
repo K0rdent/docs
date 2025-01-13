@@ -1,7 +1,7 @@
 # Credential System
 
 In order for infrastructure provider to work properly a correct credentials
-should be passed to it. The following describes how it is implemented in Project 2A.
+should be passed to it. The following describes how it is implemented in k0rdent.
 
 ## The process
 
@@ -75,7 +75,7 @@ to pass all necessary credentials. This approach has several problems:
 - Possible leaks, since credentials are copied to several `Secret` objects
   related to bootstrap data.
 
-To solve these problems in Project 2A we're using special controller which
+To solve these problems in k0rdent we're using special controller which
 aggregates all necessary data from CAPI provider resources (like
 `ClusterIdentity`) and creates secrets directly on the cluster deployment.
 
@@ -115,7 +115,7 @@ Currently Cluster API provider Azure (CAPZ) creates `azure.json` Secrets in the
 same namespace with `Cluster` object. By design they should be referenced in the
 `cloud-init` YAML later during bootstrap process.
 
-In Project 2A these Secrets aren't used and will not be added to the
+In k0rdent these Secrets aren't used and will not be added to the
 `cloud-init`, but engineers can access them unrestricted.
 
 #### OpenStack

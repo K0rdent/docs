@@ -28,7 +28,7 @@ helm install hmc oci://ghcr.io/k0rdent/kcm/charts/hmc --version 0.0.6 -n hmc-sys
 
 ## Verification
 
-The installation takes a few minutes until k0rdent and its subcomponents are
+The installation takes a few minutes until kcm and its subcomponents are
 fully installed and configured.
 
 ### Verify Core Components are running
@@ -78,11 +78,11 @@ shard-controller-767975966-v5qqn         1/1     Running   0          16m
 sveltos-agent-manager-56bbf5fb94-9lskd   1/1     Running   0          15m
 ```
 
-If you have fewer pods, give k0rdent more time to reconcile all the pods.
+If you have fewer pods, give kcm more time to reconcile all the pods.
 
-### Verify k0rdent templates have been successfully reconciled
+### Verify kcm templates have been successfully reconciled
 
-For additional verification, check that the example templates packaged with k0rdent have
+For additional verification, check that the example templates packaged with kcm have
 been installed and are valid.
 
 Check `ProviderTemplate` objects with:
@@ -141,11 +141,10 @@ kyverno-X-Y-Z         true
 ### Next Step
 
 Now you can configure your Infrastructure Provider of choice and create your
-first Cluster Deployment.
+first Managed Cluster.
 
 Jump to any of the following Infrastructure Providers for specific instructions:
 
 - [AWS Quick Start](aws.md)
 - [Azure Quick Start](azure.md)
 - [vSphere Quick Start](vsphere.md)
-- [OpenStack Quick Start](openstack.md)

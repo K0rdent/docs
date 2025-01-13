@@ -1,14 +1,14 @@
 # AWS Quick Start
 
 Much of the following includes the process of setting up credentials for AWS.
-To better understand how Project 2A uses credentials, read the
+To better understand how k0rdent uses credentials, read the
 [Credential system](../credential/main.md).
 
 ## Prerequisites
 
-### 2A Management Cluster
+### k0rdent Management Cluster
 
-You need a Kubernetes cluster with [2A installed](2a-installation.md).
+You need a Kubernetes cluster with [kcm installed](installation.md).
 
 ### Software prerequisites
 
@@ -65,7 +65,7 @@ with the necessary IAM policies and service account.
     |--------------------|---------------------|
     | AKIAQF+EXAMPLE     | EdJfFar6+example    |
 
-## Step 2: Create the IAM Credentials Secret on 2A Management Cluster
+## Step 2: Create the IAM Credentials Secret on k0rdent Management Cluster
 
 Save the `Secret` YAML to a file named `aws-cluster-identity-secret.yaml`:
 
@@ -90,7 +90,7 @@ kubectl apply -f aws-cluster-identity-secret.yaml
 > WARNING:
 > 
 > The secret must be created in the same `Namespace` where the CAPA provider is
-> running. In case of Project 2A it's currently `hmc-system`. Placing secret in
+> running. In case of k0rdent it's currently `hmc-system`. Placing secret in
 > any other `Namespace` will result in the controller not able to read it.
 
 ## Step 3: Create AWSClusterStaticIdentity Object
@@ -121,7 +121,7 @@ Apply the YAML to your cluster:
 kubectl apply -f aws-cluster-identity.yaml
 ```
 
-## Step 4: Create the 2A Credential Object
+## Step 4: Create the kcm Credential Object
 
 Create a YAML with the specification of your credential and save it as
 `aws-cluster-identity-cred.yaml`.

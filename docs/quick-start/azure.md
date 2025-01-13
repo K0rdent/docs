@@ -1,18 +1,18 @@
 # Azure Quick Start
 
 Much of the following includes the process of setting up credentials for Azure.
-To better understand how Project 2A uses credentials, read the
+To better understand how k0rdent uses credentials, read the
 [Credential System](../credential/main.md).
 
 ## Prerequisites
 
-### 2A Management Cluster
+### k0rdent Management Cluster
 
-You need a Kubernetes cluster with [2A installed](2a-installation.md).
+You need a Kubernetes cluster with [kcm installed](installation.md).
 
 ### Software prerequisites
 
-Before deploying Kubernetes clusters on Azure using Project 2A, ensure you have:
+Before deploying Kubernetes clusters on Azure using k0rdent, ensure you have:
 
 The Azure CLI (`az`) is required to interact with Azure resources. Install it
 by following the [Azure CLI installation instructions](https://learn.microsoft.com/en-us/cli/azure/install-azure-cli).
@@ -21,7 +21,7 @@ Run the `az login` command to authenticate your session with Azure.
 
 ### Register resource providers
 
-If you're using a new subscription that has never been used to deploy 2A or
+If you're using a new subscription that has never been used to deploy kcm or
 CAPI clusters, ensure the following resource providers are registered:
 
 - `Microsoft.Compute`
@@ -152,7 +152,7 @@ Apply the YAML to your cluster:
 kubectl apply -f azure-cluster-identity.yaml
 ```
 
-## Step 5: Create the 2A Credential Object
+## Step 5: Create the kcm Credential Object
 
 Create a YAML with the specification of our credential and save it as
 `azure-cluster-identity-cred.yaml`.
