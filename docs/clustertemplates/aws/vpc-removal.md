@@ -6,7 +6,7 @@ It is possible to deal with non-deleted VPCs the following ways:
 
 ## Applying ownership information on VPCs
 
-When VPCs have owner information, all AWS resources will be removed when 2A ESK cluster is deleted.
+When VPCs have owner information, all AWS resources will be removed when k0rdent EKS cluster is deleted.
 So, after provisioning EKS cluster the operator can go and set tags (i.e. `tag:Owner`) and it will be sufficient for CAPA to manage them.
 
 ## GuardDuty VPCE

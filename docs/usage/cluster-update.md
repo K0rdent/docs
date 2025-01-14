@@ -6,13 +6,13 @@ object to the new `ClusterTemplate` name:
 Run:
 
 ```shell
-kubectl patch clusterdeployment.hmc <cluster-name> -n <namespace> --patch '{"spec":{"template":"<new-template-name>"}}' --type=merge
+kubectl patch clusterdeployment.kcm <cluster-name> -n <namespace> --patch '{"spec":{"template":"<new-template-name>"}}' --type=merge
 ```
 
 Then, check the status of the `ClusterDeployment` object:
 
 ```shell
-kubectl get clusterdeployment.hmc <cluster-name> -n <namespace>
+kubectl get clusterdeployment.kcm <cluster-name> -n <namespace>
 ```
 
 In the commands above, replace the parameters enclosed in angle brackets with

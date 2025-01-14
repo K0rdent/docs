@@ -1,17 +1,17 @@
-# 2A Role-Based Access Control
+# k0rdent Role-Based Access Control
 
-2A leverages the Kubernetes RBAC system and provides a set of standard `ClusterRoles` with
-associated permissions. All `ClusterRoles` are created as part of the HMC helm chart.
-2A roles are based on labels and aggregated permissions, meaning they automatically collect
+k0rdent leverages the Kubernetes RBAC system and provides a set of standard `ClusterRoles` with
+associated permissions. All `ClusterRoles` are created as part of the kcm helm chart.
+k0rdent roles are based on labels and aggregated permissions, meaning they automatically collect
 rules from other `ClusterRoles` with specific labels.
 
-The following table outlines the roles available in 2A, along with their respective read/write or read-only
+The following table outlines the roles available in k0rdent, along with their respective read/write or read-only
 permissions:
 
 | Roles                            | Global Admin | Global Viewer | Namespace Admin | Namespace Editor | Namespace Viewer |
 |----------------------------------|--------------|---------------|-----------------|------------------|------------------|
 | **Scope**                        | **Global**   | **Global**    | **Namespace**   | **Namespace**    | **Namespace**    |
-| 2A management                    | r/w          | r/o           | -               | -                | -                |
+| k0rdent management               | r/w          | r/o           | -               | -                | -                |
 | Namespaces management            | r/w          | r/o           | -               | -                | -                |
 | Provider Templates               | r/w          | r/o           | -               | -                | -                |
 | Global Template Management       | r/w          | r/o           | -               | -                | -                |
@@ -25,17 +25,17 @@ permissions:
 
 ## Roles definition
 
-This section provides an overview of all `ClusterRoles` available in 2A.
+This section provides an overview of all `ClusterRoles` available in k0rdent.
 
 > NOTE:
-> The names of the `ClusterRoles` may have different prefix depending on the name of the HMC Helm chart.
-> The `ClusterRoles` definitions below use the `hmc` prefix, which is the default name of the HMC Helm chart.
+> The names of the `ClusterRoles` may have different prefix depending on the name of the kcm Helm chart.
+> The `ClusterRoles` definitions below use the `kcm` prefix, which is the default name of the kcm Helm chart.
 
 ### Global Admin
 
-The `Global Admin` role provides full administrative access across all the 2A system.
+The `Global Admin` role provides full administrative access across all the k0rdent system.
 
-**Name**: `hmc-global-admin-role`
+**Name**: `kcm-global-admin-role`
 
 **Aggregation Rule**: Includes all `ClusterRoles` with the labels:
 
@@ -45,7 +45,7 @@ The `Global Admin` role provides full administrative access across all the 2A sy
 
 **Permissions**:
 
-1. Full access to 2A API
+1. Full access to k0rdent API
 2. Full access to Flux Helm repositories and Helm charts
 3. Full access to Cluster API identities
 4. Full access to namespaces and secrets
@@ -54,7 +54,7 @@ The `Global Admin` role provides full administrative access across all the 2A sy
 
 A user with the `Global Admin` role is authorized to perform the following actions:
 
-1. Manage the 2A configuration
+1. Manage the k0rdent configuration
 2. Manage namespaces in the management cluster
 3. Manage `Provider Templates`: add new templates or remove unneeded ones
 4. Manage `Cluster` and `Service Templates` in any namespace, including adding and removing templates
@@ -65,16 +65,16 @@ A user with the `Global Admin` role is authorized to perform the following actio
 8. Manage and deploy Services across multiple clusters in any namespace by modifying `MultiClusterService` resources
 9. Manage `ClusterDeployments` in any namespace
 10. Manage `Credentials` and `secrets` in any namespace
-11. Upgrade 2A
-12. Uninstall 2A
+11. Upgrade k0rdent
+12. Uninstall k0rdent
 
 
 ### Global Viewer
 
-The `Global Viewer` role grants read-only access across the 2A system. It does not permit any modifications,
+The `Global Viewer` role grants read-only access across the k0rdent system. It does not permit any modifications,
 including the creation of clusters.
 
-**Name**: `hmc-global-viewer-role`
+**Name**: `kcm-global-viewer-role`
 
 **Aggregation Rule**: Includes all `ClusterRoles` with the labels:
 
@@ -83,7 +83,7 @@ including the creation of clusters.
 
 **Permissions**:
 
-1. Read access to 2A API
+1. Read access to k0rdent API
 2. Read access to Flux Helm repositories and Helm charts
 3. Read access to Cluster API identities
 4. Read access to namespaces and secrets
@@ -92,7 +92,7 @@ including the creation of clusters.
 
 A user with the `Global Viewer` role is authorized to perform the following actions:
 
-1. View the 2A configuration
+1. View the k0rdent configuration
 2. List namespaces available in the management cluster
 3. List and get the detailed information about available `Provider Templates`
 4. List available `Cluster` and `Service Templates` in any namespace
@@ -107,7 +107,7 @@ A user with the `Global Viewer` role is authorized to perform the following acti
 
 The `Namespace Admin` role provides full administrative access within namespace.
 
-**Name**: `hmc-namespace-admin-role`
+**Name**: `kcm-namespace-admin-role`
 
 **Aggregation Rule**: Includes all `ClusterRoles` with the labels:
 
@@ -136,7 +136,7 @@ A user with the `Namespace Admin` role is authorized to perform the following ac
 The `Namespace Editor` role allows users to create and modify `ClusterDeployments` within namespace using predefined
 `Credentials` and `Templates`.
 
-**Name**: `hmc-namespace-editor-role`
+**Name**: `kcm-namespace-editor-role`
 
 **Aggregation Rule**: Includes all `ClusterRoles` with the labels:
 
@@ -163,7 +163,7 @@ A user with the `Namespace Editor` role has the following permissions in the nam
 
 The `Namespace Viewer` role grants read-only access to resources within a namespace.
 
-**Name**: `hmc-namespace-viewer-role`
+**Name**: `kcm-namespace-viewer-role`
 
 **Aggregation Rule**: Includes all `ClusterRoles` with the labels:
 

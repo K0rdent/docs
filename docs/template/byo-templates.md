@@ -1,6 +1,6 @@
 # Bring your own Templates
 
-This guide outlines the steps to bring your own Template to HMC.
+This guide outlines the steps to bring your own Template to kcm.
 
 ## Create a Source Object
 
@@ -15,7 +15,7 @@ A source object defines where the Helm chart is stored. The source can be one of
 > NOTES:
 > 1. The source object must exist in the same namespace as the Template.
 > 2. For cluster-scoped `ProviderTemplates`, the referenced source must reside in the **system** namespace
-> (default: `hmc-system`).
+> (default: `kcm-system`).
 
 ### Example: Custom Source Object with HelmRepository Kind
 
@@ -24,7 +24,7 @@ apiVersion: source.toolkit.fluxcd.io/v1
 kind: HelmRepository
 metadata:
   name: custom-templates-repo
-  namespace: hmc-system
+  namespace: kcm-system
 spec:
   insecure: true
   interval: 10m0s
@@ -69,8 +69,8 @@ The controller will automatically create the `HelmChart` object based on the cha
 > NOTE:
 > `ClusterTemplate` and `ServiceTemplate` objects should reside in the same namespace as the `ClusterDeployment`
 > referencing them. The `ClusterDeployment` can't reference the Template from another namespace (the creation request will
-> be declined by the admission webhook). All `ClusterTemplates` and `ServiceTemplates` shipped with HMC reside in the
-> system namespace (defaults to `hmc-system`). To get the instructions on how to distribute Templates along multiple
+> be declined by the admission webhook). All `ClusterTemplates` and `ServiceTemplates` shipped with kcm reside in the
+> system namespace (defaults to `kcm-system`). To get the instructions on how to distribute Templates along multiple
 > namespaces, read [Template Life Cycle Management](main.md#template-life-cycle-management).
 
 ### Example: Custom ClusterTemplate with the Chart Definition to Create a new HelmChart
@@ -80,7 +80,7 @@ apiVersion: k0rdent.mirantis.com/v1alpha1
 kind: ClusterTemplate
 metadata:
   name: custom-template
-  namespace: hmc-system
+  namespace: kcm-system
 spec:
   providers:
     - bootstrap-k0smotron
@@ -101,7 +101,7 @@ apiVersion: k0rdent.mirantis.com/v1alpha1
 kind: ClusterTemplate
 metadata:
   name: custom-template
-  namespace: hmc-system
+  namespace: kcm-system
 spec:
   helm:
     chartRef:
@@ -259,15 +259,15 @@ is not listed in the core `CAPI` `ProviderTemplate` object, the updates to the `
 * if a `ClusterTemplate` object's exact kubernetes version does not satisfy the kubernetes version
 constraint from the related `ServiceTemplate` object, the updates to the `ClusterDeployment` object will be blocked.
 
-## Remove Templates shipped with HMC
+## Remove Templates shipped with kcm
 
-If you need to limit the templates that exist in your HMC installation, follow the instructions below:
+If you need to limit the templates that exist in your kcm installation, follow the instructions below:
 
-1. Get the list of `ProviderTemplates`, `ClusterTemplates` or `ServiceTemplates` shipped with HMC. For example,
+1. Get the list of `ProviderTemplates`, `ClusterTemplates` or `ServiceTemplates` shipped with kcm. For example,
 for `ClusterTemplate` objects, run:
 
     ```bash
-    kubectl get clustertemplates -n hmc-system -l helm.toolkit.fluxcd.io/name=hmc-templates
+    kubectl get clustertemplates -n kcm-system -l helm.toolkit.fluxcd.io/name=kcm-templates
     ```
 
     Example output:
@@ -281,5 +281,5 @@ for `ClusterTemplate` objects, run:
 2. Remove the template from the list using `kubectl delete`. For example:
 
     ```bash
-    kubectl delete clustertemplate -n hmc-system <template-name>
+    kubectl delete clustertemplate -n kcm-system <template-name>
     ```

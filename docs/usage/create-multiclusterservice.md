@@ -29,16 +29,16 @@ spec:
 
 Consider the following example where 2 clusters have been deployed using ClusterDeployment objects:
 ```sh
-➜  ~ kubectl get clusterdeployments.k0rdent.mirantis.com -n hmc-system
+➜  ~ kubectl get clusterdeployments.k0rdent.mirantis.com -n kcm-system
 NAME             READY   STATUS
 dev-cluster-1   True    ClusterDeployment is ready
 dev-cluster-2   True    ClusterDeployment is ready
 ➜  ~ 
 ➜  ~ 
-➜  ~  kubectl get cluster -n hmc-system --show-labels
+➜  ~  kubectl get cluster -n kcm-system --show-labels
 NAME           CLUSTERCLASS     PHASE         AGE     VERSION   LABELS
-dev-cluster-1                  Provisioned   2h41m             app.kubernetes.io/managed-by=Helm,helm.toolkit.fluxcd.io/name=dev-cluster-1,helm.toolkit.fluxcd.io/namespace=hmc-system,sveltos-agent=present
-dev-cluster-2                  Provisioned   3h10m             app.kubernetes.io/managed-by=Helm,helm.toolkit.fluxcd.io/name=dev-cluster-2,helm.toolkit.fluxcd.io/namespace=hmc-system,sveltos-agent=present
+dev-cluster-1                  Provisioned   2h41m             app.kubernetes.io/managed-by=Helm,helm.toolkit.fluxcd.io/name=dev-cluster-1,helm.toolkit.fluxcd.io/namespace=kcm-system,sveltos-agent=present
+dev-cluster-2                  Provisioned   3h10m             app.kubernetes.io/managed-by=Helm,helm.toolkit.fluxcd.io/name=dev-cluster-2,helm.toolkit.fluxcd.io/namespace=kcm-system,sveltos-agent=present
 ```
 
 > EXAMPLE: 
@@ -49,7 +49,7 @@ dev-cluster-2                  Provisioned   3h10m             app.kubernetes.io
 > metadata:
 >   . . . 
 >   name: dev-cluster-1
->   namespace: hmc-system
+>   namespace: kcm-system
 > spec:
 >   . . .
 >   services:
@@ -71,7 +71,7 @@ dev-cluster-2                  Provisioned   3h10m             app.kubernetes.io
 > metadata:
 >   . . .
 >   name: dev-cluster-2
->   namespace: hmc-system
+>   namespace: kcm-system
 > spec:
 >   . . .
 >   services:
@@ -174,7 +174,7 @@ and 1 MultiClusterService is deployed.
 >   observedGeneration: 1
 >   services:
 >   - clusterName: dev-cluster-2
->     clusterNamespace: hmc-system
+>     clusterNamespace: kcm-system
 >     conditions:
 >     - lastTransitionTime: "2024-10-25T08:36:35Z"
 >       message: |
@@ -189,7 +189,7 @@ and 1 MultiClusterService is deployed.
 >       status: "False"
 >       type: ingress-nginx.ingress-nginx/SveltosHelmReleaseReady
 >   - clusterName: dev-cluster-1
->     clusterNamespace: hmc-system
+>     clusterNamespace: kcm-system
 >     conditions:
 >     - lastTransitionTime: "2024-10-25T08:36:24Z"
 >       message: ""
@@ -213,7 +213,7 @@ Whereas, it shows provisioned for `dev-cluster-1` because the MultiClusterServic
 > metadata:
 >   . . . 
 >   name: dev-cluster-1
->   namespace: hmc-system
+>   namespace: kcm-system
 >   . . .
 > spec:
 >   . . .
@@ -231,7 +231,7 @@ Whereas, it shows provisioned for `dev-cluster-1` because the MultiClusterServic
 >   . . .
 >   services:
 >   - clusterName: dev-cluster-1
->     clusterNamespace: hmc-system
+>     clusterNamespace: kcm-system
 >     conditions:
 >     - lastTransitionTime: "2024-10-25T08:36:35Z"
 >       message: |
@@ -262,7 +262,7 @@ another object with higher priority is managing it, so it shows a conflict inste
 > metadata:
 >   . . .
 >   name: dev-cluster-2
->   namespace: hmc-system
+>   namespace: kcm-system
 >   resourceVersion: "30889"
 >   . . .
 > spec:
@@ -278,7 +278,7 @@ another object with higher priority is managing it, so it shows a conflict inste
 >   . . .
 >   services:
 >   - clusterName: dev-cluster-2
->     clusterNamespace: hmc-system
+>     clusterNamespace: kcm-system
 >     conditions:
 >     - lastTransitionTime: "2024-10-25T08:18:22Z"
 >       message: ""

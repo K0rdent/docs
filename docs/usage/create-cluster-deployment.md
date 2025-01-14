@@ -9,14 +9,14 @@
 
 ### Step 2: Select the Template
 
-For details about the templates in Project 2A, see the [Templates system](../template/main.md).
+For details about the templates in k0rdent, see the [Templates system](../template/main.md).
 
 - Set the `KUBECONFIG` environment variable to the path to the management
   cluster kubeconfig file. Then select the `Template` you want to use for the
   deployment. To list all available templates, run:
 
   ```shell
-  kubectl get clustertemplate -n hmc-system
+  kubectl get clustertemplate -n kcm-system
   ```
 
 > NOTE:
@@ -36,7 +36,7 @@ For details about the templates in Project 2A, see the [Templates system](../tem
     kind: ClusterDeployment
     metadata:
       name: <cluster-name>
-      namespace: <hmc-system-namespace>
+      namespace: <kcm-system-namespace>
     spec:
       template: <template-name>
       credential: <infrastructure-provider-credential-name>
@@ -60,7 +60,7 @@ Following is an interpolated example.
 > kind: ClusterDeployment
 > metadata:
 >   name: my-managed-cluster
->   namespace: hmc-system
+>   namespace: kcm-system
 > spec:
 >   template: aws-standalone-cp-0-0-3
 >   credential: aws-credential
@@ -75,7 +75,7 @@ Following is an interpolated example.
 
 ### Step 4: Apply the `ClusterDeployment` Configuration to Create it
 
-- Apply the `ClusterDeployment` object to your Project 2A deployment:
+- Apply the `ClusterDeployment` object to your k0rdent deployment:
 
 	```shell
 	kubectl apply -f clusterdeployment.yaml
@@ -86,7 +86,7 @@ Following is an interpolated example.
 - Check the status of the newly created `ClusterDeployment`:
 
 	```shell
-	kubectl -n <namespace> get clusterdeployment.hmc <cluster-name> -o=yaml
+	kubectl -n <namespace> get clusterdeployment.kcm <cluster-name> -o=yaml
 	```
 
 > INFO:
@@ -122,7 +122,7 @@ Following is an interpolated example.
 
 ## Dry Run
 
-Project 2A `ClusterDeployment` supports two modes: with and without `.spec.dryRun`
+k0rdent `ClusterDeployment` supports two modes: with and without `.spec.dryRun`
 (defaults to `false`).
 
 If no configuration (`.spec.config`) is specified, the `ClusterDeployment` object
@@ -137,7 +137,7 @@ corresponding `Template` status) and automatically have `.spec.dryRun` set to
 > kind: ClusterDeployment
 > metadata:
 >   name: my-managed-cluster
->   namespace: hmc-system
+>   namespace: kcm-system
 > spec:
 >   config:
 >     clusterNetwork:
@@ -179,7 +179,7 @@ Here is an example of a `ClusterDeployment` object that passed the validation:
 > kind: ClusterDeployment
 > metadata:
 >   name: my-managed-cluster
->   namespace: hmc-system
+>   namespace: kcm-system
 > spec:
 >   template: aws-standalone-cp-0-0-3
 >   credential: aws-credential
@@ -212,29 +212,29 @@ Here is an example of a `ClusterDeployment` object that passed the validation:
 >     observedGeneration: 1
 > ```
 
-<!-- This Cleanup section describes uninstalling project 2A from the super cluster and hence should be in its own file. -->
+<!-- This Cleanup section describes uninstalling k0rdent from the super cluster and hence should be in its own file. -->
 
 ## Cleanup
 
 1. Remove the Management object:
 
 	```shell
-	kubectl delete management.hmc hmc
+	kubectl delete management.kcm kcm
 	```
 
 > NOTE:
 >
-> Ensure you have no Project 2A `ClusterDeployment` objects left in the cluster
+> Ensure you have no k0rdent `ClusterDeployment` objects left in the cluster
 > prior to Management deletion.
 
-2. Remove the `hmc` Helm release:
+2. Remove the `kcm` Helm release:
 
 	```shell
-	helm uninstall hmc -n hmc-system
+	helm uninstall kcm -n kcm-system
 	```
 
-3. Remove the `hmc-system` namespace:
+3. Remove the `kcm-system` namespace:
 
 	```shell
-	kubectl delete ns hmc-system
+	kubectl delete ns kcm-system
 	```

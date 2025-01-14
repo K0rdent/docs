@@ -74,7 +74,7 @@ apiVersion: v1
 kind: Secret
 metadata:
   name: aws-cluster-identity-secret
-  namespace: hmc-system
+  namespace: kcm-system
 type: Opaque
 stringData:
   AccessKeyID: AKIAQF+EXAMPLE
@@ -90,7 +90,7 @@ kubectl apply -f aws-cluster-identity-secret.yaml
 > WARNING:
 > 
 > The secret must be created in the same `Namespace` where the CAPA provider is
-> running. In case of k0rdent it's currently `hmc-system`. Placing secret in
+> running. In case of k0rdent it's currently `kcm-system`. Placing secret in
 > any other `Namespace` will result in the controller not able to read it.
 
 ## Step 3: Create AWSClusterStaticIdentity Object
@@ -137,7 +137,7 @@ apiVersion: k0rdent.mirantis.com/v1alpha1
 kind: Credential
 metadata:
   name: aws-cluster-identity-cred
-  namespace: hmc-system
+  namespace: kcm-system
 spec:
   description: "Credential Example"
   identityRef:
@@ -164,7 +164,7 @@ apiVersion: k0rdent.mirantis.com/v1alpha1
 kind: ClusterDeployment
 metadata:
   name: my-aws-clusterdeployment1
-  namespace: hmc-system
+  namespace: kcm-system
 spec:
   template: aws-standalone-cp-0-0-4
   credential: aws-cluster-identity-cred
@@ -186,13 +186,13 @@ There will be a delay as the cluster finishes provisioning. Follow the
 provisioning process with the following command:
 
 ```bash
-kubectl -n hmc-system get clusterdeployment.k0rdent.mirantis.com my-aws-clusterdeployment1 --watch
+kubectl -n kcm-system get clusterdeployment.k0rdent.mirantis.com my-aws-clusterdeployment1 --watch
 ```
 
 After the cluster is `Ready`, you can access it via the kubeconfig, like this:
 
 ```bash
-kubectl -n hmc-system get secret my-aws-clusterdeployment1-kubeconfig -o jsonpath='{.data.value}' | base64 -d > my-aws-clusterdeployment1-kubeconfig.kubeconfig
+kubectl -n kcm-system get secret my-aws-clusterdeployment1-kubeconfig -o jsonpath='{.data.value}' | base64 -d > my-aws-clusterdeployment1-kubeconfig.kubeconfig
 ```
 
 ```bash

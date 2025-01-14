@@ -8,7 +8,7 @@ Each access rule specifies:
 1. The target namespaces where credentials should be delivered.
 2. A list of `Credential` names to distribute to those namespaces.
 
-The HMC controller will copy the specified `Credential` objects from the **system** namespace to the target
+The kcm controller will copy the specified `Credential` objects from the **system** namespace to the target
 namespaces based on the `accessRules` in the `AccessManagement` spec.
 
 > INFO:

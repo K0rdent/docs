@@ -40,7 +40,7 @@ apiVersion: k0rdent.mirantis.com/v1alpha1
 kind: ClusterDeployment
 metadata:
   name: my-openstack-cluster-deployment
-  namespace: hmc-system
+  namespace: kcm-system
 spec:
   template: openstack-standalone-cp-0-0-1
   credential: openstack-cluster-identity-cred

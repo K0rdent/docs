@@ -1,10 +1,10 @@
 # Pre-defined ServiceTemplates
 
-HMC comes with a set of pre-defined ServiceTemplates. These templates are referring to the following Helm charts:
+kcm comes with a set of pre-defined ServiceTemplates. These templates are referring to the following Helm charts:
 
 > NOTE:
 > Listed Helm charts will be looked up in the registry configured by the `--default-registry-url`
-> flag provided to the `hmc-controller-manager` (default value: `oci://ghcr.io/k0rdent/kcm/charts`).
+> flag provided to the `kcm-controller-manager` (default value: `oci://ghcr.io/k0rdent/kcm/charts`).
 > In case of using different registry, the corresponding Helm charts must be available
 > in the registry in prior to using the ServiceTemplate.
 

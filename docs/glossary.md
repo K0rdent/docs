@@ -80,7 +80,7 @@ resource (CR) that defines the infrastructure-specific configuration needed for 
 Kubernetes clusters. It enables Cluster API (CAPI) to provision and manage clusters on 
 a specific infrastructure platform (e.g., AWS, Azure, VMware, OpenStack, etc.).
 
-### Mutli Cluster Service
+### Multi-Cluster Service
 The `MultiClusterService` is a custom resource used to manage deployment of beach-head 
 services across multiple clusters.
 

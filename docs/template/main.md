@@ -1,6 +1,6 @@
 # Templates system
 
-By default, 2A delivers a set of default `ProviderTemplate`, `ClusterTemplate` and `ServiceTemplate` objects:
+By default, k0rdent delivers a set of default `ProviderTemplate`, `ClusterTemplate` and `ServiceTemplate` objects:
 
 * `ProviderTemplate`
    The template containing the configuration of the provider (e.g., k0smotron). Cluster-scoped.
@@ -10,7 +10,7 @@ By default, 2A delivers a set of default `ProviderTemplate`, `ClusterTemplate` a
    The template containing the configuration of the service to be installed on the cluster deployment. Namespace-scoped.
 
 All Templates are immutable. You can also build your own templates and use them for deployment along with the
-templates shipped with 2A.
+templates shipped with k0rdent.
 
 ## Template Naming Convention
 
@@ -30,7 +30,7 @@ The templates can have any name. However, since they are immutable, we have adop
 >       reconcileStrategy: ChartVersion
 >       sourceRef:
 >         kind: HelmRepository
->         name: hmc-templates
+>         name: kcm-templates
 >       version: 0.0.4
 > status:
 >   capiContracts:
@@ -40,7 +40,7 @@ The templates can have any name. However, since they are immutable, we have adop
 >   chartRef:
 >     kind: HelmChart
 >     name: cluster-api-0-0-4
->     namespace: hmc-system
+>     namespace: kcm-system
 >   config:
 >     airgap: false
 >     config: {}
@@ -59,7 +59,7 @@ The templates can have any name. However, since they are immutable, we have adop
 > kind: ClusterTemplate
 > metadata:
 >   name: aws-standalone-cp-0-0-3
->   namespace: hmc-system
+>   namespace: kcm-system
 > spec:
 >   helm:
 >     chartSpec:
@@ -68,13 +68,13 @@ The templates can have any name. However, since they are immutable, we have adop
 >       reconcileStrategy: ChartVersion
 >       sourceRef:
 >         kind: HelmRepository
->         name: hmc-templates
+>         name: kcm-templates
 >       version: 0.0.3
 > status:
 >   chartRef:
 >     kind: HelmChart
 >     name: aws-standalone-cp-0-0-3
->     namespace: hmc-system
+>     namespace: kcm-system
 >   config:
 >     bastion:
 >       allowedCIDRBlocks: []
@@ -120,7 +120,7 @@ The templates can have any name. However, since they are immutable, we have adop
 >       instanceType: ""
 >       rootVolumeSize: 8
 >     workersNumber: 2
->   description: 'An HMC template to deploy a k0s cluster on AWS with bootstrapped control
+>   description: 'An kcm template to deploy a k0s cluster on AWS with bootstrapped control
 >     plane nodes. '
 >   observedGeneration: 1
 >   providerContracts:
@@ -140,7 +140,7 @@ The templates can have any name. However, since they are immutable, we have adop
 > kind: ServiceTemplate
 > metadata:
 >   name: kyverno-3-2-6
->   namespace: hmc-system
+>   namespace: kcm-system
 > spec:
 >   helm:
 >     chartSpec:
@@ -149,13 +149,13 @@ The templates can have any name. However, since they are immutable, we have adop
 >       reconcileStrategy: ChartVersion
 >       sourceRef:
 >         kind: HelmRepository
->         name: hmc-templates
+>         name: kcm-templates
 >       version: 3.2.6
 > status:
 >   chartRef:
 >     kind: HelmChart
 >     name: kyverno-3-2-6
->     namespace: hmc-system
+>     namespace: kcm-system
 >   description: A Helm chart to refer the official kyverno helm chart
 >   observedGeneration: 1
 >   valid: true
@@ -171,7 +171,7 @@ and the upgrade sequences for them.
 
 The example of the Cluster Template Management:
 
-1. Create `ClusterTemplateChain` object in the system namespace (defaults to `hmc-system`). Properly configure
+1. Create `ClusterTemplateChain` object in the system namespace (defaults to `kcm-system`). Properly configure
    the list of `.spec.supportedTemplates[].availableUpgrades` for the specified `ClusterTemplate` if the upgrade is allowed. For example:
 
 ```yaml
@@ -179,7 +179,7 @@ apiVersion: k0rdent.mirantis.com/v1alpha1
 kind: ClusterTemplateChain
 metadata:
   name: aws
-  namespace: hmc-system
+  namespace: kcm-system
 spec:
   supportedTemplates:
     - name: aws-standalone-cp-0-0-1
@@ -202,7 +202,7 @@ spec:
       - aws
 ```
 
-The HMC controllers will deliver all the `ClusterTemplate` objects across the target namespaces.
+The kcm controllers will deliver all the `ClusterTemplate` objects across the target namespaces.
 As a result, the new objects should be created:
 
 * `ClusterTemplateChain` `default/aws`

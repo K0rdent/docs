@@ -6,7 +6,7 @@
 
 ## Prerequisites
 
-In order to install HMC in an air-gapped environment, you need will need the
+In order to install kcm in an air-gapped environment, you need will need the
 following:
 
 - An installed k0s cluster that will be used as the management cluster.  If you
@@ -15,9 +15,9 @@ following:
   implements an OCI image bundle watcher which allows k0s to utilize a bundle
   of management cluster images easily. Any Kubernetes distribution can be
   used, but instructions for using k0s are provided here.
-- The `KUBECONFIG` of a management cluster that will be the target for the HMC
+- The `KUBECONFIG` of a management cluster that will be the target for the kcm
   installation.
-- A registry that is accessible from the airgapped hosts to store the HMC images.
+- A registry that is accessible from the airgapped hosts to store the kcm images.
   If you do not have a registry you can deploy a [local Docker registry](https://distribution.github.io/distribution/)
   or use [mindthegap](https://github.com/mesosphere/mindthegap?tab=readme-ov-file#serving-a-bundle-supports-both-image-or-helm-chart)
 
@@ -31,8 +31,8 @@ following:
     > }
     > ```
 
-- A registry and associated chart repository for hosting HMC charts.  At this
-  time all HMC charts MUST be hosted in a single OCI chart repository.  See
+- A registry and associated chart repository for hosting kcm charts.  At this
+  time all kcm charts MUST be hosted in a single OCI chart repository.  See
   [Use OCI-based registries](https://helm.sh/docs/topics/registries/) in the
   Helm documentation for more information.
 - [jq](https://jqlang.github.io/jq/download/), Helm and Docker binaries
@@ -41,16 +41,16 @@ following:
 
 ## Installation
 
-1. Download the HMC airgap bundle, the bundle contains the
+1. Download the kcm airgap bundle, the bundle contains the
 following:
 
-    - `images/hmc-images-<version>.tgz` - The image bundle tarball for the
+    - `images/kcm-images-<version>.tgz` - The image bundle tarball for the
       management cluster, this bundle will be loaded into the management
       cluster.
-    - `images/hmc-extension-images-<version>.tgz` - The image bundle tarball for
+    - `images/kcm-extension-images-<version>.tgz` - The image bundle tarball for
       the managed clusters, this bundle will be pushed to a registry where the
       images can be accessed by the managed clusters.
-    - `charts` - Contains the HMC Helm chart, dependency charts and k0s
+    - `charts` - Contains the kcm Helm chart, dependency charts and k0s
       extensions charts within the `extensions` directory.  All of these charts
       will be pushed to a chart repository within a registry.
     - `scripts/airgap-push.sh` - A script that will aid in re-tagging and
@@ -63,8 +63,8 @@ following:
    the script.
 
      ```bash
-     tar xvf hmc-airgap-<version>.tgz scripts/airgap-push.sh
-     ./scripts/airgap-push.sh -r <registry> -c <chart-repo> -a hmc-airgap-<version>.tgz
+     tar xvf kcm-airgap-<version>.tgz scripts/airgap-push.sh
+     ./scripts/airgap-push.sh -r <registry> -c <chart-repo> -a kcm-airgap-<version>.tgz
      ```
 
 3. Next, extract the `management` bundle tarball and sync the images to the
@@ -74,23 +74,23 @@ following:
      > NOTE:
      > Multiple image bundles can be placed in the `/var/lib/k0s/images`
      > directory for k0s to use and the existing `k0s` airgap bundle does not
-     > need to be merged into the `hmc-images-<version>.tgz` bundle.
+     > need to be merged into the `kcm-images-<version>.tgz` bundle.
 
      ```bash
-     tar -C /var/lib/k0s -xvf hmc-airgap-<version>.tgz "images/hmc-images-<version>.tgz"
+     tar -C /var/lib/k0s -xvf kcm-airgap-<version>.tgz "images/kcm-images-<version>.tgz"
      ```
 
-4. Install the HMC Helm chart on the management cluster from the registry where
-   the HMC charts were pushed.  The HMC controller image is loaded as part of
+4. Install the kcm Helm chart on the management cluster from the registry where
+   the kcm charts were pushed.  The kcm controller image is loaded as part of
    the airgap `management` bundle and does not need to be customized within the
    Helm chart, but the default chart repository configured via
    `controller.defaultRegistryURL` should be set to reference the repository
    where charts have been pushed.
 
       ```bash
-      helm install hmc oci://<chart-repository>/hmc \
+      helm install kcm oci://<chart-repository>/kcm \
         --version <version> \
-        -n hmc-system \
+        -n kcm-system \
         --create-namespace \
         --set controller.defaultRegistryURL=oci://<chart-repository>
       ```
@@ -107,13 +107,13 @@ following:
       apiVersion: k0rdent.mirantis.com/v1alpha1
       kind: Management
       metadata:
-        name: hmc
+        name: kcm
       spec:
         core:
           capi:
             config:
               airgap: true
-          hmc:
+          kcm:
             config:
               controller:
                 defaultRegistryURL: oci://<registry-url>

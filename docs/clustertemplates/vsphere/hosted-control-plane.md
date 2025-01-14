@@ -2,7 +2,7 @@
 
 ## Prerequisites
 
-- Management Kubernetes cluster (v1.28+) deployed on vSphere with HMC installed
+- Management Kubernetes cluster (v1.28+) deployed on vSphere with kcm installed
   on it
 
 Keep in mind that all control plane components for all managed clusters will

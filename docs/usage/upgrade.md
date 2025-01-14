@@ -1,17 +1,17 @@
-# Upgrading 2A to the newer version
+# Upgrading k0rdent to the newer version
 
-> NOTE: To upgrade 2A the user must have `Global Admin` role.
-> For the detailed information about 2A RBAC, refer to the [RBAC documentation](../rbac/roles.md).
+> NOTE: To upgrade k0rdent the user must have `Global Admin` role.
+> For the detailed information about k0rdent RBAC, refer to the [RBAC documentation](../rbac/roles.md).
 
-Follow the steps below to update 2A to a newer version:
+Follow the steps below to update k0rdent to a newer version:
 
 **Step 1. Create a New `Release` Object**
 
 Create a `Release` object in the management cluster for the desired version. For example, to create
-a `Release` for version `v0.0.6`, run the following command:
+a `Release` for version `v0.0.7`, run the following command:
 
 ```shell
-VERSION=v0.0.6
+VERSION=v0.0.7
 kubectl create -f https://github.com/k0rdent/kcm/releases/download/${VERSION}/release.yaml
 ```
 
@@ -29,18 +29,18 @@ Example output:
 
 ```shell
 NAME        AGE
-hmc-0-0-5   71m
-hmc-0-0-6   65m
+kcm-0-0-5   71m
+kcm-0-0-7   65m
 ```
 
 - Patch the `Management` Object with the New `Release` Name:
 
-Update the `spec.release` field in the `Management` object to point to the new release. Replace `hmc-0-0-4` with
+Update the `spec.release` field in the `Management` object to point to the new release. Replace `kcm-0-0-4` with
 the name of your new release:
 
 ```shell
-RELEASE_NAME=hmc-0-0-6
-kubectl patch management.hmc hmc --patch "{\"spec\":{\"release\":\"${RELEASE_NAME}\"}}" --type=merge
+RELEASE_NAME=kcm-0-0-7
+kubectl patch management.kcm kcm --patch "{\"spec\":{\"release\":\"${RELEASE_NAME}\"}}" --type=merge
 ```
 
 **Step 3. Verify the Upgrade**
@@ -48,5 +48,5 @@ kubectl patch management.hmc hmc --patch "{\"spec\":{\"release\":\"${RELEASE_NAM
 Check the status of the `Management` object to monitor the readiness of the components:
 
 ```shell
-kubectl get management.hmc hmc -o=jsonpath={.status} | jq
+kubectl get management.kcm kcm -o=jsonpath={.status} | jq
 ```

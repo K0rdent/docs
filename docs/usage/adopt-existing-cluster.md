@@ -5,7 +5,7 @@
 In order to adopt an existing Kubernetes cluster you will require the following:
 
 - A kubernetes kubeconfig file for the cluster to be adopted
-- A management cluster with K0rdent installed
+- A management cluster with kcm installed
 - Network connectivity between the management cluster and the cluster to be adopted
 
 ## Installation
@@ -29,7 +29,7 @@ Create a `Credential` object with all credentials required per the
     kind: ClusterDeployment
     metadata:
       name: <cluster-name>
-      namespace: <hmc-system-namespace>
+      namespace: <kcm-system-namespace>
     spec:
       template: adopted-cluster-<template-version>
       credential: <credential-name>
@@ -53,7 +53,7 @@ Following is an interpolated example.
 > kind: ClusterDeployment
 > metadata:
 >   name: my-cluster
->   namespace: hmc-system
+>   namespace: kcm-system
 > spec:
 >   template: adotped-cluster-0-0-1
 >   credential: my-cluster-credential
@@ -63,7 +63,7 @@ Following is an interpolated example.
 
 ### Step 4: Apply the `ClusterDeployment` Configuration to Create it
 
-- Apply the `ClusterDeployment` object to your Project 2A deployment:
+- Apply the `ClusterDeployment` object to your k0rdent deployment:
 
   ```shell
   kubectl apply -f clusterdeployment.yaml
@@ -74,5 +74,5 @@ Following is an interpolated example.
 - Check the status of the newly created `ClusterDeployment`:
 
   ```shell
-  kubectl -n <namespace> get clusterdeployment.hmc <cluster-name> -o=yaml
+  kubectl -n <namespace> get clusterdeployment.kcm <cluster-name> -o=yaml
   ```

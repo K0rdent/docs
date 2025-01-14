@@ -12,7 +12,7 @@ Consider the following example:
 > kind: ClusterDeployment
 > metadata:
 >   name: my-managed-cluster
->   namespace: hmc-system
+>   namespace: kcm-system
 > spec:
 >   config:
 >     clusterNetwork:
@@ -79,7 +79,7 @@ the service template for kyverno.
 > kind: ServiceTemplate
 > metadata:
 >   name: kyverno-3-2-6
->   namespace: hmc-system
+>   namespace: kcm-system
 > spec:
 >   helm:
 >     chartSpec:
@@ -88,11 +88,11 @@ the service template for kyverno.
 >       reconcileStrategy: ChartVersion
 >       sourceRef:
 >         kind: HelmRepository
->         name: hmc-templates
+>         name: kcm-templates
 >       version: 3.2.6
 > ```
 
-The `hmc-templates` helm repository hosts the actual chart for kyverno version 3.2.6.
+The `kcm-templates` helm repository hosts the actual chart for kyverno version 3.2.6.
 For more details see the [Bring your own Templates](../template/byo-templates.md) guide.
 
 ### Configuring Custom Values
@@ -106,7 +106,7 @@ kind: ClusterDeployment
 metadata:
   . . .
   name: my-clusterdeployment
-  namespace: hmc-system
+  namespace: kcm-system
   . . .
 spec:
   . . .
@@ -125,13 +125,13 @@ spec:
         victoriametrics:
           vmauth:
             ingress:
-              host: vmauth.hmc0.example.net
+              host: vmauth.kcm0.example.net
             credentials:
               username: motel
               password: motel
         grafana:
           ingress:
-            host: grafana.hmc0.example.net
+            host: grafana.kcm0.example.net
         cert-manager:
           email: mail@example.net
     - template: ingress-nginx-4-11-3
@@ -152,7 +152,7 @@ apiVersion: k0rdent.mirantis.com/v1alpha1
 kind: ClusterDeployment
 metadata:
   name: my-clusterdeployment
-  namespace: hmc-system
+  namespace: kcm-system
 spec:
   . . .
   servicesPriority: 100
@@ -182,7 +182,7 @@ The `.status.services` field of the `ClusterDeployment` object shows the status 
 >   . . .
 >   generation: 1
 >   name: wali-aws-dev
->   namespace: hmc-system
+>   namespace: kcm-system
 >   . . .
 > spec:
 >   . . .
@@ -197,7 +197,7 @@ The `.status.services` field of the `ClusterDeployment` object shows the status 
 >   observedGeneration: 1
 >   services:
 >   - clusterName: my-managed-cluster
->     clusterNamespace: hmc-system
+>     clusterNamespace: kcm-system
 >     conditions:
 >     - lastTransitionTime: "2024-12-11T23:03:05Z"
 >       message: ""
@@ -249,7 +249,7 @@ The example below removes `kyverno-3-2-6` so its status also removed from `.stat
 >   . . .
 >   generation: 2
 >   name: wali-aws-dev
->   namespace: hmc-system
+>   namespace: kcm-system
 >   . . .
 > spec:
 >   . . .
@@ -264,7 +264,7 @@ The example below removes `kyverno-3-2-6` so its status also removed from `.stat
 >   observedGeneration: 2
 >   services:
 >   - clusterName: wali-aws-dev
->     clusterNamespace: hmc-system
+>     clusterNamespace: kcm-system
 >     conditions:
 >     - lastTransitionTime: "2024-12-11T23:15:45Z"
 >       message: ""

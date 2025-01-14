@@ -2,7 +2,7 @@
 
 ## Prerequisites
 
--   Management Kubernetes cluster (v1.28+) deployed on Azure with HMC installed
+-   Management Kubernetes cluster (v1.28+) deployed on Azure with kcm installed
     on it
 -   Default storage class configured on the management cluster
 
@@ -63,7 +63,7 @@ kubectl get azurecluster <cluster-name> -o go-template='{{(index .spec.networkSp
 
 
 
-## HMC ClusterDeployment manifest
+## kcm ClusterDeployment manifest
 
 With all the collected data your `ClusterDeployment` manifest will look similar to this:
 
