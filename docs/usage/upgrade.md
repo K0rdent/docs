@@ -29,7 +29,7 @@ Example output:
 
 ```shell
 NAME        AGE
-kcm-0-0-5   71m
+kcm-0-0-6   71m
 kcm-0-0-7   65m
 ```
 
