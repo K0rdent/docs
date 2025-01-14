@@ -78,7 +78,7 @@ nav:
   - Usage:
       - Installation Guide: usage/installation.md
       - Adopting Existing Clusters Guide: usage/adopt-existing-cluster.md
-      - Air-gapped Installation Guide: usage/airgap.md
+#     - Air-gapped Installation Guide: usage/airgap.md
       - Create Cluster Deployment: usage/create-cluster-deployment.md
       - Cluster Updates: usage/cluster-update.md
       - k0rdent Upgrade: usage/upgrade.md
