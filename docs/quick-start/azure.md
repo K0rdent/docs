@@ -209,6 +209,10 @@ spec:
       vmSize: Standard_A4_v2
 ```
 
+> NOTE:
+> To see available versions for `Azure` template run `kubectl get clustertemplate -n kcm-system`.
+>
+
 Apply the YAML to your management cluster:
 
 ```shell
