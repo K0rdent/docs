@@ -12,12 +12,16 @@ for successful cluster creation.
 
 | Parameter                             | Example                               | Description                                                     |
 |---------------------------------------|---------------------------------------|-----------------------------------------------------------------|
-| `.spec.config.vsphere.server`         | `vcenter.example.com`                 | Address of the vSphere server                                   |
-| `.spec.config.vsphere.thumbprint`     | `"00:00:00"`                          | Certificate thumbprint                                          |
+| `.spec.config.vsphere.server`         | `vcenter.example.com`                 | Address of the vSphere instance                                 |
+| `.spec.config.vsphere.thumbprint`     | `"00:00:00:..."`                      | Certificate thumbprint                                          |
 | `.spec.config.vsphere.datacenter`     | `DC`                                  | Datacenter name                                                 |
 | `.spec.config.vsphere.datastore`      | `/DC/datastore/DS`                    | Datastore path                                                  |
 | `.spec.config.vsphere.resourcePool`   | `/DC/host/vCluster/Resources/ResPool` | Resource pool path                                              |
-| `.spec.config.vsphere.folder`         | `/DC/vm/example`                      | vSphere folder path                                             |
+| `.spec.config.vsphere.folder`         | `/DC/vm/example`                      | Folder path                                                     |
+| `.spec.config.controlPlane.network`   | `/DC/network/vm_net`                  | Network path for `controlPlane`                                 |
+| `.spec.config.worker.network`         | `/DC/network/vm_net`                  | Network path for `worker`                                       |
+| `.spec.config.*.ssh.publicKey`        | `"ssh-ed25519 AAAA..."`               | SSH public key in `authorized_keys` format                      |
+| `.spec.config.*.vmTemplate`           | `/DC/vm/templates/ubuntu`             | VM template image path                                          |
 | `.spec.config.controlPlaneEndpointIP` | `172.16.0.10`                         | `kube-vip` vIP which will be created for control plane endpoint |
 
 To obtain vSphere certificate thumbprint you can use the following command:
@@ -25,6 +29,34 @@ To obtain vSphere certificate thumbprint you can use the following command:
 ```bash
 curl -sw %{certs} https://vcenter.example.com | openssl x509 -sha256 -fingerprint -noout | awk -F '=' '{print $2}'
 ```
+
+[`govc`](https://github.com/vmware/govmomi/blob/main/govc/README.md), a vSphere CLI, can also help to discover proper values for some of the parameters:
+
+```bash
+  # vsphere.datacenter
+  govc ls
+
+  # vsphere.datastore
+  govc ls /*/datastore/*
+
+  # vsphere.resourcePool
+  govc ls /*/host/*/Resources/*
+
+  # vsphere.folder
+  govc ls -l /*/vm/**
+
+  # controlPlane.network, worker.network
+  govc ls /*/network/*
+
+  # *.vmTemplate
+  govc vm.info -t '*'
+```
+
+> NOTE:
+> Follow official `govc` installation instructions from [here](https://github.com/vmware/govmomi/blob/main/govc/README.md#installation).
+> `govc` usage guide is [here](https://github.com/vmware/govmomi/blob/main/govc/README.md#usage)
+> Minimal `govc` configuration requires setting: `GOVC_URL`, `GOVC_USERNAME`, `GOVC_PASSWORD` environment variables.
+
 
 ## Example of ClusterDeployment CR
 
