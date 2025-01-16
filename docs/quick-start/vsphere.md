@@ -150,7 +150,7 @@ metadata:
   name: my-vsphere-clusterdeployment1
   namespace: kcm-system
 spec:
-  template: vsphere-standalone-cp-0-0-3
+  template: vsphere-standalone-cp-0-0-5
   credential: vsphere-cluster-identity-cred
   config:
     vsphere:
@@ -176,6 +176,7 @@ spec:
 ```
 
 > NOTE:
+> To see available versions for `vSphere` template run `kubectl get clustertemplate -n kcm-system`.
 >
 > For more information about the config options, see the
 > [vSphere Template Parameters](../clustertemplates/vsphere/template-parameters.md).
@@ -201,4 +202,10 @@ kubectl -n kcm-system get secret my-vsphere-clusterdeployment1-kubeconfig -o jso
 
 ```shell
 KUBECONFIG="my-vsphere-clusterdeployment1-kubeconfig.kubeconfig" kubectl get pods -A
+```
+
+To delete provisioned cluster and free consumed vSphere resources run:
+
+```shell
+kubectl -n kcm-system delete cluster my-vsphere-clusterdeployment1
 ```
