@@ -176,6 +176,10 @@ spec:
       instanceType: t3.small
 ```
 
+> NOTE:
+> To see available versions for `AWS` template run `kubectl get clustertemplate -n kcm-system`.
+>
+
 Apply the YAML to your management cluster:
 
 ```bash
