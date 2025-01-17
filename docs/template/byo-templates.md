@@ -13,6 +13,7 @@ A source object defines where the Helm chart is stored. The source can be one of
 [Bucket](https://fluxcd.io/flux/components/source/buckets/).
 
 > NOTES:
+>
 > 1. The source object must exist in the same namespace as the Template.
 > 2. For cluster-scoped `ProviderTemplates`, the referenced source must reside in the **system** namespace
 > (default: `kcm-system`).
@@ -83,12 +84,12 @@ metadata:
   namespace: kcm-system
 spec:
   providers:
-    - bootstrap-k0smotron
-    - control-plane-k0smotron
+    - bootstrap-k0sproject-k0smotron
+    - control-plane-k0sproject-k0smotron
     - infrastructure-openstack
   helm:
     chartSpec:
-      chart: os-k0smotron
+      chart: os-k0sproject-k0smotron
       sourceRef:
         kind: HelmRepository
         name: custom-templates-repo
@@ -109,7 +110,6 @@ spec:
       name: custom-chart
 ```
 
-
 ## Required and exposed providers definition
 
 The `*Template` object must specify the list of Cluster API providers that are either **required** (for
@@ -127,8 +127,8 @@ For example:
 ```yaml
 spec:
   providers:
-  - bootstrap-k0smotron
-  - control-plane-k0smotron
+  - bootstrap-k0sproject-k0smotron
+  - control-plane-k0sproject-k0smotron
   - infrastructure-aws
 ```
 
@@ -136,7 +136,7 @@ spec:
 
 ```bash
 annotations:
-  cluster.x-k8s.io/provider: infrastructure-aws, control-plane-k0smotron, bootstrap-k0smotron
+  cluster.x-k8s.io/provider: infrastructure-aws, control-plane-k0sproject-k0smotron, bootstrap-k0sproject-k0smotron
 ```
 
 ## Compatibility attributes
@@ -205,12 +205,12 @@ and the value is the provider contract version required to be supported by the p
     spec:
       k8sVersion: 1.30.0 # only exact semantic version is applicable
       providers:
-      - bootstrap-k0smotron
-      - control-plane-k0smotron
+      - bootstrap-k0sproject-k0smotron
+      - control-plane-k0sproject-k0smotron
       - infrastructure-aws
       providerContracts:
-        bootstrap-k0smotron: v1beta1 # only a single contract version is applicable
-        control-plane-k0smotron: v1beta1
+        bootstrap-k0sproject-k0smotron: v1beta1 # only a single contract version is applicable
+        control-plane-k0sproject-k0smotron: v1beta1
         infrastructure-aws: v1beta2
     ```
 
@@ -218,9 +218,9 @@ and the value is the provider contract version required to be supported by the p
 
     ```yaml
     annotations:
-      cluster.x-k8s.io/provider: infrastructure-aws, control-plane-k0smotron, bootstrap-k0smotron
-      cluster.x-k8s.io/bootstrap-k0smotron: v1beta1
-      cluster.x-k8s.io/control-plane-k0smotron: v1beta1
+      cluster.x-k8s.io/provider: infrastructure-aws, control-plane-k0sproject-k0smotron, bootstrap-k0sproject-k0smotron
+      cluster.x-k8s.io/bootstrap-k0sproject-k0smotron: v1beta1
+      cluster.x-k8s.io/control-plane-k0sproject-k0smotron: v1beta1
       cluster.x-k8s.io/infrastructure-aws: v1beta2
       k0rdent.mirantis.com/k8s-version: 1.30.0
     ```

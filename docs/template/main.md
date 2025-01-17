@@ -17,6 +17,7 @@ templates shipped with k0rdent.
 The templates can have any name. However, since they are immutable, we have adopted a naming convention that includes semver in the name, i.e., `template-<major>-<minor>-<patch>`. Below are some examples for each of the templates.
 
 > EXAMPLE: An example of a `ProviderTemplate` with its status.
+>
 > ```yaml
 > apiVersion: k0rdent.mirantis.com/v1alpha1
 > kind: ProviderTemplate
@@ -54,6 +55,7 @@ The templates can have any name. However, since they are immutable, we have adop
 > ```
 
 > EXAMPLE: An example of a `ClusterTemplate` with its status.
+>
 > ```yaml
 > apiVersion: k0rdent.mirantis.com/v1alpha1
 > kind: ClusterTemplate
@@ -124,17 +126,18 @@ The templates can have any name. However, since they are immutable, we have adop
 >     plane nodes. '
 >   observedGeneration: 1
 >   providerContracts:
->     bootstrap-k0smotron: v1beta1
->     control-plane-k0smotron: v1beta1
+>     bootstrap-k0sproject-k0smotron: v1beta1
+>     control-plane-k0sproject-k0smotron: v1beta1
 >     infrastructure-aws: v1beta2
 >   providers:
->   - bootstrap-k0smotron
->   - control-plane-k0smotron
+>   - bootstrap-k0sproject-k0smotron
+>   - control-plane-k0sproject-k0smotron
 >   - infrastructure-aws
 >   valid: true
 > ```
 
 > EXAMPLE: An example of a `ServiceTemplate` with its status.
+>
 > ```yaml
 > apiVersion: k0rdent.mirantis.com/v1alpha1
 > kind: ServiceTemplate

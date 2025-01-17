@@ -102,5 +102,8 @@ nav:
       - Distribution: credential/distribution.md
   - RBAC:
       - Overview: rbac/roles.md
+  - Disaster Recovery:
+      - Overview: disaster-recovery/overview.md
+      - Customization: disaster-recovery/customization.md
   - Architecture: architecture.md
   - Glossary: glossary.md
