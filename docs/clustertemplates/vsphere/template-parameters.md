@@ -33,28 +33,29 @@ curl -sw %{certs} https://vcenter.example.com | openssl x509 -sha256 -fingerprin
 [`govc`](https://github.com/vmware/govmomi/blob/main/govc/README.md), a vSphere CLI, can also help to discover proper values for some of the parameters:
 
 ```bash
-  # vsphere.datacenter
-  govc ls
+# vsphere.datacenter
+govc ls
 
-  # vsphere.datastore
-  govc ls /*/datastore/*
+# vsphere.datastore
+govc ls /*/datastore/*
 
-  # vsphere.resourcePool
-  govc ls /*/host/*/Resources/*
+# vsphere.resourcePool
+govc ls /*/host/*/Resources/*
 
-  # vsphere.folder
-  govc ls -l /*/vm/**
+# vsphere.folder
+govc ls -l /*/vm/**
 
-  # controlPlane.network, worker.network
-  govc ls /*/network/*
+# controlPlane.network, worker.network
+govc ls /*/network/*
 
-  # *.vmTemplate
-  govc vm.info -t '*'
+# *.vmTemplate
+govc vm.info -t '*'
 ```
 
 > NOTE:
-> Follow official `govc` installation instructions from [here](https://github.com/vmware/govmomi/blob/main/govc/README.md#installation).
-> `govc` usage guide is [here](https://github.com/vmware/govmomi/blob/main/govc/README.md#usage)
+> Follow official `govc` installation instructions from [here](https://github.com/vmware/govmomi/blob/main/govc/README.md#installation),
+> and `govc` usage guide is [here](https://github.com/vmware/govmomi/blob/main/govc/README.md#usage).
+>
 > Minimal `govc` configuration requires setting: `GOVC_URL`, `GOVC_USERNAME`, `GOVC_PASSWORD` environment variables.
 
 
