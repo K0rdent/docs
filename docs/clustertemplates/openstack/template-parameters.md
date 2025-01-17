@@ -42,22 +42,26 @@ metadata:
   name: my-openstack-cluster-deployment
   namespace: kcm-system
 spec:
-  template: openstack-standalone-cp-0-0-1
+  template: openstack-standalone-cp-0-0-2
   credential: openstack-cluster-identity-cred
   config:
     controlPlaneNumber: 1
     workersNumber: 1
     controlPlane:
-      sshPublicKey: ramesses-pk
+      sshPublicKey: my-public-key
       flavor: m1.medium
       image:
         filter:
           name: ubuntu-22.04-x86_64
     worker:
-      sshPublicKey: ramesses-pk
+      sshPublicKey: my-public-key
       flavor: m1.medium
       image:
         filter:
           name: ubuntu-22.04-x86_64
-    authURL: <OS_AUTH_URL>
+    authURL: https://my-keystone-openstack-url.com
+    identityRef:
+      name: openstack-cloud-config
+      cloudName: openstack
+      region: RegionOne
 ```
