@@ -146,7 +146,7 @@ kubectl -n kcm-system get clusterdeployment.k0rdent.mirantis.com my-openstack-cl
 After the cluster is `Ready`, you can access it via the kubeconfig, like this:
 
 ```bash
-kubectl -n kcm-system get secret my-openstack-cluster-deployment-kubeconfig -o jsonpath='{.data.value>' | base64 -d > my-openstack-cluster-deployment-kubeconfig.kubeconfig
+kubectl -n kcm-system get secret my-openstack-cluster-deployment-kubeconfig -o jsonpath='{.data.value}' | base64 -d > my-openstack-cluster-deployment-kubeconfig.kubeconfig
 ```
 
 ```bash
