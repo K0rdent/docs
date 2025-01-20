@@ -64,7 +64,7 @@ kind: ClusterDeployment
 metadata:
   name: cluster-1
 spec:
-  template: aws-standalone-cp-0-0-2
+  template: aws-standalone-cp-0-0-5
   credential: aws-cred
   config:
     sshKeyName: foobar
@@ -88,7 +88,7 @@ kind: ClusterDeployment
 metadata:
   name: cluster-1
 spec:
-  template: aws-eks-0-0-2
+  template: aws-eks-0-0-3
   credential: aws-cred
   config:
     sshKeyName: foobar

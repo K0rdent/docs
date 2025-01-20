@@ -36,7 +36,8 @@ with the necessary IAM policies and service account.
     export AWS_REGION=<aws-region>
     export AWS_ACCESS_KEY_ID=<admin-user-access-key>
     export AWS_SECRET_ACCESS_KEY=<admin-user-secret-access-key>
-    export AWS_SESSION_TOKEN=<session-token> # Optional. If you are using Multi-Factor Auth.
+    # AWS_SESSION_TOKEN is optional when using Multi-Factor Auth.
+    export AWS_SESSION_TOKEN=<session-token>
     ```
 
 2. After these are set, run this command to create the IAM CloudFormation stack:
@@ -79,6 +80,9 @@ type: Opaque
 stringData:
   AccessKeyID: AKIAQF+EXAMPLE
   SecretAccessKey: EdJfFar6+example
+  # SessionToken is optional when using Multi-Factor Auth.
+  # SessionToken: IQoJb3JpZ2luX2VjEK7//+example
+
 ```
 
 Apply the YAML to your cluster using the following command:
@@ -144,6 +148,7 @@ spec:
     apiVersion: infrastructure.cluster.x-k8s.io/v1beta2
     kind: AWSClusterStaticIdentity
     name: aws-cluster-identity
+    namespace: kcm-system
 ```
 
 Apply the YAML to your cluster:
@@ -166,15 +171,19 @@ metadata:
   name: my-aws-clusterdeployment1
   namespace: kcm-system
 spec:
-  template: aws-standalone-cp-0-0-4
+  template: aws-standalone-cp-0-0-5
   credential: aws-cluster-identity-cred
   config:
-    region: us-west-2
+    region: us-east-2
     controlPlane:
       instanceType: t3.small
     worker:
       instanceType: t3.small
 ```
+
+> WARNING:
+> Don't forget to set proper AWS Region.
+>
 
 > NOTE:
 > To see available versions for `AWS` template run `kubectl get clustertemplate -n kcm-system`.

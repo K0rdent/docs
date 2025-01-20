@@ -72,7 +72,7 @@ kind: ClusterDeployment
 metadata:
   name: aws-hosted-cp
 spec:
-  template: aws-hosted-cp-0-0-3
+  template: aws-hosted-cp-0-0-4
   credential: aws-credential
   config:
     vpcID: vpc-0a000000000000000
@@ -108,7 +108,7 @@ kind: ClusterDeployment
 metadata:
   name: aws-hosted
 spec:
-  template: aws-hosted-cp-0-0-3
+  template: aws-hosted-cp-0-0-4
   credential: aws-credential
   config:
     vpcID: "{{.spec.network.vpc.id}}"
