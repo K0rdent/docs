@@ -102,7 +102,7 @@ nav:
       - Distribution: credential/distribution.md
   - RBAC:
       - Overview: rbac/roles.md
-  - Architecture: 
+  - Architecture:
       - Overview: architecture/architecture.md
-      - 2A initialisation process: architecture/initialisation.md
+      - k0rdent initialization process: architecture/initialization.md
   - Glossary: glossary.md
