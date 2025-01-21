@@ -27,31 +27,32 @@ the [installation guide](../usage/installation.md#extended-management-configurat
 
 2. Create or modify the existing `Management` object in the `.spec.config.kcm`, for example:
 
-   ```yaml
-   apiVersion: k0rdent.mirantis.com/v1alpha1
-   kind: Management
-   metadata:
-     name: kcm
-   spec:
-     core:
-       kcm:
-         config:
-           velero:
-            initContainers:
-              - name: velero-plugin-for-<PROVIDER NAME>
-                image: velero/velero-plugin-for-<PROVIDER NAME>:<PROVIDER PLUGIN TAG>
-                imagePullPolicy: IfNotPresent
-                volumeMounts:
-                  - mountPath: /target
-                    name: plugins
-         # ...
-   ```
+    ```yaml
+    apiVersion: k0rdent.mirantis.com/v1alpha1
+    kind: Management
+    metadata:
+      name: kcm
+    spec:
+      core:
+        kcm:
+          config:
+            velero:
+             initContainers:
+               - name: velero-plugin-for-<PROVIDER NAME>
+                 image: velero/velero-plugin-for-<PROVIDER NAME>:<PROVIDER PLUGIN TAG>
+                 imagePullPolicy: IfNotPresent
+                 volumeMounts:
+                   - mountPath: /target
+                     name: plugins
+          # ...
+    ```
 
 To fully disable `velero`, set the `velero.enabled` parameter to `false`.
 
 ## Schedule expression format
 
-The `ManagementBackup` `.spec.schedule` field accepts a correct Cron expression,
+The `ManagementBackup` `.spec.schedule` field accepts a correct
+[Cron](https://en.wikipedia.org/wiki/Cron) expression,
 along with the
 [nonstandard predefined scheduling definitions](https://en.wikipedia.org/wiki/Cron#Nonstandard_predefined_scheduling_definitions)
 and an extra definition `@every` with a number and a valid time unit

@@ -49,7 +49,7 @@ Before the creation of scheduled backups, several actions should be performed be
 > EXAMPLE: An example of a `BackupStorageLocation` and the related `Secret` for the `Amazon S3`
 > and the `AWS` provider:
 >
-> ```yaml
+>```yaml
 > ---
 > # Secret with the cloud storage credentials
 > apiVersion: v1
@@ -82,10 +82,11 @@ Before the creation of scheduled backups, several actions should be performed be
 >   credential:
 >     name: cloud-credentials
 >     key: cloud
-> ```
+>```
 
-For more comprehensive examples and to familiarize yourself with limitations and caveats
-please follow the link to the [official location documentation](https://velero.io/docs/v1.15/locations).
+> HINT:
+> For more comprehensive examples and to familiarize yourself with limitations and caveats
+> please follow the link to the [official location documentation](https://velero.io/docs/v1.15/locations).
 
 ### Create Backup
 
@@ -97,9 +98,9 @@ Optionally, set the name of the `BackupStorageLocation` `.spec.backup.storageLoc
 The default location is the `BackupStorageLocation` object with `.spec.default` set to `true`.
 
 > EXAMPLE: An example of the `ManagementBackup` object with a schedule and
-> the storage location and its status:
+> the storage location:
 >
-> ```yaml
+>```yaml
 > apiVersion: k0rdent.mirantis.com/v1alpha1
 > kind: ManagementBackup
 > metadata:
@@ -107,52 +108,23 @@ The default location is the `BackupStorageLocation` object with `.spec.default` 
 > spec:
 >   schedule: "0 */6 * * *"
 >   storageLocation: aws-s3
-> status:
->   lastBackup:
->     completionTimestamp: "2025-01-17T18:00:18Z"
->     expiration: "2025-02-16T18:00:12Z"
->     formatVersion: 1.1.0
->     hookStatus: {}
->     phase: Completed
->     progress:
->       itemsBackedUp: 78
->       totalItems: 78
->     startTimestamp: "2025-01-17T18:00:12Z"
->     version: 1
->   lastBackupName: kcm-20250117180012
->   lastBackupTime: "2025-01-17T18:00:12Z"
->   nextAttempt: "2025-01-18T00:00:00Z"
-> ```
+>```
 
 ## Backup on Demand
 
 To create a single backup of the `kcm`, a `ManagementBackup` object can be created
 manually, e.g. via the `kubectl` CLI. The object then creates only one instance of backup.
 
-> EXAMPLE: An example of a `ManagementBackup` object with its status:
+> EXAMPLE: An example of a `ManagementBackup` object:
 >
-> ```yaml
+>```yaml
 > apiVersion: k0rdent.mirantis.com/v1alpha1
 > kind: ManagementBackup
 > metadata:
 >   name: example-backup
 > spec:
 >   storageLocation: my-location
-> status:
->   lastBackup:
->     completionTimestamp: "2025-01-17T15:50:18Z"
->     expiration: "2025-02-16T15:50:12Z"
->     formatVersion: 1.1.0
->     hookStatus: {}
->     phase: Completed
->     progress:
->       itemsBackedUp: 78
->       totalItems: 78
->     startTimestamp: "2025-01-17T15:50:12Z"
->     version: 1
->   lastBackupName: example-backup
->   lastBackupTime: "2025-01-17T15:50:12Z"
-> ```
+>```
 
 ## What's Included in the Backup
 
@@ -160,7 +132,7 @@ The backup includes all of the `kcm` component resources, parts of the `cert-man
 components required for other components creation, and all the required resources
 of `CAPI` and `ClusterDeployment`s currently in use in the management cluster.
 
->EXAMPLE: An example set of labels, and objects satisfying these labels will
+> EXAMPLE: An example set of labels, and objects satisfying these labels will
 > be included in the backup:
 >
 >```text
@@ -172,11 +144,11 @@ of `CAPI` and `ClusterDeployment`s currently in use in the management cluster.
 > controller.cert-manager.io/fao="true"
 > helm.toolkit.fluxcd.io/name="cluster-deployment-name"
 > k0rdent.mirantis.com/component="kcm"
-> ```
+>```
 
 ## Restoration
 
-> NOTE: Caveats
+> NOTE: Caveats and limitations
 >
 > Please refer to the
 > [official migration documentation](https://velero.io/docs/v1.15/migration-case/#before-migrating-your-cluster)
@@ -206,37 +178,37 @@ performed:
 3. Restore the `kcm` system: either use the [velero CLI](https://velero.io/docs/v1.15/basic-install/#install-the-cli)
    or directly create [`Restore`](https://velero.io/docs/v1.15/api-types/restore/) object.
 
-> EXAMPLE: A `Restore` object:
->
-> ```yaml
-> apiVersion: velero.io/v1
-> kind: Restore
-> metadata:
->   name: <restore-name>
->   namespace: kcm-system
-> spec:
->   backupName: <backup-name>
->   excludedResources:
->   - nodes
->   - events
->   - events.events.k8s.io
->   - backups.velero.io
->   - restores.velero.io
->   - resticrepositories.velero.io
->   - csinodes.storage.k8s.io
->   - volumeattachments.storage.k8s.io
->   - backuprepositories.velero.io
->   existingResourcePolicy: update
->   hooks: {}
->   includedNamespaces:
->   - '*'
-> ```
+    > EXAMPLE: A `Restore` object:
+    >
+    >```yaml
+    > apiVersion: velero.io/v1
+    > kind: Restore
+    > metadata:
+    >   name: <restore-name>
+    >   namespace: kcm-system
+    > spec:
+    >   backupName: <backup-name>
+    >   excludedResources:
+    >   # the following are velero defaults, so it is recommended to keep them
+    >   - nodes
+    >   - events
+    >   - events.events.k8s.io
+    >   - backups.velero.io
+    >   - restores.velero.io
+    >   - resticrepositories.velero.io
+    >   - csinodes.storage.k8s.io
+    >   - volumeattachments.storage.k8s.io
+    >   - backuprepositories.velero.io
+    >   existingResourcePolicy: update
+    >   includedNamespaces:
+    >   - '*'
+    >```
 
-> EXAMPLE: A `velero` CLI command:
->
-> ```bash
-> velero --namespace kcm-system restore create <restore-name> --existing-resource-policy update --from-backup <backup-name>
->```
+    > EXAMPLE: A `velero` CLI command:
+    >
+    >```bash
+    > velero --namespace kcm-system restore create <restore-name> --existing-resource-policy update --from-backup <backup-name>
+    >```
 
 4. Wait until the `Restore` status is `Completed` and all `kcm` components are up and running.
 
