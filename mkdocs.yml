@@ -105,5 +105,7 @@ nav:
   - Disaster Recovery:
       - Overview: disaster-recovery/overview.md
       - Customization: disaster-recovery/customization.md
-  - Architecture: architecture.md
+  - Architecture:
+      - Overview: architecture/architecture.md
+      - k0rdent initialization process: architecture/initialization.md
   - Glossary: glossary.md

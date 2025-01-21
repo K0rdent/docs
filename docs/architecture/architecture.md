@@ -1,9 +1,6 @@
-# Architecture
-
+# Architectural Overview
 
 Below is a diagram that provides an overview of how k0rdent works.
-
-## Architectural Overview
 
 ```mermaid
 ---
