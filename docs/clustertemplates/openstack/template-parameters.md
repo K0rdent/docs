@@ -2,16 +2,50 @@
 
 ## ClusterDeployment Parameters
 
-To deploy an OpenStack cluster, the following parameters are critical in the `ClusterDeployment` resource:
+To deploy an OpenStack cluster, the following are the primary parameters in the `ClusterDeployment` resource:
 
-| Parameter                     | Example                               | Description                                         |
-|-------------------------------|---------------------------------------|-----------------------------------------------------|
-| `.spec.credential`            | `openstack-cluster-identity-cred`     | Reference to the Credential object.                 |
-| `.spec.template`              | `openstack-standalone-cp-0-0-1`       | Reference to the ClusterTemplate.                   |
-| `.spec.config.authURL`        | `https://keystone.yourorg.net/`       | Keystone authentication endpoint for OpenStack.     |
-| `.spec.config.controlPlaneNumber` | `3`                               | Number of control plane nodes.                      |
-| `.spec.config.workersNumber`  | `2`                                   | Number of worker nodes.                             |
-
+<table>
+  <thead>
+    <tr>
+      <th>Parameter</th>
+      <th>Example</th>
+      <th>Description</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td>.spec.credential</td>
+      <td><code>openstack-cluster-identity-cred</code></td>
+      <td>Reference to the Credential object.</td>
+    </tr>
+    <tr>
+      <td>.spec.template</td>
+      <td><code>openstack-standalone-cp-0-0-1</code></td>
+      <td>Reference to the ClusterTemplate.</td>
+    </tr>
+    <tr>
+      <td>.spec.config.authURL</td>
+      <td><code>https://keystone.yourorg.net/</code></td>
+      <td>Keystone authentication endpoint for OpenStack.</td>
+    </tr>
+    <tr>
+      <td>.spec.config.controlPlaneNumber</td>
+      <td><code>3</code></td>
+      <td>Number of control plane nodes.</td>
+    </tr>
+    <tr>
+      <td>.spec.config.workersNumber</td>
+      <td><code>2</code></td>
+      <td>Number of worker nodes.</td>
+    </tr>
+    <tr>
+      <td>.spec.config.clusterLabels<br>(optional)</td>
+      <td><code>k0rdent: demo</code></td>
+      <td>Labels to apply to the cluster. Used by <br>MultiClusterService.</td>
+    </tr>
+  </tbody>
+</table>
+ 
 ### SSH Configuration
 
 `sshPublicKey` is a reference name for an existing SSH key configured in OpenStack.
@@ -45,6 +79,8 @@ spec:
   template: openstack-standalone-cp-0-0-2
   credential: openstack-cluster-identity-cred
   config:
+    clusterLabels:
+      k0rdent: demo
     controlPlaneNumber: 1
     workersNumber: 1
     controlPlane:
