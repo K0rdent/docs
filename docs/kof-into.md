@@ -6,13 +6,7 @@ KOF provides enterprise-grade observability and FinOps capabilities for k0rdent-
 
 ## Architecture Components
 
-<figure>
-<img
-src="PR%20for%20KOF%20User%20Documentation-media/5e30a6ee9f256cce44b0c5b93958d51b06d13276.png"
-title="wikilink" alt="Pastedimage20250122175949.png" />
-<figcaption
-aria-hidden="true">Pastedimage20250122175949.png</figcaption>
-</figure>
+![kof-architecture](https://github.com/k0rdent/kof/blob/main/docs/otel.png)
 
 ### 1. Management Layer
 
