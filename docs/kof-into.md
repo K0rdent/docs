@@ -218,10 +218,10 @@ kubectl get pods -n grafana-system
 ## Architecture Diagram
 
     ┌───────────────────────┐
-    │    KOF Mothership    │
-    │ ┌─────────┐ ┌──────┐ │
-    │ │ Grafana │ │Promxy│ │
-    │ └─────────┘ └──────┘ │
+    │    KOF Mothership     │
+    │ ┌─────────┐ ┌──────┐  │
+    │ │ Grafana │ │Promxy│  │
+    │ └─────────┘ └──────┘  │
     └───────────┬───────────┘
                 │
         ┌───────┴───────┐
