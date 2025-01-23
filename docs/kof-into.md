@@ -48,7 +48,7 @@ KOF provides enterprise-grade observability and FinOps capabilities for k0rdent-
 
 ## 2. Storage Layer chart
 
-Deploys metrics and logs [VictoriaMetrics](https://victoriametrics.com/) storages.
+Deploys [VictoriaMetrics](https://victoriametrics.com/) storages for metrics and logs.
 
 - Grafana - storage-cluster scoped Grafana instance, deployed and configured with grafana-operator
 - vmcluster - metrics storage, ingestion, querying
