@@ -1,76 +1,150 @@
-# k0rdent Observability and FinOps (KOF)
+# k0rdent Observability and FinOps (kof)
 
 ## Overview
 
-[KOF](https://github.com/k0rdent/kof) provides enterprise-grade observability and FinOps capabilities for k0rdent-managed Kubernetes clusters. It enables centralized metrics, logging, and cost management through a unified OpenTelemetry-based architecture.
+[kof](https://github.com/k0rdent/kof) provides enterprise-grade observability
+and FinOps capabilities for k0rdent-managed Kubernetes clusters.
+It enables centralized metrics, logging, and cost management
+through a unified OpenTelemetry-based architecture.
 
-## Architecture Components
+## Architecture
 
-![kof-architecture](https://github.com/k0rdent/kof/blob/main/docs/otel.png)
+### High-level
 
-### 1. Management Layer
+3 layers: Management, Storage, Collection.
 
-- Centralized Grafana dashboard
-- Promxy for cross-cluster metrics aggregation
-- VictoriaMetrics for alerting and record rules
-- Service template deployment engine
+```
+           ┌────────────────┐
+           │   Management   │
+           │   UI, promxy   │
+           └────────┬───────┘
+                    │
+             ┌──────┴──────┐
+             │             │
+        ┌────┴─────┐ ┌─────┴────┐
+        │ Storage  │ │ Storage  │
+        │ region 1 │ │ region 2 │
+        └────┬─────┘ └─────┬────┘
+             │             │
+      ┌──────┴──────┐     ...
+      │             │
+┌─────┴─────┐ ┌─────┴─────┐
+│ Collect   │ │ Collect   │
+│ managed 1 │ │ managed 2 │
+└───────────┘ └───────────┘
+```
 
-### 2. Storage Layer
+### Mid-level
 
-- Regional VictoriaMetrics clusters
-- Dedicated Grafana instances
-- VMAuth authentication service
-- High-performance data retention
+Data flows up - from observed resources to centralized Grafana:
 
-### 3. Collection Layer
+```
+management cluster_____________________
+│                                     │
+│  kof-mothership chart_____________  │
+│  │                               │  │
+│  │ centralized Grafana & storage │  │
+│  │                               │  │
+│  │ promxy                        │  │
+│  │_______________________________│  │
+│_____________________________________│
 
-- OpenTelemetry collectors
-- Automated deployment across clusters
-- Secure metric and log collection
-- Efficient data routing
 
-## Prerequisites
+cloud 1...
+│
+│  region 1__________________________________________  region 2...
+│  │                                                │  │
+.  │  storage cluster_____________________          │  │
+.  │  │                                  │          │  │
+.  │  │  kof-storage chart_____________  │          │  .
+   │  │  │                            │  │          │  .
+   │  │  │ regional Grafana & storage │  │          │  .
+   │  │  │____________________________│  │          │
+   │  │__________________________________│          │
+   │                                                │
+   │                                                │
+   │  managed cluster 1_____________________  2...  │
+   │  │                                    │  │     │
+   │  │  kof-operators chart_____________  │  │     │
+   │  │  │                              │  │  │     │
+   │  │  │  opentelemetry-operator____  │  │  .     │
+   │  │  │  │                        │  │  │  .     │
+   │  │  │  │ OpenTelemetryCollector │  │  │  .     │
+   │  │  │  │________________________│  │  │        │
+   │  │  │                              │  │        │
+   │  │  │  prometheus-operator-crds    │  │        │
+   │  │  │______________________________│  │        │
+   │  │                                    │        │
+   │  │                                    │        │
+   │  │  kof-collectors chart________      │        │
+   │  │  │                          │      │        │
+   │  │  │ opencost                 │      │        │
+   │  │  │ kube-state-metrics       │      │        │
+   │  │  │ prometheus-node-exporter │      │        │
+   │  │  │__________________________│      │        │
+   │  │                                    │        │
+   │  │                                    │        │
+   │  │  observed resources                │        │
+   │  │____________________________________│        │
+   │________________________________________________│
+```
+
+### Low-level
+
+![kof-architecture](assets/kof/otel.png)
+
+## Helm Charts
+
+### kof-mothership
+
+- Centralized [Grafana](https://grafana.com/) dashboard, managed by [grafana-operator](https://github.com/grafana/grafana-operator)
+- Local [VictoriaMetrics](https://victoriametrics.com/) storage for alerting rules only, managed by [victoria-metrics-operator](https://docs.victoriametrics.com/operator/)
+- [Sveltos](https://projectsveltos.github.io/sveltos/) dashboard, automatic secret distribution
+- [cluster-api-visualizer](https://github.com/Jont828/cluster-api-visualizer) for insight into multicluster configuration
+- [k0rdent](https://github.com/k0rdent) service templates to deploy other charts to regional clusters
+- [Promxy](https://github.com/jacksontj/promxy) for aggregating Prometheus metrics from regional clusters
+
+### kof-storage
+
+- Regional [Grafana](https://grafana.com/) dashboard, managed by [grafana-operator](https://github.com/grafana/grafana-operator)
+- Regional [VictoriaMetrics](https://victoriametrics.com/) storage with main data, managed by [victoria-metrics-operator](https://docs.victoriametrics.com/operator/)
+  - [vmauth](https://docs.victoriametrics.com/vmauth/) entrypoint proxy for VictoriaMetrics components
+  - [vmcluster](https://docs.victoriametrics.com/operator/resources/vmcluster/) for high-available fault-tolerant version of VictoriaMetrics database
+  - [victoria-logs-single](https://github.com/VictoriaMetrics/helm-charts/tree/master/charts/victoria-logs-single) for high-performance, cost-effective, scalable logs storage
+- [external-dns](https://github.com/kubernetes-sigs/external-dns) to communicate with other clusters
+
+### kof-operators
+
+- [prometheus-operator-crds](https://github.com/prometheus-community/helm-charts/tree/main/charts/prometheus-operator-crds) Prometheus CRDs required to create OpenTelemetry collectors
+- [OpenTelemetry](https://opentelemetry.io/) [collectors](https://opentelemetry.io/docs/collector/) below, managed by [opentelemetry-operator](https://opentelemetry.io/docs/kubernetes/operator/)
+
+### kof-collectors
+
+- [prometheus-node-exporter](https://prometheus.io/docs/guides/node-exporter/) for hardware and OS metrics
+- [kube-state-metrics](https://github.com/kubernetes/kube-state-metrics) (KSM) for metrics about the state of Kubernetes objects
+- [OpenCost](https://www.opencost.io/) "shines a light into the black box of Kubernetes spend"
+
+## Demo
+
+### Grafana
+
+![grafana-demo](assets/kof/grafana-2025-01-14.gif)
+
+### Sveltos
+
+![sveltos-demo](assets/kof/sveltos-2025-01-22.gif)
+
+## Implementation Guide
+
+!!! WORK IN PROGRESS !!!
+
+### Prerequisites
 
 - k0rdent management cluster
 - Infrastructure provider credentials
 - Domain for service endpoints
 - cert-manager for SSL certificates
 - ingress-nginx controller
-
-------------------------------------------------------------------------
-
-## 1. Management Layer chart
-
-- central grafana interface
-- promxy to forward calls to multiple downstream regional metrics servers
-- local victoriametrics storage for alerting record rules
-- k0rdent helmchart definitions and service templates to deploy storage and collectors charts into managedclusters
-
-## 2. Storage Layer chart
-
-Deploys [VictoriaMetrics](https://victoriametrics.com/) storages for metrics and logs.
-
-- Grafana - storage-cluster scoped Grafana instance, deployed and configured with grafana-operator
-- vmcluster - metrics storage, ingestion, querying
-- vmlogs - logs storage
-- vmauth - auth frontend for metrics and logs ingestion and query services
-
-## 3. Collection Layer charts
-
-### a. Operators chart
-
-- opentelemetry-operator - [OpenTelemetry Operator](https://opentelemetry.io/docs/kubernetes/operator/)
-- prometheus-operator-crds - [Prometheus Operator](https://github.com/prometheus-community/helm-charts/tree/main/charts/prometheus-operator-crds)
-
-This chart pre-installs all required CRDs to create Opentelemetry Collectors for metrics and logs
-
-### b. Collectors chart
-
-- opentelemetry-collectors - [OpenTelemetry Collector](https://opentelemetry.io/docs/collector/) configured to monitor logs and metrics and send them to a storage cluster
-
-------------------------------------------------------------------------
-
-## Implementation Guide
 
 ### 1. Storage Cluster Deployment
 
@@ -214,25 +288,6 @@ kubectl get pods -n victoria-metrics
 # Monitor Grafana
 kubectl get pods -n grafana-system
 ```
-
-## Architecture Diagram
-
-    ┌───────────────────────┐
-    │    KOF Mothership     │
-    │ ┌─────────┐ ┌──────┐  │
-    │ │ Grafana │ │Promxy│  │
-    │ └─────────┘ └──────┘  │
-    └───────────┬───────────┘
-                │
-        ┌───────┴───────┐
-        │               │
-    ┌───┴───┐       ┌───┴───┐
-    │Storage│       │Storage│ Regional
-    └───┬───┘       └───┬───┘ Clusters
-        │               │
-    ┌───┴───┐       ┌───┴───┐
-    │Collect│       │Collect│ Managed
-    └───────┘       └───────┘ Clusters
 
 ## Resource Limits
 
