@@ -70,6 +70,8 @@ kind: Secret
 metadata:
   name: vsphere-cluster-identity-secret
   namespace: kcm-system
+  labels:
+    k0rdent.mirantis.com/component: "kcm"
 stringData:
   username: <user>
   password: <password>
@@ -93,6 +95,8 @@ apiVersion: infrastructure.cluster.x-k8s.io/v1beta1
 kind: VSphereClusterIdentity
 metadata:
   name: vsphere-cluster-identity
+  labels:
+    k0rdent.mirantis.com/component: "kcm"
 spec:
   secretName: vsphere-cluster-identity-secret
   allowedNamespaces:

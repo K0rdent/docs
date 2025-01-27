@@ -41,6 +41,8 @@ kind: Secret
 metadata:
   name: openstack-cloud-config
   namespace: kcm-system
+  labels:
+    k0rdent.mirantis.com/component: "kcm"
 stringData:
   clouds.yaml: |
     clouds:

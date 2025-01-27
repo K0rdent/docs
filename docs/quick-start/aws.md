@@ -76,6 +76,8 @@ kind: Secret
 metadata:
   name: aws-cluster-identity-secret
   namespace: kcm-system
+  labels:
+    k0rdent.mirantis.com/component: "kcm"
 type: Opaque
 stringData:
   AccessKeyID: AKIAQF+EXAMPLE
@@ -112,6 +114,8 @@ apiVersion: infrastructure.cluster.x-k8s.io/v1beta2
 kind: AWSClusterStaticIdentity
 metadata:
   name: aws-cluster-identity
+  labels:
+    k0rdent.mirantis.com/component: "kcm"
 spec:
   secretRef: aws-cluster-identity-secret
   allowedNamespaces:

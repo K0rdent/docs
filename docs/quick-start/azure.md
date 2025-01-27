@@ -106,6 +106,8 @@ kind: Secret
 metadata:
   name: azure-cluster-identity-secret
   namespace: kcm-system
+  labels:
+    k0rdent.mirantis.com/component: "kcm"
 stringData:
   clientSecret: <password> # Password retrieved from the Service Principal
 type: Opaque
@@ -134,6 +136,7 @@ kind: AzureClusterIdentity
 metadata:
   labels:
     clusterctl.cluster.x-k8s.io/move-hierarchy: "true"
+    k0rdent.mirantis.com/component: "kcm"
   name: azure-cluster-identity
   namespace: kcm-system
 spec:
