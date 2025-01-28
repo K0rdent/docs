@@ -10,8 +10,8 @@ In order to adopt an existing Kubernetes cluster you will require the following:
 
 ## Installation
 
-
 ### Step 1: Create the credential
+
 Create a `Credential` object with all credentials required per the
   [Credential System](../credential/main.md).
 
@@ -42,11 +42,11 @@ Create a `Credential` object with all credentials required per the
 >
 > Substitute the parameters enclosed in angle brackets with the corresponding
 > values. Enable the `dryRun` flag if required. For details, see
-> [Dry Run](#dry-run).
+> [Dry Run](create-cluster-deployment.md#dry-run).
 
 Following is an interpolated example.
 
-> EXAMPLE: `ClusterDeployment` 
+> EXAMPLE: `ClusterDeployment`
 >
 > ```yaml
 > apiVersion: k0rdent.mirantis.com/v1alpha1
@@ -60,7 +60,6 @@ Following is an interpolated example.
 >   dryRun: true
 >   config: {}
 > ```
-
 
 ### Step 4: Apply the `ClusterDeployment` Configuration to Create it
 
