@@ -77,6 +77,7 @@ nav:
     - OpenStack: quick-start/openstack.md
   - Usage:
       - Installation Guide: usage/installation.md
+      - Extended Management Configuration: usage/management-configuration.md
       - Adopting Existing Clusters Guide: usage/adopt-existing-cluster.md
 #     - Air-gapped Installation Guide: usage/airgap.md
       - Create Cluster Deployment: usage/create-cluster-deployment.md

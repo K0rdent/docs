@@ -29,10 +29,14 @@ kind: Management
 metadata:
   name: kcm
 spec:
+  core:
+    capi: {}
+    kcm: {}
   providers:
   - name: k0smotron
   - name: cluster-api-provider-aws
   - name: cluster-api-provider-azure
+  - name: cluster-api-provider-openstack
   - name: cluster-api-provider-vsphere
   - name: projectsveltos
 release: kcm-0-0-7
@@ -40,27 +44,9 @@ release: kcm-0-0-7
 To see what is included in a specific release, look at the `release.yaml` file in the tagged release.
 For example, here is the [v0.0.7 release.yaml](https://github.com/k0rdent/kcm/releases/download/v0.0.7/release.yaml).
 
-There are two options to override the default management configuration of k0rdent:
-
-1. Update the `Management` object after the k0rdent installation using `kubectl`:
-
-    `kubectl --kubeconfig <path-to-management-kubeconfig> edit management`
-
-2. Deploy k0rdent skipping the default `Management` object creation and provide your
-   own `Management` configuration:
-
-	- Create `management.yaml` file and configure core components and providers.
-	- Specify `--create-management=false` controller argument and install k0rdent:
-	  If installing using `helm` add the following parameter to the `helm
-	  install` command:
-
-		  `--set="controller.createManagement=false"`
-
-	- Create `kcm` `Management` object after k0rdent installation:
-
-           ```bash
-           kubectl --kubeconfig <path-to-management-kubeconfig> create -f management.yaml
-           ```
+You can optionally customize the default k0rdent configuration, such as [specifying a custom OCI registry for the 
+KCM core components](management-configuration.md#configuring-a-custom-oci-registry-for-kcm-components).
+For more information on how to do this, refer to [Extended Management Configuration](management-configuration.md).
 
 ## Air-gapped installation
 
