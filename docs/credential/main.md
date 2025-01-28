@@ -75,9 +75,14 @@ to pass all necessary credentials. This approach has several problems:
 - Possible leaks, since credentials are copied to several `Secret` objects
   related to bootstrap data.
 
-To solve these problems in k0rdent we're using special controller which
-aggregates all necessary data from CAPI provider resources (like
-`ClusterIdentity`) and creates secrets directly on the cluster deployment.
+To solve these problems in k0rdent we're using Sveltos controller which can
+render CCM template with all necessary data from CAPI provider resources (like
+`ClusterIdentity`) and can create secrets directly on the cluster deployment.
+
+> NOTE:
+> CCM template examples can be found in `*-credentials.yaml` [here](https://github.com/k0rdent/kcm/tree/main/config/dev).
+> Look for ConfigMap object that has `projectsveltos.io/template: "true"`
+> annotation and `*-resource-template` object name.
 
 This eliminates the need to pass anything credentials-related to `cloud-init`
 and makes it possible to rotate credentials automatically without the need for
@@ -127,7 +132,6 @@ automatically generates the cloud-config required by OpenStack’s cloud-control
 
 For more details, refer to the [kcm OpenStack Credential Propagation doc](https://github.com/k0rdent/kcm/blob/main/docs/dev.md#openstack).
 
-
 #### Adopted cluster
 
 Credentials for adopted clusters consist of a secret containing a kubeconfig file to access the existing kubernetes cluster. 
@@ -136,7 +140,7 @@ a secret which contains the kubeconfig for an adopted cluster. To create this se
 for the cluster that is being adopted and then run the following command to base64 encode it:
 
 ```shell
-cat kubeconfig | base64 -d -w 0
+cat kubeconfig | base64 -w 0
 ```
 
 Once you have obtained a base64 encoded kubeconfig file create a secret:
@@ -151,3 +155,4 @@ metadata:
   namespace: <namespace>
 type: Opaque
 ```
+

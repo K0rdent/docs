@@ -55,9 +55,10 @@ Following is an interpolated example.
 >   name: my-cluster
 >   namespace: kcm-system
 > spec:
->   template: adotped-cluster-0-0-1
+>   template: adotped-cluster-0-0-2
 >   credential: my-cluster-credential
 >   dryRun: true
+>   config: {}
 > ```
 
 
