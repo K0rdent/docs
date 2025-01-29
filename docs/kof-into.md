@@ -47,6 +47,12 @@ management cluster_____________________
 │  │                               │  │
 │  │ promxy                        │  │
 │  │_______________________________│  │
+│                                     │
+│  kof-operators chart_____________   │
+│  │                              │   │
+│  │  opentelemetry-operator      │   │
+│  │  prometheus-operator-crds    │   │
+│  │______________________________│   │
 │_____________________________________│
 
 
@@ -115,7 +121,7 @@ cloud 1...
 
 ### kof-operators
 
-- [prometheus-operator-crds](https://github.com/prometheus-community/helm-charts/tree/main/charts/prometheus-operator-crds) required to create OpenTelemetry collectors
+- [prometheus-operator-crds](https://github.com/prometheus-community/helm-charts/tree/main/charts/prometheus-operator-crds) required to create OpenTelemetry collectors, also required to monitor `kof-mothership` itself
 - [OpenTelemetry](https://opentelemetry.io/) [collectors](https://opentelemetry.io/docs/collector/) below, managed by [opentelemetry-operator](https://opentelemetry.io/docs/kubernetes/operator/)
 
 ### kof-collectors
@@ -124,129 +130,399 @@ cloud 1...
 - [kube-state-metrics](https://github.com/kubernetes/kube-state-metrics) (KSM) for metrics about the state of Kubernetes objects
 - [OpenCost](https://www.opencost.io/) "shines a light into the black box of Kubernetes spend"
 
-## Demo
-
-### Grafana
-
-![grafana-demo](assets/kof/grafana-2025-01-14.gif)
-
-### Sveltos
-
-![sveltos-demo](assets/kof/sveltos-2025-01-22.gif)
-
-## Implementation Guide
-
-!!! WORK IN PROGRESS !!!
+## Installation
 
 ### Prerequisites
 
-- k0rdent management cluster
-- Infrastructure provider credentials
-- Domain for service endpoints
-- cert-manager for SSL certificates
-- ingress-nginx controller
+- Kubernetes cluster, e.g. [k0s](https://docs.k0sproject.io/stable/install/) or `kind create cluster -n k0rdent`
+- k0rdent management cluster - [installation guide](https://k0rdent.github.io/docs/quick-start/installation/)
+- Infrastructure provider credentials, e.g. [guide for AWS](https://k0rdent.github.io/docs/quick-start/aws/)
+  - Skip the "Create Your First Cluster Deployment" section
+- Access to create DNS records for service endpoints, e.g. `kof.example.com`
 
-### 1. Storage Cluster Deployment
+### DNS auto-config
 
-``` yaml
-apiVersion: kcm.mirantis.com/v1alpha1
+To avoid [manual configuration of DNS records for service endpoints](#manual-dns-config) later,
+you can automate it now, e.g. for AWS:
+
+- Create `external-dns` IAM user with [this policy](https://github.com/kubernetes-sigs/external-dns/blob/master/docs/tutorials/aws.md#iam-policy).
+
+- Create `external-dns-aws-credentials` file,
+  replacing `REDACTED` with the keys of this IAM user:
+  ```
+  [default]
+  aws_access_key_id = REDACTED
+  aws_secret_access_key = REDACTED
+  ```
+
+- Create `external-dns-aws-credentials` secret:
+  ```bash
+  kubectl create namespace kof
+  kubectl create secret generic \
+    -n kof external-dns-aws-credentials \
+    --from-file external-dns-aws-credentials
+  ```
+
+### Variables
+
+Set your own values:
+```bash
+STORAGE_CLUSTER_NAME=cloud1-region1
+MANAGED_CLUSTER_NAME=$STORAGE_CLUSTER_NAME-managed1
+STORAGE_DOMAIN=$STORAGE_CLUSTER_NAME.kof.example.com
+ADMIN_EMAIL=$(git config user.email)
+echo "$STORAGE_CLUSTER_NAME, $MANAGED_CLUSTER_NAME, $STORAGE_DOMAIN, $ADMIN_EMAIL"
+```
+
+### Management Cluster
+
+- Add kof helm repo to the k0rdent management cluster:
+  ```bash
+  helm repo add kof https://k0rdent.github.io/kof
+  helm repo update
+  helm search repo kof/
+  ```
+  It should list the [helm charts](#helm-charts) described above.
+
+- Install `kof-operators` required by `kof-mothership`:
+  ```bash
+  helm upgrade -i --create-namespace -n kof kof-operators kof/kof-operators
+  ```
+
+- Verify the [variables](#variables):
+  ```bash
+  echo "$STORAGE_CLUSTER_NAME, $MANAGED_CLUSTER_NAME, $STORAGE_DOMAIN, $ADMIN_EMAIL"
+  ```
+
+- Install `kof-mothership`:
+  ```bash
+  helm upgrade -i -n kof kof-mothership kof/kof-mothership \
+    --set kcm.installTemplates=true \
+    --set-json 'grafana.logSources=[{
+      "name": "'$STORAGE_CLUSTER_NAME'",
+      "url": "https://vmauth.'$STORAGE_DOMAIN'/vls",
+      "type": "victoriametrics-logs-datasource",
+      "auth": {
+        "credentials_secret_name": "storage-vmuser-credentials",
+        "username_key": "username",
+        "password_key": "password"
+    }}]' \
+    --set-json 'kcm.kof.clusterProfiles.kof-aws-dns-secrets={
+      "matchLabels": {"k0rdent.mirantis.com/kof-aws-dns-secrets": "true"},
+      "secrets": ["external-dns-aws-credentials"]
+    }'
+
+  helm get values -n kof kof-mothership
+  ```
+
+  Why we override some [default values](https://github.com/k0rdent/kof/blob/main/charts/kof-mothership/values.yaml) here:
+  - `kcm.installTemplates` installs the templates like `cert-manager` and `kof-storage` into the management cluster. This allows to reference them from `.spec.serviceSpec.services[].template` in AWS `ClusterDeployment` below.
+  - `grafana.logSources` are configured to use your `STORAGE_CLUSTER_NAME` and `STORAGE_DOMAIN`.
+  - `storage-vmuser-credentials` secret is auto-created by default and auto-distributed to other clusters by Sveltos `ClusterProfile` [here](https://github.com/k0rdent/kof/blob/121b61f5f6de6ddfdf3525b98f3ad4cb8ce57eaa/charts/kof-mothership/values.yaml#L25-L31).
+  - `external-dns-aws-credentials` secret created in [DNS auto-config](#dns-auto-config) section is auto-distributed to storage clusters by Sveltos.
+  - `grafana-admin-credentials` secret is auto-created by default [here](https://github.com/k0rdent/kof/blob/121b61f5f6de6ddfdf3525b98f3ad4cb8ce57eaa/charts/kof-mothership/values.yaml#L64-L65). We will use it in the [Grafana](#grafana) section.
+
+- Check the pods:
+  ```bash
+  kubectl get pod -n kof
+  ```
+  All pods should be `Running` except the `kof-mothership-promxy`:
+  it is waiting for `kof-mothership-promxy-config` secret
+  that will be auto-created and updated by `kof-mothership-promxy-operator`
+  on deployment of storage clusters below.
+
+### Storage Cluster
+
+- Look through the [default values](https://github.com/k0rdent/kof/blob/main/charts/kof-storage/values.yaml) of `kof-storage` chart.
+- Apply the next quick start example for AWS, or use it as a reference.
+
+- Verify the [variables](#variables):
+  ```bash
+  echo "$STORAGE_CLUSTER_NAME, $MANAGED_CLUSTER_NAME, $STORAGE_DOMAIN, $ADMIN_EMAIL"
+  ```
+
+- Compose the Storage `ClusterDeployment`:
+
+```bash
+cat >storage-cluster.yaml <<EOF
+apiVersion: k0rdent.mirantis.com/v1alpha1
 kind: ClusterDeployment
 metadata:
-  name: kof-storage-cluster
+  name: $STORAGE_CLUSTER_NAME
+  namespace: kcm-system
+  labels:
+    kof: storage
+spec:
+  template: aws-standalone-cp-0-0-5
+  credential: aws-cluster-identity-cred
+  config:
+    clusterIdentity:
+      name: aws-cluster-identity
+      namespace: kcm-system
+    controlPlane:
+      instanceType: t3.large
+    controlPlaneNumber: 1
+    publicIP: true
+    region: us-east-2
+    worker:
+      instanceType: t3.medium
+    workersNumber: 3
+    clusterLabels:
+      k0rdent.mirantis.com/kof-storage-secrets: "true"
+      k0rdent.mirantis.com/kof-aws-dns-secrets: "true"
+  serviceSpec:
+    priority: 100
+    services:
+      - template: ingress-nginx-4-11-3
+        name: ingress-nginx
+        namespace: ingress-nginx
+      - name: cert-manager
+        namespace: cert-manager
+        template: cert-manager
+        values: |
+          crds:
+            enabled: true
+      - name: kof-storage
+        namespace: kof
+        template: kof-storage
+        values: |
+          external-dns:
+            enabled: true
+          victoriametrics:
+            vmauth:
+              ingress:
+                host: vmauth.$STORAGE_DOMAIN
+            security:
+              username_key: username
+              password_key: password
+              credentials_secret_name: storage-vmuser-credentials
+          grafana:
+            ingress:
+              host: grafana.$STORAGE_DOMAIN
+            security:
+              credentials_secret_name: grafana-admin-credentials
+          cert-manager:
+            email: $ADMIN_EMAIL
+---
+apiVersion: kof.k0rdent.mirantis.com/v1alpha1
+kind: PromxyServerGroup
+metadata:
+  labels:
+    app.kubernetes.io/name: promxy-operator
+    k0rdent.mirantis.com/promxy-secret-name: kof-mothership-promxy-config
+  name: promxyservergroup-sample
   namespace: kof
 spec:
-  template: kof-storage
-  config:
-    ingress:
-      vmauth:
-        host: vmauth.storage.example.com
-      grafana:
-        host: grafana.storage.example.com
-    retention:
-      metrics: 30d
-      logs: 14d
-    storage:
-      class: standard
-      size: 100Gi
+  cluster_name: $STORAGE_CLUSTER_NAME
+  targets:
+    - "vmauth.$STORAGE_DOMAIN:443"
+  path_prefix: /vm/select/0/prometheus/
+  scheme: https
+  http_client:
+    dial_timeout: "5s"
+    tls_config:
+      insecure_skip_verify: true
+    basic_auth:
+      credentials_secret_name: storage-vmuser-credentials
+      username_key: username
+      password_key: password
+EOF
 ```
 
-### 2. Collector Deployment
+- Verify and apply the Storage `ClusterDeployment`:
+  ```bash
+  cat storage-cluster.yaml
 
-``` yaml
-apiVersion: kcm.mirantis.com/v1alpha1
+  kubectl apply -f storage-cluster.yaml
+  ```
+
+- Watch how cluster is deployed to AWS until all `READY` are `True`:
+  ```bash
+  clusterctl describe cluster -n kcm-system $STORAGE_CLUSTER_NAME --show-conditions all
+  ```
+
+### Managed Cluster
+
+- Look through the default values of [kof-operators](https://github.com/k0rdent/kof/blob/main/charts/kof-operators/values.yaml)
+  and [kof-collectors](https://github.com/k0rdent/kof/blob/main/charts/kof-collectors/values.yaml) charts.
+
+- Apply the next quick start example for AWS, or use it as a reference.
+
+- Verify the [variables](#variables):
+  ```bash
+  echo "$STORAGE_CLUSTER_NAME, $MANAGED_CLUSTER_NAME, $STORAGE_DOMAIN, $ADMIN_EMAIL"
+  ```
+
+- Compose the Managed `ClusterDeployment`:
+
+```bash
+cat >managed-cluster.yaml <<EOF
+apiVersion: k0rdent.mirantis.com/v1alpha1
 kind: ClusterDeployment
 metadata:
-  name: kof-collector
-  namespace: kof
+  name: $MANAGED_CLUSTER_NAME
+  namespace: kcm-system
+  labels:
+    kof: collector
 spec:
-  template: kof-collectors
+  credential: aws-cluster-identity-cred
   config:
-    storage:
-      endpoint: vmauth.storage.example.com
-    collection:
-      logLevel: info
-      metrics:
-        scrapeInterval: 30s
-      logs:
-        excludePaths: 
-          - /var/log/lastlog
-          - /var/log/tallylog
+    clusterIdentity:
+      name: aws-cluster-identity
+      namespace: kcm-system
+    controlPlane:
+      instanceType: t3.large
+    controlPlaneNumber: 1
+    publicIP: false
+    region: us-east-2
+    worker:
+      instanceType: t3.small
+    workersNumber: 3
+    clusterLabels:
+      k0rdent.mirantis.com/kof-storage-secrets: "true"
+  template: aws-standalone-cp-0-0-5
+  serviceSpec:
+    priority: 100
+    services:
+      - template: cert-manager
+        name: cert-manager
+        namespace: kof
+        values: |
+          crds:
+            enabled: true
+      - template: kof-operators
+        name: kof-operators
+        namespace: kof
+      - template: kof-collectors
+        name: kof-collectors
+        namespace: kof
+        values: |
+          global:
+            clusterName: $MANAGED_CLUSTER_NAME
+          opencost:
+            enabled: true
+            opencost:
+              prometheus:
+                username_key: username
+                password_key: password
+                existingSecretName: storage-vmuser-credentials
+                external:
+                  url: https://vmauth.$STORAGE_DOMAIN/vm/select/0/prometheus
+              exporter:
+                defaultClusterId: $MANAGED_CLUSTER_NAME
+          kof:
+            logs:
+              username_key: username
+              password_key: password
+              credentials_secret_name: storage-vmuser-credentials
+              endpoint: https://vmauth.$STORAGE_DOMAIN/vls/insert/opentelemetry/v1/logs
+            metrics:
+              username_key: username
+              password_key: password
+              credentials_secret_name: storage-vmuser-credentials
+              endpoint: https://vmauth.$STORAGE_DOMAIN/vm/insert/0/prometheus/api/v1/write
+EOF
 ```
 
-### 3. Access Configuration
+- Verify and apply the Managed `ClusterDeployment`:
+  ```bash
+  cat managed-cluster.yaml
 
-#### Grafana Setup
+  kubectl apply -f managed-cluster.yaml
+  ```
 
-1.  Retrieve access credentials:
+- Watch how cluster is deployed to AWS until all `READY` are `True`:
+  ```bash
+  clusterctl describe cluster -n kcm-system $MANAGED_CLUSTER_NAME --show-conditions all
+  ```
 
-``` bash
-kubectl get secret -n kof grafana-admin-credentials -o jsonpath="{.data.GF_SECURITY_ADMIN_USER}" | base64 -d
-kubectl get secret -n kof grafana-admin-credentials -o jsonpath="{.data.GF_SECURITY_ADMIN_PASSWORD}" | base64 -d
+### Verification
+
+```bash
+kubectl get secret -n kcm-system $STORAGE_CLUSTER_NAME-kubeconfig \
+  -o=jsonpath={.data.value} | base64 -d > storage-kubeconfig
+
+kubectl get secret -n kcm-system $MANAGED_CLUSTER_NAME-kubeconfig \
+  -o=jsonpath={.data.value} | base64 -d > managed-kubeconfig
+
+KUBECONFIG=storage-kubeconfig kubectl get pod -A
+KUBECONFIG=managed-kubeconfig kubectl get pod -A
+```
+Wait for all pods to become `Running`.
+
+### Manual DNS config
+
+If you've opted out of [DNS auto-config](#dns-auto-config) then:
+
+- Get the `EXTERNAL-IP` of `ingress-nginx`:
+  ```bash
+  KUBECONFIG=storage-kubeconfig kubectl get svc -n ingress-nginx ingress-nginx-controller
+  ```
+  It should look like `REDACTED.us-east-2.elb.amazonaws.com`
+
+- Create the next DNS records of type `A` both pointing to that `EXTERNAL-IP`:
+  ```bash
+  echo vmauth.$STORAGE_DOMAIN
+  echo grafana.$STORAGE_DOMAIN
+  ```
+
+## Sveltos
+
+Use [Sveltos dashboard](https://projectsveltos.github.io/sveltos/getting_started/install/dashboard/#platform-administrator-example)
+to verify secrets auto-distributed to required clusters:
+
+```bash
+kubectl create sa platform-admin
+kubectl create clusterrolebinding platform-admin-access \
+  --clusterrole cluster-admin --serviceaccount default:platform-admin
+
+kubectl create token platform-admin --duration=24h
+kubectl port-forward -n kof svc/dashboard 8081:80
 ```
 
-2.  Configure data sources:
+- Open http://127.0.0.1:8081/login and paste the token printed above.
+- Open the `ClusterAPI` tab: http://127.0.0.1:8081/sveltos/clusters/ClusterAPI/1
+- Check both storage and managed clusters:
+  - Cluster profiles should be `Provisioned`.
+  - Secrets should be distributed.
 
-``` yaml
-apiVersion: grafana.integreatly.org/v1beta1
-kind: GrafanaDatasource
-metadata:
-  name: metrics
-spec:
-  name: VictoriaMetrics
-  type: prometheus
-  access: proxy
-  url: http://vmcluster-vmselect.victoria-metrics:8481/select/0/prometheus
-```
+![sveltos-demo](assets/kof/sveltos-2025-01-22.gif)
 
-## Dashboard Organization
+## Grafana
 
-- Login to <http://127.0.0.1:3000/dashboards> with user/pass printed above.
+- Get Grafana username and password:
+  ```bash
+  kubectl get secret -n kof grafana-admin-credentials -o yaml | yq '{
+    "user": .data.GF_SECURITY_ADMIN_USER | @base64d,
+    "pass": .data.GF_SECURITY_ADMIN_PASSWORD | @base64d
+  }'
+  ```
 
-- Open a dashboard.
+- Start Grafana dashboard:
+  ```bash
+  kubectl port-forward -n kof svc/grafana-vm-service 3000:3000
+  ```
 
-  <figure>
-  <img
-  src="PR%20for%20KOF%20User%20Documentation-media/f1c073c2c9425975198ac4c3d212d0eb7910145f.png"
-  title="wikilink" alt="Pastedimage20250122181247.png" />
-  <figcaption
-  aria-hidden="true">Pastedimage20250122181247.png</figcaption>
-  </figure>
+- Login to http://127.0.0.1:3000/dashboards with user/pass printed above.
+- Open a dashboard:
 
-### 1. Cluster Overview
+![grafana-demo](assets/kof/grafana-2025-01-14.gif)
+
+### Cluster Overview
 
 - Health metrics
 - Resource utilization
 - Performance trends
 - Cost analysis
 
-### 2. Logging Interface
+### Logging Interface
 
 - Real-time log streaming
 - Full-text search
 - Log aggregation
 - Alert correlation
 
-### 3. Cost Management
+### Cost Management
 
 - Resource cost tracking
 - Usage analysis
@@ -257,15 +533,15 @@ spec:
 
 ### Regional Expansion
 
-1.  Deploy storage clusters in new regions
-2.  Update Promxy configuration
-3.  Configure collector routing
+- Deploy [Storage Cluster](#storage-cluster) in new region
+- Update promxy configuration
+- Configure collector routing
 
-### Cluster Addition
+### Managed Cluster Addition
 
-1.  Apply collector template
-2.  Verify data flow
-3.  Configure custom dashboards
+- Apply templates as in [Managed Cluster](#managed-cluster) section
+- Verify data flow
+- Configure custom dashboards
 
 ## Maintenance
 
@@ -278,50 +554,76 @@ spec:
 
 ### Health Monitoring
 
-``` bash
-# Check collector status
-kubectl get pods -n opentelemetry-system
+- Apply [Verification](#verification) section
+- Apply [Sveltos](#sveltos) section
 
-# Verify storage components  
-kubectl get pods -n victoria-metrics
+### Uninstallation
 
-# Monitor Grafana
-kubectl get pods -n grafana-system
+```bash
+kubectl delete -f managed-cluster.yaml
+kubectl delete -f storage-cluster.yaml
+helm uninstall -n kof kof-mothership
 ```
 
 ## Resource Limits
 
-### Storage Clusters
+### Resources of Management Cluster
 
-``` yaml
-resources:
-  vmcluster:
-    limits:
-      cpu: 4
-      memory: 8Gi
+- [promxy](https://github.com/k0rdent/kof/blob/121b61f5f6de6ddfdf3525b98f3ad4cb8ce57eaa/charts/kof-mothership/values.yaml#L120-L126):
+  ```yaml
+  resources:
     requests:
-      cpu: 2
-      memory: 4Gi
-```
-
-### Collectors
-
-``` yaml
-resources:
-  collector:
+      cpu: 100m
+      memory: 128Mi
     limits:
-      cpu: 1
-      memory: 1Gi
+      cpu: 100m
+      memory: 128Mi
+  ```
+
+- [promxy-deployment](https://github.com/k0rdent/kof/blob/121b61f5f6de6ddfdf3525b98f3ad4cb8ce57eaa/charts/kof-mothership/templates/promxy/promxy-deployment.yaml#L107-L113):
+  ```yaml
+  resources:
     requests:
-      cpu: 200m
-      memory: 512Mi
-```
+      cpu: 0.02
+      memory: 20Mi
+    limits:
+      cpu: 0.02
+      memory: 20Mi
+  ```
+
+- [promxy-operator](https://github.com/k0rdent/kof/blob/121b61f5f6de6ddfdf3525b98f3ad4cb8ce57eaa/promxy-operator/config/manager/manager.yaml#L87-L93):
+  ```yaml
+  resources:
+    limits:
+      cpu: 500m
+      memory: 128Mi
+    requests:
+      cpu: 10m
+      memory: 64Mi
+  ```
+
+### Resources of Managed Cluster
+
+- [opentelemetry](https://github.com/k0rdent/kof/blob/121b61f5f6de6ddfdf3525b98f3ad4cb8ce57eaa/charts/kof-collectors/templates/opentelemetry/instrumentation.yaml#L18-L22):
+  ```yaml
+  resourceRequirements:
+    limits:
+      memory: 128Mi
+    requests:
+      memory: 128Mi
+  ```
 
 ## Version Compatibility
 
 | Component       | Version  | Notes                         |
 |-----------------|----------|-------------------------------|
-| k0rdent         | ≥ 1.0.0  | Required for template support |
-| Kubernetes      | ≥ 1.24   | Earlier versions untested     |
-| OpenTelemetry   | ≥ 0.81.0 | Recommended minimum           |
-| VictoriaMetrics | ≥ 1.91.0 | Required for clustering       |
+| k0rdent         | ≥ 0.0.7  | Required for template support |
+| Kubernetes      | ≥ 1.32   | Earlier versions untested     |
+| OpenTelemetry   | ≥ 0.75   | Recommended minimum           |
+| VictoriaMetrics | ≥ 0.40   | Required for clustering       |
+
+Detailed:
+- [kof-mothership](https://github.com/k0rdent/kof/blob/main/charts/kof-mothership/Chart.yaml)
+- [kof-storage](https://github.com/k0rdent/kof/blob/main/charts/kof-storage/Chart.yaml)
+- [kof-operators](https://github.com/k0rdent/kof/blob/main/charts/kof-operators/Chart.yaml)
+- [kof-collectors](https://github.com/k0rdent/kof/blob/main/charts/kof-collectors/Chart.yaml)
