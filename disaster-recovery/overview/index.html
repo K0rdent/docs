@@ -1,0 +1,2326 @@
+
+<!doctype html>
+<html lang="en" class="no-js">
+  <head>
+    
+      <meta charset="utf-8">
+      <meta name="viewport" content="width=device-width,initial-scale=1">
+      
+      
+        <meta name="author" content="Mirantis">
+      
+      
+      
+        <link rel="prev" href="../../rbac/roles/">
+      
+      
+        <link rel="next" href="../customization/">
+      
+      
+      <link rel="icon" href="../../assets/favicon.ico">
+      <meta name="generator" content="mkdocs-1.6.1, mkdocs-material-9.5.50">
+    
+    
+      
+        <title>Overview - k0rdent</title>
+      
+    
+    
+      <link rel="stylesheet" href="../../assets/stylesheets/main.a40c8224.min.css">
+      
+        
+        <link rel="stylesheet" href="../../assets/stylesheets/palette.06af60db.min.css">
+      
+      
+
+
+    
+    
+      
+    
+    
+      
+        
+        
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+        <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Overpass:300,300i,400,400i,700,700i%7CRoboto+Mono:400,400i,700,700i&display=fallback">
+        <style>:root{--md-text-font:"Overpass";--md-code-font:"Roboto Mono"}</style>
+      
+    
+    
+      <link rel="stylesheet" href="../../stylesheets/extra.css">
+    
+    <script>__md_scope=new URL("../..",location),__md_hash=e=>[...e].reduce(((e,_)=>(e<<5)-e+_.charCodeAt(0)),0),__md_get=(e,_=localStorage,t=__md_scope)=>JSON.parse(_.getItem(t.pathname+"."+e)),__md_set=(e,_,t=localStorage,a=__md_scope)=>{try{t.setItem(a.pathname+"."+e,JSON.stringify(_))}catch(e){}}</script>
+    
+      
+
+    
+    
+    
+  </head>
+  
+  
+    
+    
+      
+    
+    
+    
+    
+    <body dir="ltr" data-md-color-scheme="default" data-md-color-primary="custom" data-md-color-accent="indigo">
+  
+    
+    <input class="md-toggle" data-md-toggle="drawer" type="checkbox" id="__drawer" autocomplete="off">
+    <input class="md-toggle" data-md-toggle="search" type="checkbox" id="__search" autocomplete="off">
+    <label class="md-overlay" for="__drawer"></label>
+    <div data-md-component="skip">
+      
+        
+        <a href="#disaster-recovery-feature-overview" class="md-skip">
+          Skip to content
+        </a>
+      
+    </div>
+    <div data-md-component="announce">
+      
+    </div>
+    
+    
+      
+
+  
+
+<header class="md-header md-header--shadow md-header--lifted" data-md-component="header">
+  <nav class="md-header__inner md-grid" aria-label="Header">
+    <a href="../.." title="k0rdent" class="md-header__button md-logo" aria-label="k0rdent" data-md-component="logo">
+      
+  <img src="../../assets/mirantis-logo-inverted-horizontal-one-color.svg" alt="logo">
+
+    </a>
+    <label class="md-header__button md-icon" for="__drawer">
+      
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M3 6h18v2H3zm0 5h18v2H3zm0 5h18v2H3z"/></svg>
+    </label>
+    <div class="md-header__title" data-md-component="header-title">
+      <div class="md-header__ellipsis">
+        <div class="md-header__topic">
+          <span class="md-ellipsis">
+            k0rdent
+          </span>
+        </div>
+        <div class="md-header__topic" data-md-component="header-topic">
+          <span class="md-ellipsis">
+            
+              Overview
+            
+          </span>
+        </div>
+      </div>
+    </div>
+    
+      
+        <form class="md-header__option" data-md-component="palette">
+  
+    
+    
+    
+    <input class="md-option" data-md-color-media="" data-md-color-scheme="default" data-md-color-primary="custom" data-md-color-accent="indigo"  aria-label="Switch to dark mode"  type="radio" name="__palette" id="__palette_0">
+    
+      <label class="md-header__button md-icon" title="Switch to dark mode" for="__palette_1" hidden>
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a4 4 0 0 0-4 4 4 4 0 0 0 4 4 4 4 0 0 0 4-4 4 4 0 0 0-4-4m0 10a6 6 0 0 1-6-6 6 6 0 0 1 6-6 6 6 0 0 1 6 6 6 6 0 0 1-6 6m8-9.31V4h-4.69L12 .69 8.69 4H4v4.69L.69 12 4 15.31V20h4.69L12 23.31 15.31 20H20v-4.69L23.31 12z"/></svg>
+      </label>
+    
+  
+    
+    
+    
+    <input class="md-option" data-md-color-media="" data-md-color-scheme="slate" data-md-color-primary="custom" data-md-color-accent="indigo"  aria-label="Switch to light mode"  type="radio" name="__palette" id="__palette_1">
+    
+      <label class="md-header__button md-icon" title="Switch to light mode" for="__palette_0" hidden>
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 18c-.89 0-1.74-.2-2.5-.55C11.56 16.5 13 14.42 13 12s-1.44-4.5-3.5-5.45C10.26 6.2 11.11 6 12 6a6 6 0 0 1 6 6 6 6 0 0 1-6 6m8-9.31V4h-4.69L12 .69 8.69 4H4v4.69L.69 12 4 15.31V20h4.69L12 23.31 15.31 20H20v-4.69L23.31 12z"/></svg>
+      </label>
+    
+  
+</form>
+      
+    
+    
+      <script>var palette=__md_get("__palette");if(palette&&palette.color){if("(prefers-color-scheme)"===palette.color.media){var media=matchMedia("(prefers-color-scheme: light)"),input=document.querySelector(media.matches?"[data-md-color-media='(prefers-color-scheme: light)']":"[data-md-color-media='(prefers-color-scheme: dark)']");palette.color.media=input.getAttribute("data-md-color-media"),palette.color.scheme=input.getAttribute("data-md-color-scheme"),palette.color.primary=input.getAttribute("data-md-color-primary"),palette.color.accent=input.getAttribute("data-md-color-accent")}for(var[key,value]of Object.entries(palette.color))document.body.setAttribute("data-md-color-"+key,value)}</script>
+    
+    
+    
+      <label class="md-header__button md-icon" for="__search">
+        
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.52 6.52 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5"/></svg>
+      </label>
+      <div class="md-search" data-md-component="search" role="dialog">
+  <label class="md-search__overlay" for="__search"></label>
+  <div class="md-search__inner" role="search">
+    <form class="md-search__form" name="search">
+      <input type="text" class="md-search__input" name="query" aria-label="Search" placeholder="Search" autocapitalize="off" autocorrect="off" autocomplete="off" spellcheck="false" data-md-component="search-query" required>
+      <label class="md-search__icon md-icon" for="__search">
+        
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.52 6.52 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5"/></svg>
+        
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11z"/></svg>
+      </label>
+      <nav class="md-search__options" aria-label="Search">
+        
+        <button type="reset" class="md-search__icon md-icon" title="Clear" aria-label="Clear" tabindex="-1">
+          
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M19 6.41 17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12z"/></svg>
+        </button>
+      </nav>
+      
+        <div class="md-search__suggest" data-md-component="search-suggest"></div>
+      
+    </form>
+    <div class="md-search__output">
+      <div class="md-search__scrollwrap" tabindex="0" data-md-scrollfix>
+        <div class="md-search-result" data-md-component="search-result">
+          <div class="md-search-result__meta">
+            Initializing search
+          </div>
+          <ol class="md-search-result__list" role="presentation"></ol>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+    
+    
+      <div class="md-header__source">
+        <a href="https://github.com/k0rdent/kcm" title="Go to repository" class="md-source" data-md-component="source">
+  <div class="md-source__icon md-icon">
+    
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512"><!--! Font Awesome Free 6.7.2 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2024 Fonticons, Inc.--><path d="M439.55 236.05 244 40.45a28.87 28.87 0 0 0-40.81 0l-40.66 40.63 51.52 51.52c27.06-9.14 52.68 16.77 43.39 43.68l49.66 49.66c34.23-11.8 61.18 31 35.47 56.69-26.49 26.49-70.21-2.87-56-37.34L240.22 199v121.85c25.3 12.54 22.26 41.85 9.08 55a34.34 34.34 0 0 1-48.55 0c-17.57-17.6-11.07-46.91 11.25-56v-123c-20.8-8.51-24.6-30.74-18.64-45L142.57 101 8.45 235.14a28.86 28.86 0 0 0 0 40.81l195.61 195.6a28.86 28.86 0 0 0 40.8 0l194.69-194.69a28.86 28.86 0 0 0 0-40.81"/></svg>
+  </div>
+  <div class="md-source__repository">
+    GitHub
+  </div>
+</a>
+      </div>
+    
+  </nav>
+  
+    
+  
+</header>
+    
+    <div class="md-container" data-md-component="container">
+      
+      
+        
+      
+      <main class="md-main" data-md-component="main">
+        <div class="md-main__inner md-grid">
+          
+            
+              
+              <div class="md-sidebar md-sidebar--primary" data-md-component="sidebar" data-md-type="navigation" >
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+
+
+<nav class="md-nav md-nav--primary" aria-label="Navigation" data-md-level="0">
+  <label class="md-nav__title" for="__drawer">
+    <a href="../.." title="k0rdent" class="md-nav__button md-logo" aria-label="k0rdent" data-md-component="logo">
+      
+  <img src="../../assets/mirantis-logo-inverted-horizontal-one-color.svg" alt="logo">
+
+    </a>
+    k0rdent
+  </label>
+  
+    <div class="md-nav__source">
+      <a href="https://github.com/k0rdent/kcm" title="Go to repository" class="md-source" data-md-component="source">
+  <div class="md-source__icon md-icon">
+    
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512"><!--! Font Awesome Free 6.7.2 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2024 Fonticons, Inc.--><path d="M439.55 236.05 244 40.45a28.87 28.87 0 0 0-40.81 0l-40.66 40.63 51.52 51.52c27.06-9.14 52.68 16.77 43.39 43.68l49.66 49.66c34.23-11.8 61.18 31 35.47 56.69-26.49 26.49-70.21-2.87-56-37.34L240.22 199v121.85c25.3 12.54 22.26 41.85 9.08 55a34.34 34.34 0 0 1-48.55 0c-17.57-17.6-11.07-46.91 11.25-56v-123c-20.8-8.51-24.6-30.74-18.64-45L142.57 101 8.45 235.14a28.86 28.86 0 0 0 0 40.81l195.61 195.6a28.86 28.86 0 0 0 40.8 0l194.69-194.69a28.86 28.86 0 0 0 0-40.81"/></svg>
+  </div>
+  <div class="md-source__repository">
+    GitHub
+  </div>
+</a>
+    </div>
+  
+  <ul class="md-nav__list" data-md-scrollfix>
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../.." class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Home
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_2" >
+        
+          
+          <label class="md-nav__link" for="__nav_2" id="__nav_2_label" tabindex="0">
+            
+  
+  <span class="md-ellipsis">
+    Quick Start
+  </span>
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_2_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_2">
+            <span class="md-nav__icon md-icon"></span>
+            Quick Start
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../quick-start/installation/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Installation
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../quick-start/aws/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    AWS
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../quick-start/azure/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Azure
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../quick-start/vsphere/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    vSphere
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../quick-start/openstack/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    OpenStack
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_3" >
+        
+          
+          <label class="md-nav__link" for="__nav_3" id="__nav_3_label" tabindex="0">
+            
+  
+  <span class="md-ellipsis">
+    Usage
+  </span>
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_3_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_3">
+            <span class="md-nav__icon md-icon"></span>
+            Usage
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../usage/installation/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Installation Guide
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../usage/management-configuration/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Extended Management Configuration
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../usage/adopt-existing-cluster/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Adopting Existing Clusters Guide
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../usage/create-cluster-deployment/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Create Cluster Deployment
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../usage/cluster-update/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Cluster Updates
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../usage/upgrade/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    k0rdent Upgrade
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_4" >
+        
+          
+          <label class="md-nav__link" for="__nav_4" id="__nav_4_label" tabindex="0">
+            
+  
+  <span class="md-ellipsis">
+    Templates
+  </span>
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_4_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_4">
+            <span class="md-nav__icon md-icon"></span>
+            Templates
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../template/main/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Overview
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../template/byo-templates/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    BYO Templates
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_5" >
+        
+          
+          <label class="md-nav__link" for="__nav_5" id="__nav_5_label" tabindex="0">
+            
+  
+  <span class="md-ellipsis">
+    ClusterTemplates
+  </span>
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_5_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_5">
+            <span class="md-nav__icon md-icon"></span>
+            ClusterTemplates
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    
+    
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_5_1" >
+        
+          
+          <label class="md-nav__link" for="__nav_5_1" id="__nav_5_1_label" tabindex="0">
+            
+  
+  <span class="md-ellipsis">
+    AWS & EKS
+  </span>
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="2" aria-labelledby="__nav_5_1_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_5_1">
+            <span class="md-nav__icon md-icon"></span>
+            AWS & EKS
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../clustertemplates/aws/template-parameters/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Template Parameters
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../clustertemplates/aws/hosted-control-plane/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Hosted Control Plane
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    
+    
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_5_2" >
+        
+          
+          <label class="md-nav__link" for="__nav_5_2" id="__nav_5_2_label" tabindex="0">
+            
+  
+  <span class="md-ellipsis">
+    Azure
+  </span>
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="2" aria-labelledby="__nav_5_2_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_5_2">
+            <span class="md-nav__icon md-icon"></span>
+            Azure
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../clustertemplates/azure/template-parameters/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Template Parameters
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../clustertemplates/azure/hosted-control-plane/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Hosted Control Plane
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    
+    
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_5_3" >
+        
+          
+          <label class="md-nav__link" for="__nav_5_3" id="__nav_5_3_label" tabindex="0">
+            
+  
+  <span class="md-ellipsis">
+    vSphere
+  </span>
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="2" aria-labelledby="__nav_5_3_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_5_3">
+            <span class="md-nav__icon md-icon"></span>
+            vSphere
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../clustertemplates/vsphere/template-parameters/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Template Parameters
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../clustertemplates/vsphere/hosted-control-plane/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Hosted Control Plane
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    
+    
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_5_4" >
+        
+          
+          <label class="md-nav__link" for="__nav_5_4" id="__nav_5_4_label" tabindex="0">
+            
+  
+  <span class="md-ellipsis">
+    OpenStack
+  </span>
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="2" aria-labelledby="__nav_5_4_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_5_4">
+            <span class="md-nav__icon md-icon"></span>
+            OpenStack
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../clustertemplates/openstack/template-parameters/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Template Parameters
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_6" >
+        
+          
+          <label class="md-nav__link" for="__nav_6" id="__nav_6_label" tabindex="0">
+            
+  
+  <span class="md-ellipsis">
+    Credentials
+  </span>
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_6_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_6">
+            <span class="md-nav__icon md-icon"></span>
+            Credentials
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../credential/main/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Overview
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../credential/distribution/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Distribution
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_7" >
+        
+          
+          <label class="md-nav__link" for="__nav_7" id="__nav_7_label" tabindex="0">
+            
+  
+  <span class="md-ellipsis">
+    RBAC
+  </span>
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_7_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_7">
+            <span class="md-nav__icon md-icon"></span>
+            RBAC
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../rbac/roles/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Overview
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+    
+  
+  
+  
+    
+    
+    
+    
+    <li class="md-nav__item md-nav__item--active md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_8" checked>
+        
+          
+          <label class="md-nav__link" for="__nav_8" id="__nav_8_label" tabindex="0">
+            
+  
+  <span class="md-ellipsis">
+    Disaster Recovery
+  </span>
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_8_label" aria-expanded="true">
+          <label class="md-nav__title" for="__nav_8">
+            <span class="md-nav__icon md-icon"></span>
+            Disaster Recovery
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+    
+  
+  
+  
+    <li class="md-nav__item md-nav__item--active">
+      
+      <input class="md-nav__toggle md-toggle" type="checkbox" id="__toc">
+      
+      
+        
+      
+      
+        <label class="md-nav__link md-nav__link--active" for="__toc">
+          
+  
+  <span class="md-ellipsis">
+    Overview
+  </span>
+  
+
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <a href="./" class="md-nav__link md-nav__link--active">
+        
+  
+  <span class="md-ellipsis">
+    Overview
+  </span>
+  
+
+      </a>
+      
+        
+
+<nav class="md-nav md-nav--secondary" aria-label="Table of contents">
+  
+  
+  
+    
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Table of contents
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#motivation" class="md-nav__link">
+    <span class="md-ellipsis">
+      Motivation
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#velero-as-provider-for-management-backups" class="md-nav__link">
+    <span class="md-ellipsis">
+      Velero as Provider for Management Backups
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#scheduled-management-backups" class="md-nav__link">
+    <span class="md-ellipsis">
+      Scheduled Management Backups
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Scheduled Management Backups">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#preparation" class="md-nav__link">
+    <span class="md-ellipsis">
+      Preparation
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#create-management-backup" class="md-nav__link">
+    <span class="md-ellipsis">
+      Create Management Backup
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#management-backup-on-demand" class="md-nav__link">
+    <span class="md-ellipsis">
+      Management Backup on Demand
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#whats-included-in-the-management-backup" class="md-nav__link">
+    <span class="md-ellipsis">
+      What's Included in the Management Backup
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#restoration" class="md-nav__link">
+    <span class="md-ellipsis">
+      Restoration
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Restoration">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#general-case" class="md-nav__link">
+    <span class="md-ellipsis">
+      General case
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#caveats" class="md-nav__link">
+    <span class="md-ellipsis">
+      Caveats
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#upgrades-and-rollback" class="md-nav__link">
+    <span class="md-ellipsis">
+      Upgrades and rollback
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Upgrades and rollback">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#automatic-management-backups" class="md-nav__link">
+    <span class="md-ellipsis">
+      Automatic Management Backups
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#rollback" class="md-nav__link">
+    <span class="md-ellipsis">
+      Rollback
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#caveats-limitation" class="md-nav__link">
+    <span class="md-ellipsis">
+      Caveats / Limitation
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#velero-backups-restores-deletion" class="md-nav__link">
+    <span class="md-ellipsis">
+      Velero Backups / Restores deletion
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Velero Backups / Restores deletion">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#delete-restores" class="md-nav__link">
+    <span class="md-ellipsis">
+      Delete Restores
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#delete-backups" class="md-nav__link">
+    <span class="md-ellipsis">
+      Delete Backups
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+      
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../customization/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Customization
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_9" >
+        
+          
+          <label class="md-nav__link" for="__nav_9" id="__nav_9_label" tabindex="0">
+            
+  
+  <span class="md-ellipsis">
+    Architecture
+  </span>
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_9_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_9">
+            <span class="md-nav__icon md-icon"></span>
+            Architecture
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../architecture/architecture/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Overview
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../architecture/initialization/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    k0rdent initialization process
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../glossary/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Glossary
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+    
+  </ul>
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+            
+              
+              <div class="md-sidebar md-sidebar--secondary" data-md-component="sidebar" data-md-type="toc" >
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+<nav class="md-nav md-nav--secondary" aria-label="Table of contents">
+  
+  
+  
+    
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Table of contents
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#motivation" class="md-nav__link">
+    <span class="md-ellipsis">
+      Motivation
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#velero-as-provider-for-management-backups" class="md-nav__link">
+    <span class="md-ellipsis">
+      Velero as Provider for Management Backups
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#scheduled-management-backups" class="md-nav__link">
+    <span class="md-ellipsis">
+      Scheduled Management Backups
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Scheduled Management Backups">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#preparation" class="md-nav__link">
+    <span class="md-ellipsis">
+      Preparation
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#create-management-backup" class="md-nav__link">
+    <span class="md-ellipsis">
+      Create Management Backup
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#management-backup-on-demand" class="md-nav__link">
+    <span class="md-ellipsis">
+      Management Backup on Demand
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#whats-included-in-the-management-backup" class="md-nav__link">
+    <span class="md-ellipsis">
+      What's Included in the Management Backup
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#restoration" class="md-nav__link">
+    <span class="md-ellipsis">
+      Restoration
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Restoration">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#general-case" class="md-nav__link">
+    <span class="md-ellipsis">
+      General case
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#caveats" class="md-nav__link">
+    <span class="md-ellipsis">
+      Caveats
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#upgrades-and-rollback" class="md-nav__link">
+    <span class="md-ellipsis">
+      Upgrades and rollback
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Upgrades and rollback">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#automatic-management-backups" class="md-nav__link">
+    <span class="md-ellipsis">
+      Automatic Management Backups
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#rollback" class="md-nav__link">
+    <span class="md-ellipsis">
+      Rollback
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#caveats-limitation" class="md-nav__link">
+    <span class="md-ellipsis">
+      Caveats / Limitation
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#velero-backups-restores-deletion" class="md-nav__link">
+    <span class="md-ellipsis">
+      Velero Backups / Restores deletion
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Velero Backups / Restores deletion">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#delete-restores" class="md-nav__link">
+    <span class="md-ellipsis">
+      Delete Restores
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#delete-backups" class="md-nav__link">
+    <span class="md-ellipsis">
+      Delete Backups
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+          
+          
+            <div class="md-content" data-md-component="content">
+              <article class="md-content__inner md-typeset">
+                
+                  
+
+  
+  
+
+
+<h1 id="disaster-recovery-feature-overview">Disaster Recovery Feature Overview<a class="headerlink" href="#disaster-recovery-feature-overview" title="Permanent link">#</a></h1>
+<p>This document provides an overview of the disaster recovery feature used to back up and restore
+the <strong><code>kcm</code> management cluster</strong>.</p>
+<p>The feature leverages <a href="https://velero.io/"><code>velero</code></a> for backup management
+on the backend and integrates with the <code>kcm</code> to ensure data persistence and recovery.</p>
+<h2 id="motivation">Motivation<a class="headerlink" href="#motivation" title="Permanent link">#</a></h2>
+<p>The primary goal of this feature is to provide a reliable and efficient way to back up and restore
+<code>kcm</code> deployment in the event of a disaster that impacts the management cluster.
+By utilizing <code>velero</code> as the backup provider, we can ensure consistent backups across
+different cloud storage while maintaining the integrity of critical resources.</p>
+<p>The main goal of the feature is to provide:</p>
+<ul>
+<li>Management Backup: the ability to backup all configuration objects <strong>created and managed by the <code>kcm</code></strong>
+  into an offsite location.</li>
+<li>Restore: the ability to create configuration objects from a specific Management Backup
+  <strong>without (re)provisioning of cloud resources</strong>.</li>
+<li>Disaster Recovery: the ability to restore the <code>kcm</code> system on another management cluster
+  using restore capability, plus ensuring that clusters are not recreated or lost.</li>
+<li>Rollback: the possibility to manually restore after a specific event, e.g. a failed upgrade
+  of the <code>kcm</code>.</li>
+</ul>
+<h2 id="velero-as-provider-for-management-backups">Velero as Provider for Management Backups<a class="headerlink" href="#velero-as-provider-for-management-backups" title="Permanent link">#</a></h2>
+<p><a href="https://velero.io/"><code>Velero</code></a> is an open-source tool that simplifies backing up and restoring clusters as well as individual resources. It seamlessly integrates into the <code>kcm</code> management environment to provide robust disaster recovery capabilities.</p>
+<p>The <code>velero</code> instance is installed as part of the <code>kcm</code> and included in its helm chart,
+hence the installation process might be fully customized.</p>
+<p>The <code>kcm</code> manages the schedule and is responsible for collecting the sufficient
+data to be included in a backup.</p>
+<p>Customization options for the installation and backups are covered by <a href="../customization/">the according section</a>.</p>
+<h2 id="scheduled-management-backups">Scheduled Management Backups<a class="headerlink" href="#scheduled-management-backups" title="Permanent link">#</a></h2>
+<h3 id="preparation">Preparation<a class="headerlink" href="#preparation" title="Permanent link">#</a></h3>
+<p>Before the creation of scheduled backups, several actions should be performed beforehand:</p>
+<ol>
+<li>
+<p>If no <code>velero</code> pluguns have not been yet installed as suggested
+   in the <a href="../customization/#velero-installation">corresponding section</a>,
+   install it modifying the <code>Management</code> object:</p>
+<div class="highlight"><pre><span></span><code><span class="nt">apiVersion</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">k0rdent.mirantis.com/v1alpha1</span>
+<span class="nt">kind</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">Management</span>
+<span class="nt">metadata</span><span class="p">:</span>
+<span class="w">  </span><span class="nt">name</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">kcm</span>
+<span class="nt">spec</span><span class="p">:</span>
+<span class="w">  </span><span class="c1"># ... </span>
+<span class="w">  </span><span class="nt">core</span><span class="p">:</span>
+<span class="w">    </span><span class="nt">kcm</span><span class="p">:</span>
+<span class="w">      </span><span class="nt">config</span><span class="p">:</span>
+<span class="w">        </span><span class="nt">velero</span><span class="p">:</span>
+<span class="w">          </span><span class="nt">initContainers</span><span class="p">:</span>
+<span class="w">          </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="nt">name</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">velero-plugin-for-&lt;provider-name&gt;</span>
+<span class="w">            </span><span class="nt">image</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">velero/velero-plugin-for-&lt;provider-name&gt;:&lt;provider-plugin-tag&gt;</span>
+<span class="w">            </span><span class="nt">imagePullPolicy</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">IfNotPresent</span>
+<span class="w">            </span><span class="nt">volumeMounts</span><span class="p">:</span>
+<span class="w">            </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="nt">mountPath</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">/target</span>
+<span class="w">              </span><span class="nt">name</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">plugins</span>
+<span class="w">  </span><span class="c1"># ...</span>
+</code></pre></div>
+</li>
+<li>
+<p>Prepare a cloud storage to save backups to (e.g. <code>Amazon S3</code>).</p>
+</li>
+<li>Create a <a href="https://velero.io/docs/v1.15/api-types/backupstoragelocation/"><code>BackupStorageLocation</code></a>
+   object referencing a <code>Secret</code> with credentials to access the cloud storage
+   (if the multiple credentials feature is supported by the plugin).</li>
+</ol>
+<div class="admonition example">
+<p class="admonition-title">Example</p>
+<p>An example of a <code>BackupStorageLocation</code> and the related <code>Secret</code> for the <code>Amazon S3</code>
+and the <code>AWS</code> provider:</p>
+<div class="highlight"><pre><span></span><code><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">---</span>
+<span class="w"> </span><span class="l l-Scalar l-Scalar-Plain"># Secret with the cloud storage credentials</span>
+<span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">apiVersion</span><span class="p p-Indicator">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">v1</span>
+<span class="w"> </span><span class="nt">data</span><span class="p">:</span>
+<span class="w">   </span><span class="c1"># base64-encoded credentials, for the Amazon S3 in the following format:</span>
+<span class="w">   </span><span class="c1"># [default]</span>
+<span class="w">   </span><span class="c1"># aws_access_key_id = &lt;AWS_ACCESS_KEY&gt;</span>
+<span class="w">   </span><span class="c1"># aws_secret_access_key = &lt;AWS_SECRET_ACCESS_KEY&gt;</span>
+<span class="w">   </span><span class="nt">cloud</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">W2RlZmF1bHRdCmF3c19hY2Nlc3Nfa2V5X2lkID0gPEFXU19BQ0NFU1NfS0VZPgphd3Nfc2VjcmV0X2FjY2Vzc19rZXkgPSA8QVdTX1NFQ1JFVF9BQ0NFU1NfS0VZPgo=</span>
+<span class="w"> </span><span class="nt">kind</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">Secret</span>
+<span class="w"> </span><span class="nt">metadata</span><span class="p">:</span>
+<span class="w">   </span><span class="nt">name</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">cloud-credentials</span>
+<span class="w">   </span><span class="nt">namespace</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">kcm-system</span>
+<span class="w"> </span><span class="nt">type</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">Opaque</span>
+<span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">---</span>
+<span class="w"> </span><span class="c1"># Velero storage location</span>
+<span class="w"> </span><span class="nt">apiVersion</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">velero.io/v1</span>
+<span class="w"> </span><span class="nt">kind</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">BackupStorageLocation</span>
+<span class="w"> </span><span class="nt">metadata</span><span class="p">:</span>
+<span class="w">   </span><span class="nt">name</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">aws-s3</span>
+<span class="w">   </span><span class="nt">namespace</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">kcm-system</span>
+<span class="w"> </span><span class="nt">spec</span><span class="p">:</span>
+<span class="w">   </span><span class="nt">config</span><span class="p">:</span>
+<span class="w">     </span><span class="nt">region</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">&lt;your-region-name&gt;</span>
+<span class="w">   </span><span class="nt">default</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">true</span><span class="w"> </span><span class="c1"># optional, if not set, then storage location name must always be set in ManagementBackup</span>
+<span class="w">   </span><span class="nt">objectStorage</span><span class="p">:</span>
+<span class="w">     </span><span class="nt">bucket</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">&lt;your-bucket-name&gt;</span>
+<span class="w">   </span><span class="nt">provider</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">aws</span>
+<span class="w">   </span><span class="nt">backupSyncPeriod</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">1m</span>
+<span class="w">   </span><span class="nt">credential</span><span class="p">:</span>
+<span class="w">     </span><span class="nt">name</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">cloud-credentials</span>
+<span class="w">     </span><span class="nt">key</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">cloud</span>
+</code></pre></div>
+</div>
+<div class="admonition hint">
+<p class="admonition-title">Hint</p>
+<p>
+For more comprehensive examples and to familiarize yourself with limitations and caveats
+please follow the link to the <a href="https://velero.io/docs/v1.15/locations">official location documentation</a>.</p>
+</div>
+<h3 id="create-management-backup">Create Management Backup<a class="headerlink" href="#create-management-backup" title="Permanent link">#</a></h3>
+<p>To set a <code>ManagementBackup</code> object to create periodic backups,
+set the <code>.spec.schedule</code> field with a <a href="https://en.wikipedia.org/wiki/Cron">Cron</a> expression.
+If the <code>.spec.schedule</code> is not set, the <a href="#management-backup-on-demand">backup on demand</a> will be created instead.</p>
+<p>Optionally, set the name of the <code>BackupStorageLocation</code> <code>.spec.backup.storageLocation</code>.
+The default location is the <code>BackupStorageLocation</code> object with <code>.spec.default</code> set to <code>true</code>.</p>
+<div class="admonition example">
+<p class="admonition-title">Example</p>
+<p>An example of the <code>ManagementBackup</code> object with a schedule and
+the storage location:</p>
+<div class="highlight"><pre><span></span><code><span class="w"> </span><span class="nt">apiVersion</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">k0rdent.mirantis.com/v1alpha1</span>
+<span class="w"> </span><span class="nt">kind</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">ManagementBackup</span>
+<span class="w"> </span><span class="nt">metadata</span><span class="p">:</span>
+<span class="w">   </span><span class="nt">name</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">kcm</span>
+<span class="w"> </span><span class="nt">spec</span><span class="p">:</span>
+<span class="w">   </span><span class="nt">schedule</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;0</span><span class="nv"> </span><span class="s">*/6</span><span class="nv"> </span><span class="s">*</span><span class="nv"> </span><span class="s">*</span><span class="nv"> </span><span class="s">*&quot;</span>
+<span class="w">   </span><span class="nt">storageLocation</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">aws-s3</span>
+</code></pre></div>
+</div>
+<h2 id="management-backup-on-demand">Management Backup on Demand<a class="headerlink" href="#management-backup-on-demand" title="Permanent link">#</a></h2>
+<p>To create a single backup of the <code>kcm</code>, a <code>ManagementBackup</code> object can be created
+manually, e.g. via the <code>kubectl</code> CLI. The object then creates only one instance of backup.</p>
+<div class="admonition example">
+<p class="admonition-title">Example</p>
+<p>An example of a <code>ManagementBackup</code> object:</p>
+<div class="highlight"><pre><span></span><code><span class="w"> </span><span class="nt">apiVersion</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">k0rdent.mirantis.com/v1alpha1</span>
+<span class="w"> </span><span class="nt">kind</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">ManagementBackup</span>
+<span class="w"> </span><span class="nt">metadata</span><span class="p">:</span>
+<span class="w">   </span><span class="nt">name</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">example-backup</span>
+<span class="w"> </span><span class="nt">spec</span><span class="p">:</span>
+<span class="w">   </span><span class="nt">storageLocation</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">my-location</span>
+</code></pre></div>
+</div>
+<h2 id="whats-included-in-the-management-backup">What's Included in the Management Backup<a class="headerlink" href="#whats-included-in-the-management-backup" title="Permanent link">#</a></h2>
+<p>The backup includes all of the <code>kcm</code> component resources, parts of the <code>cert-manager</code>
+components required for other components creation, and all the required resources
+of <code>CAPI</code> and <code>ClusterDeployment</code>s currently in use in the management cluster.</p>
+<div class="admonition example">
+<p class="admonition-title">Example</p>
+<p>An example set of labels, and objects satisfying these labels will
+be included in the backup:</p>
+<div class="highlight"><pre><span></span><code> cluster.x-k8s.io/cluster-name=&quot;cluster-deployment-name&quot;
+ cluster.x-k8s.io/provider=&quot;bootstrap-k0sproject-k0smotron&quot;
+ cluster.x-k8s.io/provider=&quot;cluster-api&quot;
+ cluster.x-k8s.io/provider=&quot;control-plane-k0sproject-k0smotron&quot;
+ cluster.x-k8s.io/provider=&quot;infrastructure-aws&quot;
+ controller.cert-manager.io/fao=&quot;true&quot;
+ helm.toolkit.fluxcd.io/name=&quot;cluster-deployment-name&quot;
+ k0rdent.mirantis.com/component=&quot;kcm&quot;
+</code></pre></div>
+</div>
+<h2 id="restoration">Restoration<a class="headerlink" href="#restoration" title="Permanent link">#</a></h2>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>
+Please refer to the
+<a href="https://velero.io/docs/v1.15/migration-case/#before-migrating-your-cluster">official migration documentation</a>
+to be familiarized with potential Velero limitations.</p>
+</div>
+<h3 id="general-case">General case<a class="headerlink" href="#general-case" title="Permanent link">#</a></h3>
+<p>To restore from a backup in the event of a disaster, the following actions should be
+performed:</p>
+<ol>
+<li>
+<p>Ensure a сlean <code>kcm</code> installation including <code>velero</code> and <a href="../customization/#velero-installation">its plugins</a>:</p>
+<div class="highlight"><pre><span></span><code>helm<span class="w"> </span>install<span class="w"> </span>kcm<span class="w"> </span>oci://ghcr.io/k0rdent/kcm/charts/kcm<span class="w"> </span><span class="se">\</span>
+<span class="w"> </span>--version<span class="w"> </span>&lt;version&gt;<span class="w"> </span><span class="se">\</span>
+<span class="w"> </span>--create-namespace<span class="w"> </span><span class="se">\</span>
+<span class="w"> </span>--namespace<span class="w"> </span>kcm-system<span class="w"> </span><span class="se">\</span>
+<span class="w"> </span>--set<span class="w"> </span>controller.createManagement<span class="o">=</span><span class="nb">false</span><span class="w"> </span><span class="se">\</span>
+<span class="w"> </span>--set<span class="w"> </span>controller.createAccessManagement<span class="o">=</span><span class="nb">false</span><span class="w"> </span><span class="se">\</span>
+<span class="w"> </span>--set<span class="w"> </span>controller.createRelease<span class="o">=</span><span class="nb">false</span><span class="w"> </span><span class="se">\</span>
+<span class="w"> </span>--set<span class="w"> </span>controller.createTemplates<span class="o">=</span><span class="nb">false</span>
+<span class="w"> </span>--set<span class="w"> </span>velero.initContainers<span class="o">[</span><span class="m">0</span><span class="o">]</span>.name<span class="o">=</span>velero-plugin-for-&lt;provider-name&gt;<span class="w"> </span><span class="se">\</span>
+<span class="w"> </span>--set<span class="w"> </span>velero.initContainers<span class="o">[</span><span class="m">0</span><span class="o">]</span>.image<span class="o">=</span>velero/velero-plugin-for-&lt;provider-name&gt;:&lt;provider-plugin-tag&gt;<span class="w"> </span><span class="se">\</span>
+<span class="w"> </span>--set<span class="w"> </span>velero.initContainers<span class="o">[</span><span class="m">0</span><span class="o">]</span>.volumeMounts<span class="o">[</span><span class="m">0</span><span class="o">]</span>.mountPath<span class="o">=</span>/target<span class="w"> </span><span class="se">\</span>
+<span class="w"> </span>--set<span class="w"> </span>velero.initContainers<span class="o">[</span><span class="m">0</span><span class="o">]</span>.volumeMounts<span class="o">[</span><span class="m">0</span><span class="o">]</span>.name<span class="o">=</span>plugins
+</code></pre></div>
+<p>For more information, please refer
+to the <a href="../../usage/installation/#extended-management-configuration">installation guide</a>.</p>
+</li>
+<li>
+<p>Create the <code>BackupStorageLocation</code>/<code>Secret</code> objects that had been
+   created during the <a href="#preparation">preparation stage</a> (preferably the same depending on a plugin).</p>
+</li>
+<li>
+<p>Restore the <code>kcm</code> system creating the <a href="https://velero.io/docs/v1.15/api-types/restore/"><code>Restore</code></a> object,
+   it is important to set the <code>.spec.existingResourcePolicy</code> field value to <code>update</code>:</p>
+<div class="highlight"><pre><span></span><code><span class="w"> </span><span class="nt">apiVersion</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">velero.io/v1</span>
+<span class="w"> </span><span class="nt">kind</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">Restore</span>
+<span class="w"> </span><span class="nt">metadata</span><span class="p">:</span>
+<span class="w">   </span><span class="nt">name</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">&lt;restore-name&gt;</span>
+<span class="w">   </span><span class="nt">namespace</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">kcm-system</span>
+<span class="w"> </span><span class="nt">spec</span><span class="p">:</span>
+<span class="w">   </span><span class="nt">backupName</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">&lt;backup-name&gt;</span>
+<span class="w">   </span><span class="nt">existingResourcePolicy</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">update</span>
+<span class="w">   </span><span class="nt">includedNamespaces</span><span class="p">:</span>
+<span class="w">   </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="s">&#39;*&#39;</span>
+</code></pre></div>
+</li>
+<li>
+<p>Wait until the <code>Restore</code> status is <code>Completed</code> and all <code>kcm</code> components are up and running.</p>
+</li>
+</ol>
+<h3 id="caveats">Caveats<a class="headerlink" href="#caveats" title="Permanent link">#</a></h3>
+<p>For some <code>CAPI</code> providers it is necessary to make changes to the <code>Restore</code>
+object due to the large number of different resources and logic in each provider.
+The resources described below are not excluded from a <code>ManagementBackup</code> by
+default to avoid logical dependencies on one or another provider
+and continue to be provider-agnostic.</p>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>
+The described caveats apply only to the step with the <code>Restore</code>
+object creation and do not affect the other steps.</p>
+</div>
+<h4 id="azure-capz">Azure (CAPZ)<a class="headerlink" href="#azure-capz" title="Permanent link">#</a></h4>
+<p>The following resources should be excluded from the <code>Restore</code> object:</p>
+<ul>
+<li><code>natgateways.network.azure.com</code></li>
+<li><code>resourcegroups.resources.azure.com</code></li>
+<li><code>virtualnetworks.network.azure.com</code></li>
+<li><code>virtualnetworkssubnets.network.azure.com</code></li>
+</ul>
+<p>Due to the <a href="https://kubernetes.io/docs/tasks/extend-kubernetes/custom-resources/custom-resource-definition-versioning/#webhook-conversion">webhook conversion</a>,
+objects of these resources cannot be restored, and they will
+be created in the management cluster by the <code>CAPZ</code> provider
+automatically with the same <code>spec</code> as in the backup.</p>
+<p>The resulting <code>Restore</code> object:</p>
+<div class="highlight"><pre><span></span><code><span class="w"> </span><span class="nt">apiVersion</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">velero.io/v1</span>
+<span class="w"> </span><span class="nt">kind</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">Restore</span>
+<span class="w"> </span><span class="nt">metadata</span><span class="p">:</span>
+<span class="w">   </span><span class="nt">name</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">&lt;restore-name&gt;</span>
+<span class="w">   </span><span class="nt">namespace</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">kcm-system</span>
+<span class="w"> </span><span class="nt">spec</span><span class="p">:</span>
+<span class="w">   </span><span class="nt">backupName</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">&lt;backup-name&gt;</span>
+<span class="w">   </span><span class="nt">existingResourcePolicy</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">update</span>
+<span class="w">   </span><span class="nt">excludedResources</span><span class="p">:</span>
+<span class="w">   </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">natgateways.network.azure.com</span>
+<span class="w">   </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">resourcegroups.resources.azure.com</span>
+<span class="w">   </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">virtualnetworks.network.azure.com</span>
+<span class="w">   </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">virtualnetworkssubnets.network.azure.com</span>
+<span class="w">   </span><span class="nt">includedNamespaces</span><span class="p">:</span>
+<span class="w">   </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="s">&#39;*&#39;</span>
+</code></pre></div>
+<h4 id="vsphere-capv">vSphere (CAPV)<a class="headerlink" href="#vsphere-capv" title="Permanent link">#</a></h4>
+<p>The following resources should be excluded from the <code>Restore</code> object:</p>
+<ul>
+<li><code>mutatingwebhookconfiguration.admissionregistration.k8s.io</code></li>
+<li><code>validatingwebhookconfiguration.admissionregistration.k8s.io</code></li>
+</ul>
+<p>Due to the <a href="https://velero.io/docs/v1.15/restore-reference/#restore-order">Velero Restoration Order</a>,
+some of the <code>CAPV</code> core objects cannot be restored,
+and they will not be restored automatically.
+Since all of the objects have already passed both mutations
+and validations, there is not much sense in validating them again.
+The webhook configurations will be restored during installation
+of the <code>CAPV</code> provider.</p>
+<p>The resulting <code>Restore</code> object:</p>
+<div class="highlight"><pre><span></span><code><span class="w"> </span><span class="nt">apiVersion</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">velero.io/v1</span>
+<span class="w"> </span><span class="nt">kind</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">Restore</span>
+<span class="w"> </span><span class="nt">metadata</span><span class="p">:</span>
+<span class="w">   </span><span class="nt">name</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">&lt;restore-name&gt;</span>
+<span class="w">   </span><span class="nt">namespace</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">kcm-system</span>
+<span class="w"> </span><span class="nt">spec</span><span class="p">:</span>
+<span class="w">   </span><span class="nt">backupName</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">&lt;backup-name&gt;</span>
+<span class="w">   </span><span class="nt">existingResourcePolicy</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">update</span>
+<span class="w">   </span><span class="nt">excludedResources</span><span class="p">:</span>
+<span class="w">   </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">mutatingwebhookconfiguration.admissionregistration.k8s.io</span>
+<span class="w">   </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">validatingwebhookconfiguration.admissionregistration.k8s.io</span>
+<span class="w">   </span><span class="nt">includedNamespaces</span><span class="p">:</span>
+<span class="w">   </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="s">&#39;*&#39;</span>
+</code></pre></div>
+<h2 id="upgrades-and-rollback">Upgrades and rollback<a class="headerlink" href="#upgrades-and-rollback" title="Permanent link">#</a></h2>
+<p>The Disaster Recovery Feature provides a way to create backups
+on each <code>kcm</code> upgrade automatically.</p>
+<h3 id="automatic-management-backups">Automatic Management Backups<a class="headerlink" href="#automatic-management-backups" title="Permanent link">#</a></h3>
+<p>Each <code>ManagementBackup</code> with <em>non-empty</em> <code>.spec.schedule</code> field
+can enable the automatic creation of backups before
+<a href="../../usage/upgrade/">upgrading</a> to a new version.</p>
+<p>To enable, set the <code>.spec.performOnManagementUpgrade</code> to <code>true</code>.</p>
+<div class="admonition example">
+<p class="admonition-title">Example</p>
+<p>An example of a <code>ManagementBackup</code> object with enabled auto-backup before the <code>kcm</code> version upgrade:</p>
+<div class="highlight"><pre><span></span><code><span class="w"> </span><span class="nt">apiVersion</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">k0rdent.mirantis.com/v1alpha1</span>
+<span class="w"> </span><span class="nt">kind</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">ManagementBackup</span>
+<span class="w"> </span><span class="nt">metadata</span><span class="p">:</span>
+<span class="w">   </span><span class="nt">name</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">example-backup</span>
+<span class="w"> </span><span class="nt">spec</span><span class="p">:</span>
+<span class="w">   </span><span class="nt">schedule</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;0</span><span class="nv"> </span><span class="s">*/6</span><span class="nv"> </span><span class="s">*</span><span class="nv"> </span><span class="s">*</span><span class="nv"> </span><span class="s">*&quot;</span>
+<span class="w">   </span><span class="nt">performOnManagementUpgrade</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">true</span>
+</code></pre></div>
+</div>
+<p>After the enablement, before each upgrade of <code>kcm</code> to a new version,
+a new backup will be created.</p>
+<p>Automatically created backups have the
+following name template to make it easier to find them:
+the name of the <code>ManagementBackup</code> object with enabled <code>performOnManagementUpgrade</code>
+concatenates with the name of the release before the upgrade,
+e.g. <code>example-backup-kcm-0-1-0</code>.</p>
+<p>Automatically created backups have the following label
+<code>k0rdent.mirantis.com/release-backup</code>
+with the name of the release before the upgrade as its value
+to simplify querying if required.</p>
+<h3 id="rollback">Rollback<a class="headerlink" href="#rollback" title="Permanent link">#</a></h3>
+<p>If during the <code>kcm</code> upgrade a failure happens, a rollback operation
+should be performed to restore the <code>kcm</code> to its before-the-upgrade state:</p>
+<ol>
+<li>
+<p>Follow the first 2 steps from the <a href="#general-case">restoration section</a>,
+   creating a clean <code>kcm</code> installation and <code>BackupStorageLocation</code>/<code>Secret</code>.</p>
+</li>
+<li>
+<div class="admonition warning">
+<p class="admonition-title">Warning</p>
+<p>
+Please consider the <a href="#caveats">restoration caveats</a> section before proceeding.</p>
+</div>
+<p>Create the <code>ConfigMap</code> object with patches to revert the <code>Management</code>
+<code>.spec.release</code>, substitute the <code>&lt;version-before-upgrade&gt;</code> with
+the version of <code>kcm</code> before the upgrade, and create the <code>Restore</code> object
+propagating the <code>ConfigMap</code> to it:</p>
+<div class="highlight"><pre><span></span><code><span class="nn">---</span>
+<span class="nt">apiVersion</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">v1</span>
+<span class="nt">data</span><span class="p">:</span>
+<span class="w">  </span><span class="nt">patch-mgmt-spec-release</span><span class="p">:</span><span class="w"> </span><span class="p p-Indicator">|</span>
+<span class="w">    </span><span class="no">version: v1</span>
+<span class="w">    </span><span class="no">resourceModifierRules:</span>
+<span class="w">    </span><span class="no">- conditions:</span>
+<span class="w">        </span><span class="no">groupResource: managements.k0rdent.mirantis.com</span>
+<span class="w">      </span><span class="no">patches:</span>
+<span class="w">      </span><span class="no">- operation: replace</span>
+<span class="w">        </span><span class="no">path: &quot;/spec/release&quot;</span>
+<span class="w">        </span><span class="no">value: &quot;&lt;version-before-upgrade&gt;&quot;</span>
+<span class="nt">kind</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">ConfigMap</span>
+<span class="nt">metadata</span><span class="p">:</span>
+<span class="w">  </span><span class="nt">name</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">patch-mgmt-spec-release</span>
+<span class="w">  </span><span class="nt">namespace</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">kcm-system</span>
+<span class="nn">---</span>
+<span class="nt">apiVersion</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">velero.io/v1</span>
+<span class="nt">kind</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">Restore</span>
+<span class="nt">metadata</span><span class="p">:</span>
+<span class="w">  </span><span class="nt">name</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">&lt;restore-name&gt;</span>
+<span class="w">  </span><span class="nt">namespace</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">kcm-system</span>
+<span class="nt">spec</span><span class="p">:</span>
+<span class="w">  </span><span class="nt">backupName</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">&lt;backup-name&gt;</span>
+<span class="w">  </span><span class="nt">existingResourcePolicy</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">update</span>
+<span class="w">  </span><span class="nt">includedNamespaces</span><span class="p">:</span>
+<span class="w">  </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="s">&#39;*&#39;</span>
+<span class="w">  </span><span class="nt">resourceModifier</span><span class="p">:</span><span class="w"> </span><span class="c1"># propagate patches</span>
+<span class="w">    </span><span class="nt">kind</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">ConfigMap</span>
+<span class="w">    </span><span class="nt">name</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">patch-mgmt-spec-release</span>
+</code></pre></div>
+</li>
+<li>
+<p>Wait until the <code>Restore</code> status is <code>Completed</code> and all <code>kcm</code> components are up and running.</p>
+</li>
+<li>Optionally delete the created <code>ConfigMap</code>.</li>
+</ol>
+<h2 id="caveats-limitation">Caveats / Limitation<a class="headerlink" href="#caveats-limitation" title="Permanent link">#</a></h2>
+<!-- TODO: not sure whether it is okay to mention that explicitly since we could implement
+it somewhere in the future utilizing velero hooks -->
+
+<p>The credentials stored in backups might and will stale,
+so a proper rotation should be considered beforehand.</p>
+<p>All <code>velero</code> caveats and limitations are transitively implied in the <code>k0rdent</code>.</p>
+<p>In particular, that means no backup encryption is provided until it is implemented
+by a <code>velero</code> plugin that supports encryption and cloud storage backups.</p>
+<h2 id="velero-backups-restores-deletion">Velero Backups / Restores deletion<a class="headerlink" href="#velero-backups-restores-deletion" title="Permanent link">#</a></h2>
+<h3 id="delete-restores">Delete Restores<a class="headerlink" href="#delete-restores" title="Permanent link">#</a></h3>
+<p>To delete <code>velero</code> <code>Restore</code> from the management cluster
+<strong>and</strong> from the cloud storage, delete <code>restores.velero.io</code> object(s),
+e.g. with the following command:</p>
+<div class="highlight"><pre><span></span><code>kubectl<span class="w"> </span>delete<span class="w"> </span>restores.velero.io<span class="w"> </span>-n<span class="w"> </span>kcm-system<span class="w"> </span>&lt;restore-name&gt;
+</code></pre></div>
+<div class="admonition warning">
+<p class="admonition-title">Warning</p>
+<p>
+Deletion of a <code>Restore</code> object deletes it from both
+the management cluster and from the cloud storage.</p>
+</div>
+<h3 id="delete-backups">Delete Backups<a class="headerlink" href="#delete-backups" title="Permanent link">#</a></h3>
+<p>To remove <code>velero</code> <code>Backup</code> from the management cluster,
+delete <code>backups.velero.io</code> object(s), e.g. with the following command:</p>
+<div class="highlight"><pre><span></span><code>kubectl<span class="w"> </span>delete<span class="w"> </span>backups.velero.io<span class="w"> </span>-n<span class="w"> </span>kcm-system<span class="w"> </span>&lt;velero-backup-name&gt;
+</code></pre></div>
+<div class="admonition hint">
+<p class="admonition-title">Hint</p>
+<p>
+The command above only removes objects from
+the cluster, the data continues to persist
+on the cloud storage.</p>
+<p>The deleted object will be recreated in the
+cluster if its <code>BackupStorageLocation</code> <code>.spec.backupSyncPeriod</code>
+is set and does not equal <code>0</code>.</p>
+</div>
+<p>To delete <code>velero</code> <code>Backup</code> from the management cluster
+<strong>and</strong> from the cloud storage, create the following <code>DeleteBackupRequest</code> object:</p>
+<div class="highlight"><pre><span></span><code><span class="nt">apiVersion</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">velero.io/v1</span>
+<span class="nt">kind</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">DeleteBackupRequest</span>
+<span class="nt">metadata</span><span class="p">:</span>
+<span class="w">  </span><span class="nt">name</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">delete-backup-completely</span>
+<span class="w">  </span><span class="nt">namespace</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">kcm-system</span>
+<span class="nt">spec</span><span class="p">:</span>
+<span class="w">  </span><span class="nt">backupName</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">&lt;velero-backup&gt;</span>
+</code></pre></div>
+<div class="admonition warning">
+<p class="admonition-title">Warning</p>
+<p>
+Deletion of a <code>Backup</code> object via the <code>DeleteBackupRequest</code>
+deletes it from both
+the management cluster and from the cloud storage.</p>
+</div>
+<p>Optionally, delete the created <code>DeleteBackupRequest</code> object
+from the cluster after <code>Backup</code> has been deleted.</p>
+<p>For reference, follow the <a href="https://velero.io/docs/v1.15/backup-reference/#deleting-backups">official documentation</a>.</p>
+
+
+
+
+
+
+
+
+
+
+
+
+                
+              </article>
+            </div>
+          
+          
+<script>var target=document.getElementById(location.hash.slice(1));target&&target.name&&(target.checked=target.name.startsWith("__tabbed_"))</script>
+        </div>
+        
+      </main>
+      
+        <footer class="md-footer">
+  
+    
+      
+      <nav class="md-footer__inner md-grid" aria-label="Footer" >
+        
+          
+          <a href="../../rbac/roles/" class="md-footer__link md-footer__link--prev" aria-label="Previous: Overview">
+            <div class="md-footer__button md-icon">
+              
+              <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11z"/></svg>
+            </div>
+            <div class="md-footer__title">
+              <span class="md-footer__direction">
+                Previous
+              </span>
+              <div class="md-ellipsis">
+                Overview
+              </div>
+            </div>
+          </a>
+        
+        
+          
+          <a href="../customization/" class="md-footer__link md-footer__link--next" aria-label="Next: Customization">
+            <div class="md-footer__title">
+              <span class="md-footer__direction">
+                Next
+              </span>
+              <div class="md-ellipsis">
+                Customization
+              </div>
+            </div>
+            <div class="md-footer__button md-icon">
+              
+              <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M4 11v2h12l-5.5 5.5 1.42 1.42L19.84 12l-7.92-7.92L10.5 5.5 16 11z"/></svg>
+            </div>
+          </a>
+        
+      </nav>
+    
+  
+  <div class="md-footer-meta md-typeset">
+    <div class="md-footer-meta__inner md-grid">
+      <div class="md-copyright">
+  
+    <div class="md-copyright__highlight">
+      © 2005 - 2025 Mirantis, Inc. All rights reserved.
+    </div>
+  
+  
+    Made with
+    <a href="https://squidfunk.github.io/mkdocs-material/" target="_blank" rel="noopener">
+      Material for MkDocs
+    </a>
+  
+</div>
+      
+    </div>
+  </div>
+</footer>
+      
+    </div>
+    <div class="md-dialog" data-md-component="dialog">
+      <div class="md-dialog__inner md-typeset"></div>
+    </div>
+    
+    
+    <script id="__config" type="application/json">{"base": "../..", "features": ["toc.autohide", "search.suggest", "search.highlight", "navigation.tabs.sticky", "navigation.footer", "navigation.path", "content.code.copy"], "search": "../../assets/javascripts/workers/search.f8cc74c7.min.js", "translations": {"clipboard.copied": "Copied to clipboard", "clipboard.copy": "Copy to clipboard", "search.result.more.one": "1 more on this page", "search.result.more.other": "# more on this page", "search.result.none": "No matching documents", "search.result.one": "1 matching document", "search.result.other": "# matching documents", "search.result.placeholder": "Type to start searching", "search.result.term.missing": "Missing", "select.version": "Select version"}}</script>
+    
+    
+      <script src="../../assets/javascripts/bundle.60a45f97.min.js"></script>
+      
+    
+  </body>
+</html>
