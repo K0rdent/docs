@@ -79,6 +79,12 @@ spec:
 > When deploying EKS cluster please note that
 > [additional steps](vpc-removal.md) may be needed for proper VPC removal.
 
+> WARNING:
+> You may encounter an issue where EKS machines are not created due to the `ControlPlaneIsStable` preflight check
+> failure during EKS cluster deployment. Please follow the
+> [instruction](../../known-issues/eks.md#eks-machines-are-not-created-controlplaneisstable-preflight-check-failed)
+> to apply the workaround.
+
 EKS templates use the parameters similar to AWS and resulting EKS
 `ClusterDeployment` can look like this:
 
