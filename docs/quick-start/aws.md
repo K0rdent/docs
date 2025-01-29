@@ -19,6 +19,12 @@ by following the [AWS clusterawsadm installation instructions](https://github.co
 
 - Additional EKS steps and verifications are described in [EKS clusters](../clustertemplates/aws/template-parameters.md#eks-templates).
 
+> WARNING:
+> You may encounter an issue where EKS machines are not created due to the `ControlPlaneIsStable` preflight check
+> failure during EKS cluster deployment. Please follow the
+> [instruction](../known-issues/eks.md#eks-machines-are-not-created-controlplaneisstable-preflight-check-failed)
+> to apply the workaround.
+
 ### Configure AWS IAM
 
 Before launching a cluster on AWS, you need to set up your AWS infrastructure

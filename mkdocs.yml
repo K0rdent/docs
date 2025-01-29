@@ -90,7 +90,7 @@ nav:
       - AWS & EKS:
         - Template Parameters: clustertemplates/aws/template-parameters.md
         - Hosted Control Plane: clustertemplates/aws/hosted-control-plane.md
-      - Azure:
+      - Azure & AKS:
         - Template Parameters: clustertemplates/azure/template-parameters.md
         - Hosted Control Plane: clustertemplates/azure/hosted-control-plane.md
       - vSphere:
@@ -110,3 +110,5 @@ nav:
       - Overview: architecture/architecture.md
       - k0rdent initialization process: architecture/initialization.md
   - Glossary: glossary.md
+  - Known Issues:
+      - EKS: known-issues/eks.md
