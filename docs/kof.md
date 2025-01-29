@@ -490,6 +490,8 @@ kubectl port-forward -n kof svc/dashboard 8081:80
 
 ## Grafana
 
+### Access to Grafana
+
 - Get Grafana username and password:
   ```bash
   kubectl get secret -n kof grafana-admin-credentials -o yaml | yq '{
