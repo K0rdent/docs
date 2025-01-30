@@ -196,33 +196,44 @@ echo "$STORAGE_CLUSTER_NAME, $MANAGED_CLUSTER_NAME, $STORAGE_DOMAIN, $ADMIN_EMAI
   echo "$STORAGE_CLUSTER_NAME, $MANAGED_CLUSTER_NAME, $STORAGE_DOMAIN, $ADMIN_EMAIL"
   ```
 
-- Install `kof-mothership`:
-  ```bash
-  helm upgrade -i -n kof kof-mothership kof/kof-mothership \
-    --set kcm.installTemplates=true \
-    --set-json 'grafana.logSources=[{
-      "name": "'$STORAGE_CLUSTER_NAME'",
-      "url": "https://vmauth.'$STORAGE_DOMAIN'/vls",
-      "type": "victoriametrics-logs-datasource",
-      "auth": {
-        "credentials_secret_name": "storage-vmuser-credentials",
-        "username_key": "username",
-        "password_key": "password"
-    }}]' \
-    --set-json 'kcm.kof.clusterProfiles.kof-aws-dns-secrets={
-      "matchLabels": {"k0rdent.mirantis.com/kof-aws-dns-secrets": "true"},
-      "secrets": ["external-dns-aws-credentials"]
-    }'
+- Compose the values for `kof-mothership`:
 
-  helm get values -n kof kof-mothership
-  ```
+```bash
+cat >mothership-values.yaml <<EOF
+kcm:
+  installTemplates: true
+  kof:
+    clusterProfiles:
+      kof-aws-dns-secrets:
+        matchLabels:
+          k0rdent.mirantis.com/kof-aws-dns-secrets: "true"
+        secrets:
+          - external-dns-aws-credentials
+grafana:
+  logSources:
+    - name: $STORAGE_CLUSTER_NAME
+      url: https://vmauth.$STORAGE_DOMAIN/vls
+      type: victoriametrics-logs-datasource
+      auth:
+        credentials_secret_name: storage-vmuser-credentials
+        username_key: username
+        password_key: password
+EOF
+```
 
-  Why we override some [default values](https://github.com/k0rdent/kof/blob/main/charts/kof-mothership/values.yaml) here:
+- Why we override some [default values](https://github.com/k0rdent/kof/blob/main/charts/kof-mothership/values.yaml) here:
   - `kcm.installTemplates` installs the templates like `cert-manager` and `kof-storage` into the management cluster. This allows to reference them from `.spec.serviceSpec.services[].template` in AWS `ClusterDeployment` below.
+  - `external-dns-aws-credentials` secret created in [DNS auto-config](#dns-auto-config) section is auto-distributed to storage clusters by Sveltos.
   - `grafana.logSources` are configured to use your `STORAGE_CLUSTER_NAME` and `STORAGE_DOMAIN`.
   - `storage-vmuser-credentials` secret is auto-created by default and auto-distributed to other clusters by Sveltos `ClusterProfile` [here](https://github.com/k0rdent/kof/blob/121b61f5f6de6ddfdf3525b98f3ad4cb8ce57eaa/charts/kof-mothership/values.yaml#L25-L31).
-  - `external-dns-aws-credentials` secret created in [DNS auto-config](#dns-auto-config) section is auto-distributed to storage clusters by Sveltos.
   - `grafana-admin-credentials` secret is auto-created by default [here](https://github.com/k0rdent/kof/blob/121b61f5f6de6ddfdf3525b98f3ad4cb8ce57eaa/charts/kof-mothership/values.yaml#L64-L65). We will use it in the [Grafana](#grafana) section.
+
+- Verify the values and install `kof-mothership`:
+  ```bash
+  cat mothership-values.yaml
+
+  helm upgrade -i -n kof kof-mothership kof/kof-mothership -f mothership-values.yaml
+  ```
 
 - Check the pods:
   ```bash
