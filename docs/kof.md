@@ -143,19 +143,21 @@ cloud 1...
 ### DNS auto-config
 
 To avoid [manual configuration of DNS records for service endpoints](#manual-dns-config) later,
-you can automate it now, e.g. for AWS:
+you can automate it now using [external-dns](https://kubernetes-sigs.github.io/external-dns/latest/).
 
+E.g. for AWS you should use [Node IAM Role](https://github.com/kubernetes-sigs/external-dns/blob/master/docs/tutorials/aws.md#node-iam-role)
+or [IRSA](https://github.com/kubernetes-sigs/external-dns/blob/master/docs/tutorials/aws.md#iam-roles-for-service-accounts) methods in production.
+
+Just for the sake of this demo based on `aws-standalone` template for now,
+we're using the most simple but less secure [Static credentials](https://github.com/kubernetes-sigs/external-dns/blob/master/docs/tutorials/aws.md#static-credentials) method:
 - Create `external-dns` IAM user with [this policy](https://github.com/kubernetes-sigs/external-dns/blob/master/docs/tutorials/aws.md#iam-policy).
-
-- Create `external-dns-aws-credentials` file,
-  replacing `REDACTED` with the keys of this IAM user:
+- Create an access key and `external-dns-aws-credentials` file:
   ```
   [default]
   aws_access_key_id = REDACTED
   aws_secret_access_key = REDACTED
   ```
-
-- Create `external-dns-aws-credentials` secret:
+- Create `external-dns-aws-credentials` secret in `kof` namespace:
   ```bash
   kubectl create namespace kof
   kubectl create secret generic \
