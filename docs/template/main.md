@@ -31,7 +31,7 @@ The templates can have any name. However, since they are immutable, we have adop
 >       reconcileStrategy: ChartVersion
 >       sourceRef:
 >         kind: HelmRepository
->         name: kcm-templates
+>         name: k0rdent-templates
 >       version: 0.0.4
 > status:
 >   capiContracts:
@@ -70,7 +70,7 @@ The templates can have any name. However, since they are immutable, we have adop
 >       reconcileStrategy: ChartVersion
 >       sourceRef:
 >         kind: HelmRepository
->         name: kcm-templates
+>         name: k0rdent-templates
 >       version: 0.0.3
 > status:
 >   chartRef:
@@ -152,7 +152,7 @@ The templates can have any name. However, since they are immutable, we have adop
 >       reconcileStrategy: ChartVersion
 >       sourceRef:
 >         kind: HelmRepository
->         name: kcm-templates
+>         name: k0rdent-templates
 >       version: 3.2.6
 > status:
 >   chartRef:

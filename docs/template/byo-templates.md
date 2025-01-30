@@ -24,14 +24,14 @@ A source object defines where the Helm chart is stored. The source can be one of
 apiVersion: source.toolkit.fluxcd.io/v1
 kind: HelmRepository
 metadata:
-  name: custom-templates-repo
+  name: k0rdent-templates
   namespace: kcm-system
 spec:
   insecure: true
   interval: 10m0s
   provider: generic
   type: oci
-  url: oci://ghcr.io/external-templates-repo/charts
+  url: oci://ghcr.io/k0rdent/kcm/charts
 ```
 
 ## Create the Template
@@ -92,7 +92,7 @@ spec:
       chart: os-k0sproject-k0smotron
       sourceRef:
         kind: HelmRepository
-        name: custom-templates-repo
+        name: k0rdent-templates
 ```
 
 ### Example: Custom ClusterTemplate Referencing an Existing HelmChart object

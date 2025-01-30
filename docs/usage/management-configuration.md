@@ -118,7 +118,7 @@ kind: HelmRepository
 metadata:
   labels:
     k0rdent.mirantis.com/managed: "true"
-  name: kcm-templates
+  name: my-private-oci-registry-name
   namespace: kcm-system
 spec:
   insecure: true

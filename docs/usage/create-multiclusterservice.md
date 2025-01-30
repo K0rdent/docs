@@ -17,12 +17,12 @@ spec:
       <key1>: <value1>
       <key2>: <value2>
       . . .
-  services:
-  - template: <servicetemplate-1-name>
-    name: <release-name>
-    namespace: <release-namespace>
-  servicesPriority: 100
-  stopOnConflict: false
+  serviceSpec:
+    services:
+    - template: <servicetemplate-1-name>
+      name: <release-name>
+      namespace: <release-namespace>
+    priority: 100
 ```
 
 ## Matching Multiple Clusters
@@ -47,20 +47,19 @@ dev-cluster-2                  Provisioned   3h10m             app.kubernetes.io
 > apiVersion: k0rdent.mirantis.com/v1alpha1
 > kind: ClusterDeployment
 > metadata:
->   . . . 
 >   name: dev-cluster-1
 >   namespace: kcm-system
 > spec:
 >   . . .
->   services:
->   - name: kyverno
->     namespace: kyverno
->     template: kyverno-3-2-6
->   - name: ingress-nginx
->     namespace: ingress-nginx
->     template: ingress-nginx-4-11-0
->   servicesPriority: 100
->   stopOnConflict: false
+>   serviceSpec:
+>     services:
+>     - name: kyverno
+>       namespace: kyverno
+>       template: kyverno-3-2-6
+>     - name: ingress-nginx
+>       namespace: ingress-nginx
+>       template: ingress-nginx-4-11-0
+>     priority: 100
 >   . . .
 > ```
 > 
@@ -69,17 +68,16 @@ dev-cluster-2                  Provisioned   3h10m             app.kubernetes.io
 > apiVersion: k0rdent.mirantis.com/v1alpha1
 > kind: ClusterDeployment
 > metadata:
->   . . .
 >   name: dev-cluster-2
 >   namespace: kcm-system
 > spec:
 >   . . .
->   services:
->   - name: ingress-nginx
->     namespace: ingress-nginx
->     template: ingress-nginx-4-11-0
->   servicesPriority: 500
->   stopOnConflict: false
+>   serviceSpec:
+>     services:
+>     - name: ingress-nginx
+>       namespace: ingress-nginx
+>       template: ingress-nginx-4-11-0
+>     priority: 500
 >   . . .
 > ```
 
@@ -96,16 +94,16 @@ spec:
   clusterSelector:
     matchLabels:
       app.kubernetes.io/managed-by: Helm
-  services:
-  - name: ingress-nginx
-    namespace: ingress-nginx
-    template: ingress-nginx-4-11-3
-  servicesPriority: 300
-  stopOnConflict: false
+  serviceSpec:
+    services:
+    - name: ingress-nginx
+      namespace: ingress-nginx
+      template: ingress-nginx-4-11-3
+    priority: 300
 ```
 
 
-This MultiClusterService will match any CAPI cluster with the label `app.kubernetes.io/managed-by: Helm` and deploy
+This MultiClusterService will match any CAPI cluster with the label `app.kubernetes.io/managed-by: Helm` and deploy chart
 version 4.11.3 of ingress-nginx service on it.
 
 ### Configuring Custom Values
@@ -118,21 +116,21 @@ Refer to "Templating Custom Values" in [Deploy beach-head Services using Cluster
 
 ### Services Priority and Conflict
 
-The `.spec.servicesPriority` field is used to specify the priority for the services managed by a ClusterDeployment or MultiClusterService object.
+The `.spec.serviceSpec.priority` field is used to specify the priority for the services managed by a ClusterDeployment or MultiClusterService object.
 Considering the example above:
 
-1. ClusterDeployment `dev-cluster-1` manages deployment of kyverno (v3.2.6) and ingress-nginx (v4.11.0) with `servicesPriority=100` on its cluster.
-2. ClusterDeployment `dev-cluster-2` manages deployment of ingress-nginx (v4.11.0) with `servicesPriority=500` on its cluster.
-3. MultiClusterService `global-ingress` manages deployment of ingress-nginx (v4.11.3) with `servicesPriority=300` on both clusters.
+1. ClusterDeployment `dev-cluster-1` manages deployment of kyverno (v3.2.6) and ingress-nginx (v4.11.0) with `priority=100` on its cluster.
+2. ClusterDeployment `dev-cluster-2` manages deployment of ingress-nginx (v4.11.0) with `priority=500` on its cluster.
+3. MultiClusterService `global-ingress` manages deployment of ingress-nginx (v4.11.3) with `priority=300` on both clusters.
 
 This scenario presents a conflict on both the clusters as the MultiClusterService is attempting to deploy v4.11.3 of ingress-nginx
 on both whereas the ClusterDeployment for each is attempting to deploy v4.11.0 of ingress-nginx.
 
-This is where `.spec.servicesPriority` can be used to specify who gets the priority. Higher number means higer priority and vice versa. In this example:
+This is where `.spec.serviceSpec.priority` can be used to specify who gets the priority. Higher number means higer priority and vice versa. In this example:
 1. MultiClusterService "global-ingress" will take precedence over ClusterDeployment "dev-cluster-1" and ingress-nginx (v4.11.3) defined in MultiClusterService object will be deployed on the cluster.
 2. ClusterDeployment "dev-cluster-2" will take precedence over MultiClusterService "global-ingress" and ingress-nginx (v4.11.0) defined in ClusterDeployment object will be deployed on the cluster.
 
-> NOTE: If servicesPriority are equal, the first one to reach the cluster wins and deploys its beach-head services.
+> NOTE: If priority are equal, the first one to reach the cluster wins and deploys its beach-head services.
 
 ## Checking Status
 
@@ -153,12 +151,13 @@ and 1 MultiClusterService is deployed.
 >   clusterSelector:
 >     matchLabels:
 >       app.kubernetes.io/managed-by: Helm
->   services:
->   - name: ingress-nginx
->     namespace: ingress-nginx
->     template: ingress-nginx-4-11-3
->   servicesPriority: 300
->   stopOnConflict: false
+>   serviceSpec:
+>     services:
+>     - name: ingress-nginx
+>       namespace: ingress-nginx
+>       template: ingress-nginx-4-11-3
+>     . . .
+>   . . .
 > status:
 >   conditions:
 >   - lastTransitionTime: "2024-10-25T08:36:24Z"
@@ -217,15 +216,16 @@ Whereas, it shows provisioned for `dev-cluster-1` because the MultiClusterServic
 >   . . .
 > spec:
 >   . . .
->   services:
->   - name: kyverno
->     namespace: kyverno
->     template: kyverno-3-2-6
->   - name: ingress-nginx
->     namespace: ingress-nginx
->     template: ingress-nginx-4-11-0
->   servicesPriority: 100
->   stopOnConflict: false
+>   serviceSpec:
+>     services:
+>     - name: kyverno
+>       namespace: kyverno
+>       template: kyverno-3-2-6
+>     - name: ingress-nginx
+>       namespace: ingress-nginx
+>       template: ingress-nginx-4-11-0
+>     priority: 100
+>     . . .
 >   . . .
 > status:
 >   . . .
@@ -267,12 +267,13 @@ another object with higher priority is managing it, so it shows a conflict inste
 >   . . .
 > spec:
 >   . . .
->   services:
->   - name: ingress-nginx
->     namespace: ingress-nginx
->     template: ingress-nginx-4-11-0
->   servicesPriority: 500
->   stopOnConflict: false
+>   serviceSpec:
+>     services:
+>     - name: ingress-nginx
+>       namespace: ingress-nginx
+>       template: ingress-nginx-4-11-0
+>     priority: 500
+>     . . .
 >   . . .
 > status:
 >   . . .
