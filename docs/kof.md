@@ -241,6 +241,12 @@ echo "$STORAGE_CLUSTER_NAME, $MANAGED_CLUSTER_NAME, $STORAGE_DOMAIN, $ADMIN_EMAI
   echo "$STORAGE_CLUSTER_NAME, $MANAGED_CLUSTER_NAME, $STORAGE_DOMAIN, $ADMIN_EMAIL"
   ```
 
+- Use up to date template, e.g:
+  ```bash
+  kubectl get clustertemplate -n kcm-system | grep aws
+  TEMPLATE=aws-standalone-cp-0-0-5
+  ```
+
 - Compose the Storage `ClusterDeployment`:
 
 ```bash
@@ -253,7 +259,7 @@ metadata:
   labels:
     kof: storage
 spec:
-  template: aws-standalone-cp-0-0-5
+  template: $TEMPLATE
   credential: aws-cluster-identity-cred
   config:
     clusterIdentity:
@@ -353,6 +359,12 @@ EOF
   echo "$STORAGE_CLUSTER_NAME, $MANAGED_CLUSTER_NAME, $STORAGE_DOMAIN, $ADMIN_EMAIL"
   ```
 
+- Use up to date template, e.g:
+  ```bash
+  kubectl get clustertemplate -n kcm-system | grep aws
+  TEMPLATE=aws-standalone-cp-0-0-5
+  ```
+
 - Compose the Managed `ClusterDeployment`:
 
 ```bash
@@ -365,6 +377,7 @@ metadata:
   labels:
     kof: collector
 spec:
+  template: $TEMPLATE
   credential: aws-cluster-identity-cred
   config:
     clusterIdentity:
@@ -380,7 +393,6 @@ spec:
     workersNumber: 3
     clusterLabels:
       k0rdent.mirantis.com/kof-storage-secrets: "true"
-  template: aws-standalone-cp-0-0-5
   serviceSpec:
     priority: 100
     services:
