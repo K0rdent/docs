@@ -5,7 +5,7 @@
 [kof](https://github.com/k0rdent/kof) provides enterprise-grade observability
 and FinOps capabilities for k0rdent-managed Kubernetes clusters.
 It enables centralized metrics, logging, and cost management
-through a unified OpenTelemetry-based architecture.
+through a unified [OpenTelemetry](https://opentelemetry.io/docs/)-based architecture.
 
 ## Architecture
 
