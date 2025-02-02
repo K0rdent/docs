@@ -83,3 +83,6 @@ The k0rdent initialization process involves tools such as Helm and FluxCD.
 The `Management` object represents the k0rdent management cluster as a whole.
 The management cluster Day-2 operations (such as [upgrade](admin-upgrading-k0rdent.md)) are  executed by manipulating the `Release` and `Management` objects.
 1. kcm-controller-manager generates an empty ``AccessManagement` object. `AccessManagement` defines [access rules](template-intro.md#template-life-cycle-management) for `ClusterTemplate`/`ServiceTemplate` propagation across user namespaces. Further `AccessManagement` might be edited and used along with admin-created `ClusterTemplateChain` and `ServiceTemplateChain` objects.
+
+
+Test
