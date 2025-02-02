@@ -57,3 +57,21 @@ jobs:
             git checkout "$TAG_NAME"
             mike deploy "$TAG_NAME" --push
             mike set-default "$TAG_NAME" --push
+
+      - name: Create or Update Tag-Based Branch
+        run: |
+          # Define the branch name from the tag
+          BRANCH_NAME="release-${TAG_NAME}"
+      
+          # Check if the branch exists
+          if git ls-remote --heads origin "$BRANCH_NAME" | grep "$BRANCH_NAME"; then
+            echo "Branch $BRANCH_NAME exists, updating..."
+            git checkout "$BRANCH_NAME"
+            git reset --hard "$TAG_NAME"
+          else
+            echo "Branch $BRANCH_NAME does not exist, creating..."
+            git checkout -b "$BRANCH_NAME" "$TAG_NAME"
+          fi
+      
+          # Push the branch forcefully to match the latest tag
+          git push origin "$BRANCH_NAME" --force
