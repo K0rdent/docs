@@ -1,0 +1,59 @@
+name: Publish Docs on Branch Update
+
+on:
+  push:
+    branches:
+      - "release-v*"  # Trigger only on branches prefixed with 'release-v'
+
+permissions:
+  contents: write
+
+jobs:
+  deploy-docs:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout Repository
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 0  # Ensure all history and tags are fetched
+
+      - name: Configure Git Credentials
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: "3.x"
+
+      - name: Restore Cached Dependencies
+        uses: actions/cache@v4
+        with:
+          key: mkdocs-material-${{ env.cache_id }}
+          path: .cache
+          restore-keys: |
+            mkdocs-material-
+
+      - name: Install mkdocs-material and mike
+        run: |
+          python -m pip install --upgrade pip
+          pip install --disable-pip-version-check -r requirements.txt
+
+      - name: Extract Tag from Branch Name
+        run: |
+          BRANCH_NAME=$(git rev-parse --abbrev-ref HEAD)
+          TAG_NAME=${BRANCH_NAME#release-}  # Remove 'release-' prefix to get the tag
+          echo "TAG_NAME=${TAG_NAME}" >> $GITHUB_ENV
+          echo "Extracted Tag: ${TAG_NAME}"
+
+      - name: Deploy Docs for the Updated Branch
+        run: |
+          mike deploy "$TAG_NAME" --push
+
+
+      - name: Update Existing Tag to New Commit
+        run: |
+          git tag -fa "$TAG_NAME" -m "Updating tag $TAG_NAME with $BRANCH_NAME"
+          git push origin "$TAG_NAME" --force
