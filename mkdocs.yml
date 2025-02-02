@@ -1,46 +1,36 @@
-site_name: k0rdent
-site_author: Mirantis
-docs_dir: ./docs
+site_name: Documentation
+site_description: Documentation for k0rdent.
+site_author: Mirantis, Inc.
+
+docs_dir: docs/
 repo_name: GitHub
 repo_url: https://github.com/k0rdent/kcm
+
 copyright:
-  '© 2005 - 2025 Mirantis, Inc. All rights reserved.'
+  Copyright &copy; 2025 The k0rdent authors | Documentation distributed under <a href="https://creativecommons.org/licenses/by/4.0/legalcode.txt">CC-BY-4.0</a>.
+
 theme:
   name: "material"
-  font:
-    text: Overpass
-    code: Roboto Mono
+  highlightjs: true
+  language: "en"
+  custom_dir: docs/custom_theme
+
+  favicon: img/favicon-32x32.png
+  logo: img/k0rdent-logo-horizontal-inverted.svg
+  
   palette:
-    # Palette toggle for light mode
     - scheme: default
-      primary: custom
       toggle:
-        icon: material/brightness-7
-        name: Switch to dark mode
-
-    # Palette toggle for dark mode
-    - scheme: slate
-      primary: custom
-      toggle:
-        icon: material/brightness-4
+        icon: material/toggle-switch
         name: Switch to light mode
-
-
-  icon: assets/mirantis-logo-inverted-horizontal-one-color.svg
-  logo: assets/mirantis-logo-inverted-horizontal-one-color.svg
-  favicon: assets/favicon.ico
-
-  search: true
-  search_index_only: true
+    - scheme: slate
+      toggle:
+        icon: material/toggle-switch-off-outline
+        name: Switch to dark mode
   features:
     - toc.autohide
     - search.suggest
     - search.highlight
-    # - navigation.sections
-    # - navigation.tabs
-    - navigation.tabs.sticky
-    - navigation.footer
-    - navigation.path
     - content.code.copy
 
 extra_css:
@@ -48,17 +38,71 @@ extra_css:
 
 plugins:
   - search
-  - mermaid2
+  - ezglossary:
+      section_config:
+        - name: demo
+          inline_refs: short
+  - macros:
+      j2_variable_start_string: "{{{"
+      j2_variable_end_string: "}}}"
+  - exclude:
+      glob:
+        - Dockerfile*
+        - Makefile*
+        - requirements.txt
 
-#extra:
-#  generator: false
-
-# Page tree
+nav:
+  - Welcome to the k0rdent docs: index.md
+  - k0rdent concepts:
+    - Why k0rdent?: why-k0rdent.md
+    - k0rdent architecture: k0rdent-architecture.md
+  - QuickStarts:
+    - Guide to Quickstarts: guide-to-quickstarts.md
+    - Set up Management Node and Cluster: quickstart-1-mgmt-node-and-cluster.md
+    - Configure and Deploy to AWS: quickstart-2-aws.md
+    - Configure and Deploy to Azure: quickstart-2-azure.md
+  - Administrator Guide:
+    - Before you start: admin-before.md
+    - Installing k0rdent: admin-installation.md
+    - Prepare k0rdent to create managed clusters on multiple providers: admin-prepare.md
+    - Creating standalone clusters: admin-creating-clusters.md
+    - Adopting clusters: admin-adopting-clusters.md
+    - Hosted control planes: admin-hosted-control-planes.md
+    - Troubleshooting AWS VPCs: admin-troubleshooting-aws-vpcs.md
+    - Using and creating service templates: admin-service-templates.md
+    - Creating multi-cluster services: admin-create-multiclusterservice.md
+    - Upgrading k0rdent: admin-upgrading-k0rdent.md
+    - k0rdent credentials management: admin-credentials.md
+    - k0rdent Role Based Access Control (RBAC): admin-rbac.md
+    - Backing up k0rdent: admin-backup.md
+  - User Guide:
+    - Creating clusters as a k0rdent user: user-create-cluster.md
+    - Creating and adding services to clusters as a k0rdent user: user-create-service.md
+    - Enabling drift detection: user-enable-drift-detection.md
+  - k0rdent Templates Reference:
+    - Introduction to k0rdent templates: template-intro.md
+    - Using predefined templates: template-predefined.md
+    - Bring-your-own (BYO) templates: template-byo.md
+    - Templates for Amazon Web Services: template-aws.md
+    - Templates for Azure: template-azure.md
+    - Templates for OpenStack: template-openstack.md
+    - Templates for vSphere: template-vsphere.md
+  - Known Issues:
+    - EKS: known-issues-eks.md
+  - Reference:
+    - Glossary: glossary.md
+  - Appendix:
+    - Extended management configuration: appendix-extend-mgmt.md
+    - Understanding the dry run: appendix-dryrun.md
+    - Cloud provider credentials management in CAPI: appendix-providers.md
 
 markdown_extensions:
   - callouts
   - tables
   - pymdownx.details
+  - pymdownx.highlight: {}
+  - pymdownx.superfences: {}
+  - pymdownx.inlinehilite: {}
   - pymdownx.superfences:
       custom_fences:
         - name: mermaid
@@ -67,46 +111,26 @@ markdown_extensions:
   - toc:
       permalink: "#"
       toc_depth: 3
-nav:
-  - Home: index.md
-  - Quick Start:
-    - Installation: quick-start/installation.md
-    - AWS: quick-start/aws.md
-    - Azure: quick-start/azure.md
-    - vSphere: quick-start/vsphere.md
-    - OpenStack: quick-start/openstack.md
-  - Usage:
-      - Installation Guide: usage/installation.md
-      - Extended Management Configuration: usage/management-configuration.md
-      - Adopting Existing Clusters Guide: usage/adopt-existing-cluster.md
-#     - Air-gapped Installation Guide: usage/airgap.md
-      - Create Cluster Deployment: usage/create-cluster-deployment.md
-      - Cluster Updates: usage/cluster-update.md
-      - k0rdent Upgrade: usage/upgrade.md
-  - Templates:
-      - Overview: template/main.md
-      - BYO Templates: template/byo-templates.md
-  - ClusterTemplates:
-      - AWS & EKS:
-        - Template Parameters: clustertemplates/aws/template-parameters.md
-        - Hosted Control Plane: clustertemplates/aws/hosted-control-plane.md
-      - Azure:
-        - Template Parameters: clustertemplates/azure/template-parameters.md
-        - Hosted Control Plane: clustertemplates/azure/hosted-control-plane.md
-      - vSphere:
-        - Template Parameters: clustertemplates/vsphere/template-parameters.md
-        - Hosted Control Plane: clustertemplates/vsphere/hosted-control-plane.md
-      - OpenStack:
-        - Template Parameters: clustertemplates/openstack/template-parameters.md
-  - Credentials:
-      - Overview: credential/main.md
-      - Distribution: credential/distribution.md
-  - RBAC:
-      - Overview: rbac/roles.md
-  - Disaster Recovery:
-      - Overview: disaster-recovery/overview.md
-      - Customization: disaster-recovery/customization.md
-  - Architecture:
-      - Overview: architecture/architecture.md
-      - k0rdent initialization process: architecture/initialization.md
-  - Glossary: glossary.md
+  - def_list
+
+extra:
+  generator: false
+  social:
+    - icon: fontawesome/brands/github
+      link: https://github.com/k0rdent/kcm
+      name: k0rdent on GitHub
+    - icon: fontawesome/brands/x-twitter
+      link: https://x.com/k0rdent
+      name: k0rdent on X
+    - icon: fontawesome/brands/bluesky
+      link: https://bsky.app/profile/k0rdent.bsky.social
+      name: k0rdent on BlueSky
+    - icon: fontawesome/brands/youtube
+      link: https://www.youtube.com/channel/UChXQ6kbvjnAtdZAQpl7Fo4A
+      name: k0rdent on YouTube
+    - icon: fontawesome/brands/linkedin
+      link: https://www.linkedin.com/company/k0rdent/
+      name: k0rdent on LinkedIn
+  version:
+    provider: mike
+    default: stable
